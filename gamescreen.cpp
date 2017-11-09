@@ -8,7 +8,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
 {
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
-    scene->setSceneRect(0,0,717,794);
+    scene->setSceneRect(0,0,600,664);
 
     QGraphicsView *gameView = ui->gameView;
     gameView->setScene(scene);
@@ -22,13 +22,4 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
 GameScreen::~GameScreen()
 {
     delete ui;
-}
-
-void GameScreen::resizeEvent(QResizeEvent *)
-{
-    QRectF bounds = scene->itemsBoundingRect();
-    bounds.setWidth(bounds.width()*0.9);
-    bounds.setHeight(bounds.height()*0.9);
-    ui->gameView->fitInView(bounds, Qt::KeepAspectRatio);
-    //ui->graphicsView->centerOn(0, 0);
 }

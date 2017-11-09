@@ -7,10 +7,10 @@ GameMap::GameMap()
 
 QRectF GameMap::boundingRect() const
 {
-    return QRect(0,0,717,794);
+    return QRect(0,0,600,664);
 }
 
 void GameMap::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(0,0,717,794,mapImage);
+    painter->drawPixmap(0,0,600,664,mapImage);
 }

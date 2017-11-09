@@ -18,7 +18,6 @@ private:
     Ui::GameScreen *ui;
     QGraphicsScene *scene;
     GameMap *gameMap;
-    void resizeEvent(QResizeEvent *);
 
 public:
     explicit GameScreen(QWidget *parent = 0);
