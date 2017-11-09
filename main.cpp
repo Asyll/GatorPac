@@ -6,6 +6,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     TitleScreen window;
     window.show();
-// no change
+// Bryan's change
     return a.exec();
 }
