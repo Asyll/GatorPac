@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>Images/gatorlogo.png</file>
         <file>Images/swampmap.png</file>
+        <file>Audio/TitleScreenMusic.wav</file>
     </qresource>
 </RCC>
