@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>610</width>
     <height>753</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>600</width>
+    <width>610</width>
     <height>753</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>600</width>
+    <width>610</width>
     <height>753</height>
    </size>
   </property>
@@ -26,28 +26,34 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(0, 0, 0);</string>
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
   </property>
   <widget class="QGraphicsView" name="gameView">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>40</y>
-     <width>600</width>
-     <height>664</height>
+     <width>602</width>
+     <height>666</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>600</width>
-     <height>664</height>
+     <width>602</width>
+     <height>666</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>600</width>
-     <height>664</height>
+     <width>602</width>
+     <height>666</height>
     </size>
+   </property>
+   <property name="toolTipDuration">
+    <number>0</number>
+   </property>
+   <property name="lineWidth">
+    <number>0</number>
    </property>
    <property name="verticalScrollBarPolicy">
     <enum>Qt::ScrollBarAlwaysOff</enum>
