@@ -5,6 +5,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <QGraphicsScene>
+#include <QMediaPlayer>
 #include "gamemap.h"
 
 namespace Ui {
@@ -21,6 +22,7 @@ private:
 
 public:
     explicit GameScreen(QWidget *parent = 0);
+    QMediaPlayer * finalDeathMusic = new QMediaPlayer;
     ~GameScreen();
 };
 
