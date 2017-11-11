@@ -14,7 +14,6 @@ TitleScreen::TitleScreen(QWidget *parent) : QWidget(parent), ui(new Ui::TitleScr
     //connect(ui->startBtn, QPushButton::pressed(), this, startButtonHandle());
 
     //play 8 bit crazy train for the title screen
-    QMediaPlayer * introMusic = new QMediaPlayer();
     introMusic->setMedia(QUrl("qrc:/Audio/TitleScreenMusic.mp3"));
     if (introMusic->state() == QMediaPlayer::PlayingState) {
         introMusic->setPosition(0);
@@ -33,6 +32,7 @@ TitleScreen::~TitleScreen()
 void TitleScreen::on_startBtn_clicked()
 {
     GameScreen *game = new GameScreen();
+    introMusic->stop();
 
     this->close();
     game->show();

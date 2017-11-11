@@ -2,6 +2,7 @@
 #define TITLESCREEN_H
 
 #include <QWidget>
+#include <QMediaPlayer>
 
 namespace Ui {
 class TitleScreen;
@@ -13,6 +14,7 @@ class TitleScreen : public QWidget
 
 public:
     explicit TitleScreen(QWidget *parent = 0);
+    QMediaPlayer * introMusic = new QMediaPlayer();
     ~TitleScreen();
 
 private slots:
