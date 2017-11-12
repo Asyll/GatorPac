@@ -21,10 +21,10 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     gator = new Player(260,450);
     scene->addItem(gator);
 
-    lsu = new Enemy(0,0,"lsu");
-    fsu = new Enemy(0,0,"fsu");
-    georgia = new Enemy(0,0,"georgia");
-    kentucky = new Enemy(0,0,"kentucky");
+    fsu = new Enemy(260,210,"fsu");
+    lsu = new Enemy(220,270,"lsu");
+    georgia = new Enemy(260,270,"georgia");
+    kentucky = new Enemy(300,270,"kentucky");
     scene->addItem(lsu);
     scene->addItem(fsu);
     scene->addItem(georgia);
@@ -48,4 +48,56 @@ void GameScreen::playDeathMusic()
     else if (finalDeathMusic->state() == QMediaPlayer::StoppedState) {
         finalDeathMusic->play();
     }
+}
+
+
+// PROTECTED Functions //
+
+void GameScreen::keyPressEvent(QKeyEvent *event)
+{
+    switch(event->key())
+    {
+    case Qt::Key_Left:
+        if (!gator->moving)
+        {
+            gator->currentDirection = Direction::LEFT;
+        }
+        else
+        {
+            gator->nextDirection = Direction::LEFT;
+        }
+        break;
+    case Qt::Key_Right:
+        if (!gator->moving)
+        {
+            gator->currentDirection = Direction::RIGHT;
+        }
+        else
+        {
+            gator->nextDirection = Direction::RIGHT;
+        }
+        break;
+    case Qt::Key_Up:
+        if (!gator->moving)
+        {
+            gator->currentDirection = Direction::UP;
+        }
+        else
+        {
+            gator->nextDirection = Direction::UP;
+        }
+        break;
+    case Qt::Key_Down:
+        if (!gator->moving)
+        {
+            gator->currentDirection = Direction::DOWN;
+        }
+        else
+        {
+            gator->nextDirection = Direction::DOWN;
+        }
+        break;
+}
+
+
 }

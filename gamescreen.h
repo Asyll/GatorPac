@@ -34,6 +34,9 @@ private:
     Enemy *georgia;
     Enemy *kentucky;
 
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
 };
 
 #endif // GAMESCREEN_H

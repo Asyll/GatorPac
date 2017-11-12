@@ -12,9 +12,14 @@ public:
     GameMap();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    bool canMove(QPoint);
+
 
 private:
     QPixmap mapImage;
+    void createPathPoints(int,int,int,int);
+    QVector<QPoint> moveablePath;
+
 
 };
 

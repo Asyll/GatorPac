@@ -6,7 +6,8 @@ Player::Player(int posx, int posy) :
 {
     this->posx = posx;
     this->posy = posy;
-    forward.load("://Images/Characters/fsu_forward.png");
+    moving = false;
+    forward.load("://Images/Characters/gator_forward.png");
 }
 
 QRectF Player::boundingRect() const
