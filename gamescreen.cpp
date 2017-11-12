@@ -21,8 +21,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     gator = new Player(260,450);
     scene->addItem(gator);
 
-    score = 0;
-    ui->scoreLabel->setText("Home: ");
+    lives = 3;
 
     lsu = new Enemy(0,0,"lsu");
     fsu = new Enemy(0,0,"fsu");
@@ -54,5 +53,8 @@ void GameScreen::playDeathMusic()
 }
 
 void GameScreen::updater() {
+    score = 0;
+    lives = 3;
+    ui->lifeCount->display(lives);
     ui->scoreValue->display(score);
 }

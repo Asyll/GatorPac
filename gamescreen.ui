@@ -100,7 +100,7 @@
     <string notr="true">color:rgb(250, 70, 22);</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="AwayLabel">
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -122,11 +122,46 @@
     <string>Away:</string>
    </property>
   </widget>
-  <widget class="QLCDNumber" name="lcdNumber">
+  <widget class="QLCDNumber" name="awayScore">
    <property name="geometry">
     <rect>
      <x>443</x>
      <y>12</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(250, 70, 22);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="LifeLabel">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>705</y>
+     <width>91</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica Neue</family>
+     <pointsize>30</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(250, 70, 22);</string>
+   </property>
+   <property name="text">
+    <string>Lives: </string>
+   </property>
+  </widget>
+  <widget class="QLCDNumber" name="lifeCount">
+   <property name="geometry">
+    <rect>
+     <x>103</x>
+     <y>702</y>
      <width>111</width>
      <height>41</height>
     </rect>

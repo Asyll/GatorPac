@@ -25,6 +25,9 @@ public:
     void playDeathMusic();
     void updater();
 
+    int score;
+    int lives = 3;
+
 private:
     Ui::GameScreen *ui;
     QGraphicsScene *scene;
@@ -34,7 +37,6 @@ private:
     Enemy *fsu;
     Enemy *georgia;
     Enemy *kentucky;
-    int score;
 
 };
 
