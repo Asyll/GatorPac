@@ -1,16 +1,20 @@
 #include "player.h"
 
-Player::Player()
+Player::Player(int posx, int posy) :
+    charW(40),
+    charH(40)
 {
-    forward.load("://Images/Characters/Gator/gator_forward.png");
+    this->posx = posx;
+    this->posy = posy;
+    forward.load("://Images/Characters/fsu_forward.png");
 }
 
 QRectF Player::boundingRect() const
 {
-    return QRect(0,0,50,50);
+    return QRect(0,0,charW,charH);
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(0,0,50,50,forward);
+    painter->drawPixmap(posx,posy,charW,charW,forward);
 }

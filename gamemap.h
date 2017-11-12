@@ -8,12 +8,14 @@
 
 class GameMap : public QGraphicsItem
 {
-private:
-    QPixmap mapImage;
 public:
     GameMap();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+private:
+    QPixmap mapImage;
+
 };
 
 #endif // GAMEMAP_H

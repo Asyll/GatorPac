@@ -29,13 +29,15 @@ SOURCES += \
         titlescreen.cpp \
     gamescreen.cpp \
     gamemap.cpp \
-    player.cpp
+    player.cpp \
+    enemy.cpp
 
 HEADERS += \
         titlescreen.h \
     gamescreen.h \
     gamemap.h \
-    player.h
+    player.h \
+    enemy.h
 
 FORMS += \
         titlescreen.ui \
