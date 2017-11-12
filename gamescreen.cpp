@@ -21,6 +21,9 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     gator = new Player(260,450);
     scene->addItem(gator);
 
+    score = 0;
+    ui->scoreLabel->setText("Score: " + score);
+
     lsu = new Enemy(0,0,"lsu");
     fsu = new Enemy(0,0,"fsu");
     georgia = new Enemy(0,0,"georgia");

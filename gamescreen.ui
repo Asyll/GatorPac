@@ -65,6 +65,28 @@
     <enum>QAbstractScrollArea::AdjustToContents</enum>
    </property>
   </widget>
+  <widget class="QLabel" name="scoreLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>221</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica Neue</family>
+     <pointsize>30</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(250, 70, 22);</string>
+   </property>
+   <property name="text">
+    <string>Score:</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

@@ -33,6 +33,7 @@ private:
     Enemy *fsu;
     Enemy *georgia;
     Enemy *kentucky;
+    int score;
 
 };
 
