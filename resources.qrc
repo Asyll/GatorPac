@@ -3,5 +3,35 @@
         <file>Images/gatorlogo.png</file>
         <file>Images/swampmap.png</file>
         <file>Audio/TitleScreenMusic.mp3</file>
+        <file>Audio/FinalDeathMusic.mp3</file>
+        <file>Images/Characters/FSU/fsu_forward_up.png</file>
+        <file>Images/Characters/FSU/fsu_forward.png</file>
+        <file>Images/Characters/FSU/fsu_reverse_down.png</file>
+        <file>Images/Characters/FSU/fsu_reverse_up.png</file>
+        <file>Images/Characters/FSU/fsu_reverse.png</file>
+        <file>Images/Characters/Georgia/georgia_forward_down.png</file>
+        <file>Images/Characters/Georgia/georgia_forward_up.png</file>
+        <file>Images/Characters/Georgia/Georgia_forward.png</file>
+        <file>Images/Characters/Georgia/georgia_reverse_down.png</file>
+        <file>Images/Characters/Georgia/georgia_reverse_up.png</file>
+        <file>Images/Characters/Georgia/georgia_reverse.png</file>
+        <file>Images/Characters/Kentucky/kentuck_forward.png</file>
+        <file>Images/Characters/Kentucky/kentucky_forward_down.png</file>
+        <file>Images/Characters/Kentucky/kentucky_forward_up.png</file>
+        <file>Images/Characters/Kentucky/kentucky_reverse_down.png</file>
+        <file>Images/Characters/Kentucky/kentucky_reverse_up.png</file>
+        <file>Images/Characters/Kentucky/kentucky_reverse.png</file>
+        <file>Images/Characters/LSU/lsu_forward_down.png</file>
+        <file>Images/Characters/LSU/lsu_forward_up.png</file>
+        <file>Images/Characters/LSU/lsu_forward.png</file>
+        <file>Images/Characters/LSU/lsu_reverse_down.png</file>
+        <file>Images/Characters/LSU/lsu_reverse_up.png</file>
+        <file>Images/Characters/LSU/lsu_reverse.png</file>
+        <file>Images/Characters/Gator/gator_forward_down.png</file>
+        <file>Images/Characters/Gator/gator_forward_up.png</file>
+        <file>Images/Characters/Gator/gator_forward.png</file>
+        <file>Images/Characters/Gator/gator_reverse_down.png</file>
+        <file>Images/Characters/Gator/gator_reverse_up.png</file>
+        <file>Images/Characters/Gator/gator_reverse.png</file>
     </qresource>
 </RCC>
