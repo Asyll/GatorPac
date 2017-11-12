@@ -70,7 +70,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>221</width>
+     <width>91</width>
      <height>41</height>
     </rect>
    </property>
@@ -84,7 +84,55 @@
     <string notr="true">color: rgb(250, 70, 22);</string>
    </property>
    <property name="text">
-    <string>Score:</string>
+    <string>Home:</string>
+   </property>
+  </widget>
+  <widget class="QLCDNumber" name="scoreValue">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>10</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(250, 70, 22);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>10</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica Neue</family>
+     <pointsize>30</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(250, 70, 22);</string>
+   </property>
+   <property name="text">
+    <string>Away:</string>
+   </property>
+  </widget>
+  <widget class="QLCDNumber" name="lcdNumber">
+   <property name="geometry">
+    <rect>
+     <x>443</x>
+     <y>12</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(250, 70, 22);</string>
    </property>
   </widget>
  </widget>

@@ -22,7 +22,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     scene->addItem(gator);
 
     score = 0;
-    ui->scoreLabel->setText("Score: " + score);
+    ui->scoreLabel->setText("Home: ");
 
     lsu = new Enemy(0,0,"lsu");
     fsu = new Enemy(0,0,"fsu");
@@ -51,4 +51,8 @@ void GameScreen::playDeathMusic()
     else if (finalDeathMusic->state() == QMediaPlayer::StoppedState) {
         finalDeathMusic->play();
     }
+}
+
+void GameScreen::updater() {
+    ui->scoreValue->display(score);
 }
