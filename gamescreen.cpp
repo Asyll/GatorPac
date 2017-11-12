@@ -29,8 +29,7 @@ GameScreen::~GameScreen()
 }
 
 /*Play 8 bit evil morty for the eventual death scene when we get there.
-When all lives lost then stops other music and plays final music. But
-for now I just have it playing when the map pops up*/
+When all lives lost then stops other music and plays final music. */
 void GameScreen::playDeathMusic()
 {
     finalDeathMusic->setMedia(QUrl("qrc:/Audio/FinalDeathMusic.mp3"));
