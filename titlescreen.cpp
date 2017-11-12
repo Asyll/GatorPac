@@ -11,16 +11,7 @@ TitleScreen::TitleScreen(QWidget *parent) : QWidget(parent), ui(new Ui::TitleScr
     logo->setPixmap(QPixmap(":/Images/gatorlogo.png"));
     logo->setScaledContents( true );
 
-    //connect(ui->startBtn, QPushButton::pressed(), this, startButtonHandle());
-
-    //play 8 bit crazy train for the title screen
-    introMusic->setMedia(QUrl("qrc:/Audio/TitleScreenMusic.mp3"));
-    if (introMusic->state() == QMediaPlayer::PlayingState) {
-        introMusic->setPosition(0);
-    }
-    else if (introMusic->state() == QMediaPlayer::StoppedState) {
-        introMusic->play();
-    }
+    playBackgroundMusic();
 
 }
 
@@ -36,4 +27,16 @@ void TitleScreen::on_startBtn_clicked()
 
     this->close();
     game->show();
+}
+
+// Play 8 bit crazy train for the title screen
+void TitleScreen::playBackgroundMusic()
+{
+    introMusic->setMedia(QUrl("qrc:/Audio/TitleScreenMusic.mp3"));
+    if (introMusic->state() == QMediaPlayer::PlayingState) {
+        introMusic->setPosition(0);
+    }
+    else if (introMusic->state() == QMediaPlayer::StoppedState) {
+        introMusic->play();
+    }
 }

@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>602</width>
+    <width>582</width>
     <height>753</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>602</width>
+    <width>582</width>
     <height>753</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>602</width>
+    <width>582</width>
     <height>753</height>
    </size>
   </property>
@@ -32,21 +32,21 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>40</y>
-     <width>602</width>
-     <height>666</height>
+     <y>60</y>
+     <width>582</width>
+     <height>622</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>602</width>
-     <height>666</height>
+     <width>582</width>
+     <height>622</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>602</width>
-     <height>666</height>
+     <width>582</width>
+     <height>622</height>
     </size>
    </property>
    <property name="toolTipDuration">

@@ -22,8 +22,10 @@ private:
 
 public:
     explicit GameScreen(QWidget *parent = 0);
-    QMediaPlayer * finalDeathMusic = new QMediaPlayer;
     ~GameScreen();
+
+    QMediaPlayer * finalDeathMusic = new QMediaPlayer;
+    void playDeathMusic();
 };
 
 #endif // GAMESCREEN_H

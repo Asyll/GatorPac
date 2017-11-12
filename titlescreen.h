@@ -14,7 +14,6 @@ class TitleScreen : public QWidget
 
 public:
     explicit TitleScreen(QWidget *parent = 0);
-    QMediaPlayer * introMusic = new QMediaPlayer();
     ~TitleScreen();
 
 private slots:
@@ -22,6 +21,9 @@ private slots:
 
 private:
     Ui::TitleScreen *ui;
+
+    QMediaPlayer * introMusic = new QMediaPlayer();
+    void playBackgroundMusic();
 };
 
 #endif // TITLESCREEN_H
