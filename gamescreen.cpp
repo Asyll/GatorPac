@@ -18,8 +18,17 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     gameMap = new GameMap();
     scene->addItem(gameMap);
 
-    gator = new Player();
+    gator = new Player(260,450);
     scene->addItem(gator);
+
+    lsu = new Enemy(0,0,"lsu");
+    fsu = new Enemy(0,0,"fsu");
+    georgia = new Enemy(0,0,"georgia");
+    kentucky = new Enemy(0,0,"kentucky");
+    scene->addItem(lsu);
+    scene->addItem(fsu);
+    scene->addItem(georgia);
+    scene->addItem(kentucky);
 
 }
 

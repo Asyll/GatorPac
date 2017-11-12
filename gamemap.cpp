@@ -3,6 +3,7 @@
 GameMap::GameMap()
 {
     mapImage.load(":/Images/swampmap.png");
+
 }
 
 QRectF GameMap::boundingRect() const

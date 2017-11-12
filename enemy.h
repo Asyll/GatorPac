@@ -1,13 +1,13 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef ENEMY_H
+#define ENEMY_H
 
 #include <QGraphicsItem>
 #include <QPainter>
 
-class Player : public QGraphicsItem
+class Enemy : public QGraphicsItem
 {
 public:
-    Player(int,int);
+    Enemy(int, int, QString);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
@@ -18,7 +18,8 @@ private:
     int posx, posy;
     // Image dimension in pixels
     const int charW, charH;
-
+    // String used to find the pertaining image
+    QString name;
 };
 
-#endif // PLAYER_H
+#endif // ENEMY_H
