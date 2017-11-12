@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QMediaPlayer>
 #include "gamemap.h"
+#include "player.h"
 
 namespace Ui {
 class GameScreen;
@@ -19,6 +20,8 @@ private:
     Ui::GameScreen *ui;
     QGraphicsScene *scene;
     GameMap *gameMap;
+
+    Player *gator;
 
 public:
     explicit GameScreen(QWidget *parent = 0);

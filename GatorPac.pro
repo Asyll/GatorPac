@@ -28,12 +28,14 @@ SOURCES += \
         main.cpp \
         titlescreen.cpp \
     gamescreen.cpp \
-    gamemap.cpp
+    gamemap.cpp \
+    player.cpp
 
 HEADERS += \
         titlescreen.h \
     gamescreen.h \
-    gamemap.h
+    gamemap.h \
+    player.h
 
 FORMS += \
         titlescreen.ui \

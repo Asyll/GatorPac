@@ -8,7 +8,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
 {
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
-    scene->setSceneRect(0,0,580,620);
+    scene->setSceneRect(0,0,560,620);
 
     QGraphicsView *gameView = ui->gameView;
     gameView->setScene(scene);
@@ -18,7 +18,8 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     gameMap = new GameMap();
     scene->addItem(gameMap);
 
-
+    gator = new Player();
+    scene->addItem(gator);
 
 }
 
