@@ -34,5 +34,6 @@
         <file>Images/Characters/lsu_reverse_up.png</file>
         <file>Images/Characters/lsu_reverse.png</file>
         <file>Images/Characters/fsu_forward_down.png</file>
+        <file>Audio/IndianaJones.mp3</file>
     </qresource>
 </RCC>

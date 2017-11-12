@@ -4,6 +4,8 @@
 #include <QtWidgets>
 #include "titlescreen.h"
 
+// PUBLIC Functions //
+
 GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen)
 {
     ui->setupUi(this);
@@ -20,6 +22,8 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
 
     gator = new Player(260,450);
     scene->addItem(gator);
+
+    lives = 3;
 
     fsu = new Enemy(260,210,"fsu");
     lsu = new Enemy(220,270,"lsu");
@@ -50,6 +54,12 @@ void GameScreen::playDeathMusic()
     }
 }
 
+void GameScreen::updater() {
+    score = 0;
+    lives = 3;
+    ui->lifeCount->display(lives);
+    ui->scoreValue->display(score);
+}
 
 // PROTECTED Functions //
 
@@ -99,5 +109,3 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
         break;
 }
 
-
-}

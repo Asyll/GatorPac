@@ -23,6 +23,10 @@ public:
 
     QMediaPlayer * finalDeathMusic = new QMediaPlayer;
     void playDeathMusic();
+    void updater();
+
+    int score;
+    int lives = 3;
 
 private:
     Ui::GameScreen *ui;
