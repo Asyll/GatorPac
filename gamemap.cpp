@@ -25,11 +25,9 @@ bool GameMap::canMove(QPoint point)
     {
         if (moveablePath[i] == point)
         {
-            std::cout << "working" << std::endl;
             return true;
         }
     }
-    std::cout << "not working" << std::endl;
     return false;
 }
 

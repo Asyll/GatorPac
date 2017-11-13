@@ -48,6 +48,11 @@ GameScreen::~GameScreen()
     delete ui;
 }
 
+//void GameScreen::start() {
+//    timer = new QTimer(this);
+//    connect(timer, SIGNAL(timeout()), this, SLOT(updater()));
+//}
+
 /*Play 8 bit evil morty for the eventual death scene when we get there.
 When all lives lost then stops other music and plays final music. */
 void GameScreen::playDeathMusic()
@@ -64,6 +69,21 @@ void GameScreen::playDeathMusic()
 void GameScreen::updater() {
     playerMove();
     scene->update(gameMap->boundingRect());
+
+    /*this loop is for collision test between GatorPac and the dots
+        for() {
+
+
+
+            basicSounds->setMedia(QUrl("qrc:/Audio/PacmanChomp.wav"));
+            if (basicSounds->state() == QMediaPlayer::PlayingState) {
+                basicSounds->setPosition(0);
+            }
+            else if (basicSounds->state() == QMediaPlayer::StoppedState) {
+                basicSounds->play();
+            }
+        }
+    */
 }
 
 void GameScreen::playerMove()
@@ -222,4 +242,3 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
         break;
     }
 }
-

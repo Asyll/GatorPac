@@ -22,6 +22,8 @@ public:
     ~GameScreen();
 
     QMediaPlayer * finalDeathMusic = new QMediaPlayer;
+    QMediaPlayer * basicSounds = new QMediaPlayer;
+    //void start();
     void playDeathMusic();
 
     int score;
