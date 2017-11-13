@@ -64,6 +64,21 @@ void GameScreen::updater() {
     lives = 3;
     ui->lifeCount->display(lives);
     ui->scoreValue->display(score);
+
+/*this loop is for collision test between GatorPac and the dots
+    for() {
+
+
+
+        basicSounds->setMedia(QUrl("qrc:/Audio/PacmanChomp.wav"));
+        if (basicSounds->state() == QMediaPlayer::PlayingState) {
+            basicSounds->setPosition(0);
+        }
+        else if (basicSounds->state() == QMediaPlayer::StoppedState) {
+            basicSounds->play();
+        }
+    }
+*/
 }
 
 // PROTECTED Functions //
