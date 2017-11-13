@@ -19,6 +19,7 @@ private:
     QPixmap mapImage;
     void createPathPoints(int,int,int,int);
     QVector<QPoint> moveablePath;
+    void makeMapPaths();
 
 
 };

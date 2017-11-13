@@ -23,7 +23,6 @@ public:
 
     QMediaPlayer * finalDeathMusic = new QMediaPlayer;
     void playDeathMusic();
-    void updater();
 
     int score;
     int lives = 3;
@@ -32,14 +31,21 @@ private:
     Ui::GameScreen *ui;
     QGraphicsScene *scene;
     GameMap *gameMap;
+    QTimer *timer;
+
     Player *gator;
     Enemy *lsu;
     Enemy *fsu;
     Enemy *georgia;
     Enemy *kentucky;
 
+    void playerMove();
+
 protected:
     void keyPressEvent(QKeyEvent *event);
+
+private slots:
+    void updater();
 
 };
 
