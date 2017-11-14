@@ -25,3 +25,16 @@ int Player::getSpeed() const
 {
     return speed;
 }
+
+void Player::setDirection(Direction direction)
+{
+    int value = static_cast<int>(direction);
+    if (value < 0 || value > 4)
+    {
+        this->direction = direction;
+    }
+    else
+    {
+        this->direction = Direction::NONE;
+    }
+}

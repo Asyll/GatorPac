@@ -42,6 +42,8 @@ private:
     Enemy *kentucky;
 
     void playerMove();
+    Direction currentTmpDir;
+    Direction nextTmpDir;
 
 protected:
     void keyPressEvent(QKeyEvent *event);

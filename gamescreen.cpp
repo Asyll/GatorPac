@@ -21,7 +21,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     scene->addItem(gameMap);
 
     // Default Player(260,450,3)
-    gator = new Player(260,450,3);
+    gator = new Player(10,10,3);
     scene->addItem(gator);
 
     timer = new QTimer(this);
@@ -48,10 +48,6 @@ GameScreen::~GameScreen()
     delete ui;
 }
 
-//void GameScreen::start() {
-//    timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(updater()));
-//}
 
 /*Play 8 bit evil morty for the eventual death scene when we get there.
 When all lives lost then stops other music and plays final music. */
@@ -67,6 +63,9 @@ void GameScreen::playDeathMusic()
 }
 
 void GameScreen::updater() {
+    ui->lifeCount->display(lives);
+    ui->scoreValue->display(score);
+
     playerMove();
     scene->update(gameMap->boundingRect());
 
@@ -91,17 +90,17 @@ void GameScreen::playerMove()
     QPoint point;
     const int speed = gator->getSpeed();
 
-    if (gator->currentDirection != gator->nextDirection)
+    if (currentTmpDir != nextTmpDir)
     {
-        switch(gator->nextDirection)
+        switch(nextTmpDir)
         {
         case LEFT:
             point.setX(gator->posx - speed);
             point.setY(gator->posy);
             if (gameMap->canMove(point))
             {
-                gator->currentDirection = gator->nextDirection;
-                gator->nextDirection = Direction::NONE;
+                currentTmpDir = nextTmpDir;
+                nextTmpDir = Direction::NONE;
             }
             break;
         case RIGHT:
@@ -109,35 +108,36 @@ void GameScreen::playerMove()
             point.setY(gator->posy);
             if (gameMap->canMove(point))
             {
-                gator->currentDirection = gator->nextDirection;
-                gator->nextDirection = Direction::NONE;
+                currentTmpDir = nextTmpDir;
+                nextTmpDir = Direction::NONE;
             }
             break;
         case UP:
             point.setX(gator->posx);
-            point.setY(gator->posy + speed);
+            point.setY(gator->posy - speed);
             if (gameMap->canMove(point))
             {
-                gator->currentDirection = gator->nextDirection;
-                gator->nextDirection = Direction::NONE;
+                currentTmpDir = nextTmpDir;
+                nextTmpDir = Direction::NONE;
             }
             break;
         case DOWN:
             point.setX(gator->posx);
-            point.setY(gator->posy - speed);
+            point.setY(gator->posy + speed);
             if (gameMap->canMove(point))
             {
-                gator->currentDirection = gator->nextDirection;
-                gator->nextDirection = Direction::NONE;
+                currentTmpDir = nextTmpDir;
+                nextTmpDir = Direction::NONE;
             }
             break;
         case NONE:
             break;
         }
     }
-    switch(gator->currentDirection)
+    switch(currentTmpDir)
     {
     case LEFT:
+        gator->setDirection(currentTmpDir);
         point.setX(gator->posx - speed);
         point.setY(gator->posy);
         if (gameMap->canMove(point))
@@ -151,6 +151,7 @@ void GameScreen::playerMove()
         }
         break;
     case RIGHT:
+        gator->setDirection(currentTmpDir);
         point.setX(gator->posx + speed);
         point.setY(gator->posy);
         if (gameMap->canMove(point))
@@ -164,6 +165,7 @@ void GameScreen::playerMove()
         }
         break;
     case UP:
+        gator->setDirection(currentTmpDir);
         point.setX(gator->posx);
         point.setY(gator->posy - speed);
         if (gameMap->canMove(point))
@@ -177,6 +179,7 @@ void GameScreen::playerMove()
         }
         break;
     case DOWN:
+        gator->setDirection(currentTmpDir);
         point.setX(gator->posx);
         point.setY(gator->posy + speed);
         if (gameMap->canMove(point))
@@ -203,41 +206,41 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
     case Qt::Key_A:
         if (!gator->moving)
         {
-            gator->currentDirection = Direction::LEFT;
+            currentTmpDir = Direction::LEFT;
         }
         else
         {
-            gator->nextDirection = Direction::LEFT;
+            nextTmpDir = Direction::LEFT;
         }
         break;
     case Qt::Key_D:
         if (!gator->moving)
         {
-            gator->currentDirection = Direction::RIGHT;
+            currentTmpDir = Direction::RIGHT;
         }
         else
         {
-            gator->nextDirection = Direction::RIGHT;
+            nextTmpDir = Direction::RIGHT;
         }
         break;
     case Qt::Key_W:
         if (!gator->moving)
         {
-            gator->currentDirection = Direction::UP;
+            currentTmpDir = Direction::UP;
         }
         else
         {
-            gator->nextDirection = Direction::UP;
+            nextTmpDir = Direction::UP;
         }
         break;
     case Qt::Key_S:
         if (!gator->moving)
         {
-            gator->currentDirection = Direction::DOWN;
+            currentTmpDir = Direction::DOWN;
         }
         else
         {
-            gator->nextDirection = Direction::DOWN;
+            nextTmpDir = Direction::DOWN;
         }
         break;
     }

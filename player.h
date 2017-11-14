@@ -14,16 +14,17 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     bool moving;
-    Direction currentDirection, nextDirection;
 
     // Position in pixels
     int posx, posy;
 
     int getSpeed() const;
+    void setDirection(Direction);
 
 private:
     QPixmap forward;
     int speed;
+    Direction direction;
 
     // Image dimension in pixels
     const int charW, charH;
