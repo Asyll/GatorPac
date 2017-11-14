@@ -3,6 +3,7 @@
 #include <QThread>
 #include <QtWidgets>
 #include "titlescreen.h"
+#include "player.h"
 
 // PUBLIC Functions //
 
@@ -48,10 +49,6 @@ GameScreen::~GameScreen()
     delete ui;
 }
 
-//void GameScreen::start() {
-//    timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(updater()));
-//}
 
 /*Play 8 bit evil morty for the eventual death scene when we get there.
 When all lives lost then stops other music and plays final music. */
@@ -67,6 +64,10 @@ void GameScreen::playDeathMusic()
 }
 
 void GameScreen::updater() {
+
+    ui->xPos->display(posx);
+    ui->yPos->display(posy);
+
     playerMove();
     scene->update(gameMap->boundingRect());
 
