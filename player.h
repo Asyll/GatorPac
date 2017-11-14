@@ -22,7 +22,7 @@ public:
     void setDirection(Direction);
 
 private:
-    QPixmap forward;
+    QPixmap forward, reverse, up, down;
     int speed;
     Direction direction;
 

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMediaPlayer>
+#include <QMediaPlaylist>
 
 namespace Ui {
 class TitleScreen;
@@ -22,7 +23,7 @@ private slots:
 private:
     Ui::TitleScreen *ui;
 
-    QMediaPlayer * introMusic = new QMediaPlayer();
+    QMediaPlaylist * playlist = new QMediaPlaylist();
     void playBackgroundMusic();
 };
 

@@ -30,7 +30,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     timer->start(1000/30);
 
 
-
+    score = 0;
     lives = 3;
 
     fsu = new Enemy(260,210,"fsu");
@@ -41,6 +41,8 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     scene->addItem(fsu);
     scene->addItem(georgia);
     scene->addItem(kentucky);
+
+    playBackgroundMusic();
 
 }
 
@@ -63,6 +65,17 @@ void GameScreen::playDeathMusic()
     }
 }
 
+void GameScreen::playBackgroundMusic()
+{
+    playlist = new QMediaPlaylist();
+    playlist->addMedia(QUrl("qrc:/Audio/GameScreenMusic.mp3"));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+
+    QMediaPlayer *music = new QMediaPlayer();
+    music->setPlaylist(playlist);
+    music->play();
+}
+
 void GameScreen::updater() {
     ui->lifeCount->display(lives);
     ui->scoreValue->display(score);
@@ -76,6 +89,7 @@ void GameScreen::updater() {
 
     playerMove();
     scene->update(gameMap->boundingRect());
+    gator->update();
 
     /*this loop is for collision test between GatorPac and the dots
         for() {

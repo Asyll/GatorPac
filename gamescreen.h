@@ -6,6 +6,7 @@
 #include <QtGui>
 #include <QGraphicsScene>
 #include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include "gamemap.h"
 #include "player.h"
 #include "enemy.h"
@@ -21,8 +22,6 @@ public:
     explicit GameScreen(QWidget *parent = 0);
     ~GameScreen();
 
-    QMediaPlayer * finalDeathMusic = new QMediaPlayer;
-    QMediaPlayer * basicSounds = new QMediaPlayer;
     //void start();
     void playDeathMusic();
 
@@ -34,6 +33,11 @@ private:
     QGraphicsScene *scene;
     GameMap *gameMap;
     QTimer *timer;
+    QMediaPlaylist *playlist = new QMediaPlaylist;
+    QMediaPlayer *finalDeathMusic = new QMediaPlayer;
+
+    void playBackgroundMusic();
+    void playGatorWaka();
 
     Player *gator;
     Enemy *lsu;

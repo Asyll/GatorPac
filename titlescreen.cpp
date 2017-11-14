@@ -23,7 +23,7 @@ TitleScreen::~TitleScreen()
 void TitleScreen::on_startBtn_clicked()
 {
     GameScreen *game = new GameScreen();
-    introMusic->stop();
+    delete playlist;
 
     this->close();
     game->show();
@@ -32,11 +32,11 @@ void TitleScreen::on_startBtn_clicked()
 // Play 8 bit crazy train for the title screen
 void TitleScreen::playBackgroundMusic()
 {
-    introMusic->setMedia(QUrl("qrc:/Audio/TitleScreenMusic.mp3"));
-    if (introMusic->state() == QMediaPlayer::PlayingState) {
-        introMusic->setPosition(0);
-    }
-    else if (introMusic->state() == QMediaPlayer::StoppedState) {
-        introMusic->play();
-    }
+    playlist = new QMediaPlaylist();
+    playlist->addMedia(QUrl("qrc:/Audio/TitleScreenMusic.mp3"));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+
+    QMediaPlayer *music = new QMediaPlayer();
+    music->setPlaylist(playlist);
+    music->play();
 }
