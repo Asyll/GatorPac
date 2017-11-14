@@ -3,6 +3,7 @@
 #include <QThread>
 #include <QtWidgets>
 #include "titlescreen.h"
+#include "player.h"
 
 // PUBLIC Functions //
 
@@ -63,8 +64,14 @@ void GameScreen::playDeathMusic()
 }
 
 void GameScreen::updater() {
+<<<<<<< HEAD
     ui->lifeCount->display(lives);
     ui->scoreValue->display(score);
+=======
+
+    ui->xPos->display(posx);
+    ui->yPos->display(posy);
+>>>>>>> a66c7fba40d2c87d94effa501788be5735192efb
 
     playerMove();
     scene->update(gameMap->boundingRect());

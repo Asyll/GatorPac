@@ -170,6 +170,26 @@
     <string notr="true">color:rgb(250, 70, 22);</string>
    </property>
   </widget>
+  <widget class="QLCDNumber" name="xPos">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>710</y>
+     <width>64</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLCDNumber" name="yPos">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>710</y>
+     <width>64</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
