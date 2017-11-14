@@ -28,8 +28,6 @@ public:
 
     int score;
     int lives = 3;
-    int posx;
-    int posy;
 
 private:
     Ui::GameScreen *ui;

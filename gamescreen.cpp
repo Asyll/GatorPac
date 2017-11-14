@@ -22,7 +22,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     scene->addItem(gameMap);
 
     // Default Player(260,450,3)
-    gator = new Player(10,10,3);
+    gator = new Player(260,450,2);
     scene->addItem(gator);
 
     timer = new QTimer(this);
@@ -64,14 +64,15 @@ void GameScreen::playDeathMusic()
 }
 
 void GameScreen::updater() {
-<<<<<<< HEAD
     ui->lifeCount->display(lives);
     ui->scoreValue->display(score);
-=======
 
-    ui->xPos->display(posx);
-    ui->yPos->display(posy);
->>>>>>> a66c7fba40d2c87d94effa501788be5735192efb
+    // Debug character position
+    ui->xPos->hide();
+    ui->yPos->hide();
+    //ui->xPos->display(gator->posx);
+    //ui->yPos->display(gator->posy);
+
 
     playerMove();
     scene->update(gameMap->boundingRect());
@@ -202,6 +203,16 @@ void GameScreen::playerMove()
     case NONE:
         break;
     }
+
+    if (gator->posx == 0)
+    {
+        gator->posx = 520;
+    }
+    else if (gator->posx == 520)
+    {
+        gator->posx = 0;
+    }
+
 }
 
 // PROTECTED Functions //

@@ -16,11 +16,13 @@ QRectF GameMap::boundingRect() const
 
 void GameMap::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    //painter->drawPixmap(0,0,560,620,mapImage);
+    painter->drawPixmap(0,0,560,620,mapImage);
+    /* Draw debug paths
     for (QPoint point : moveablePath)
     {
         painter->drawPoint(point);
     }
+    */
 }
 
 bool GameMap::canMove(QPoint point)
@@ -51,8 +53,8 @@ void GameMap::makeMapPaths()
     createPathPoints(290,150,350,150);
     createPathPoints(410,150,510,150);
     // Teleport paths
-    createPathPoints(10,270,170,270);
-    createPathPoints(350,270,510,270);
+    createPathPoints(0,270,170,270);
+    createPathPoints(350,270,520,270);
     // Bottom
     createPathPoints(170,330,350,330);
     createPathPoints(10,390,230,390);
