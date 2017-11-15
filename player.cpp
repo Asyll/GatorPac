@@ -75,7 +75,7 @@ int Player::getPosy() const
 
 void Player::setPosy(int y)
 {
-    if (y >= 0 && y <= 520)
+    if (y >= 0 && y <= 570)
     {
         posy = y;
     }
