@@ -7,6 +7,7 @@ Player::Player(int posx, int posy, int speed = 0) :
     this->posx = posx;
     this->posy = posy;
     this->speed = speed;
+    this->direction = Direction::RIGHT;
     moving = false;
     forward.load("://Images/Characters/gator_forward.png");
     reverse.load("://Images/Characters/gator_reverse.png");
