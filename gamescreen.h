@@ -22,11 +22,7 @@ public:
     explicit GameScreen(QWidget *parent = 0);
     ~GameScreen();
 
-    //void start();
-    void playDeathMusic();
 
-    int score;
-    int lives = 3;
 
 private:
     Ui::GameScreen *ui;
@@ -36,20 +32,25 @@ private:
     QMediaPlaylist *playlist = new QMediaPlaylist;
     QMediaPlayer *finalDeathMusic = new QMediaPlayer;
 
-    void playBackgroundMusic();
-    void playGatorWaka();
-
     Player *gator;
     Enemy *lsu;
     Enemy *fsu;
     Enemy *georgia;
     Enemy *kentucky;
 
-    void playerMove();
+    int score;
+
     Direction currentTmpDir;
     Direction nextTmpDir;
 
-protected:
+
+    void playBackgroundMusic();
+    void playGatorWaka();
+    //void start();
+    void playDeathMusic();
+
+    void playerMove();
+
     void keyPressEvent(QKeyEvent *event);
 
 private slots:

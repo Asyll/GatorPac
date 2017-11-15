@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(int posx, int posy, int speed = 0) :
+Player::Player(int posx, int posy, int speed) :
     charW(40),
     charH(40)
 {
@@ -8,6 +8,8 @@ Player::Player(int posx, int posy, int speed = 0) :
     this->posy = posy;
     this->speed = speed;
     this->direction = Direction::RIGHT;
+
+    lives = 3;
     moving = false;
     forward.load("://Images/Characters/gator_forward.png");
     reverse.load("://Images/Characters/gator_reverse.png");
@@ -51,4 +53,53 @@ int Player::getSpeed() const
 void Player::setDirection(Direction direction)
 {
     this->direction = direction;
+}
+
+int Player::getPosx() const
+{
+    return posx;
+}
+
+void Player::setPosx(int x)
+{
+    if (x >= 0 && x <= 520)
+    {
+        posx = x;
+    }
+}
+
+int Player::getPosy() const
+{
+    return posy;
+}
+
+void Player::setPosy(int y)
+{
+    if (y >= 0 && y <= 520)
+    {
+        posy = y;
+    }
+}
+
+bool Player::isMoving() const
+{
+    return moving;
+}
+
+void Player::setMoving(bool value)
+{
+    moving = value;
+}
+
+int Player::getLives() const
+{
+    return lives;
+}
+
+void Player::setLives(int lives)
+{
+    if (lives >= 0 || lives <= 3)
+    {
+        this->lives = lives;
+    }
 }

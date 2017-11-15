@@ -5,8 +5,6 @@
 #include "titlescreen.h"
 #include "player.h"
 
-// PUBLIC Functions //
-
 GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen)
 {
     ui->setupUi(this);
@@ -31,7 +29,6 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
 
 
     score = 0;
-    lives = 3;
 
     fsu = new Enemy(260,210,"fsu");
     lsu = new Enemy(220,270,"lsu");
@@ -77,14 +74,14 @@ void GameScreen::playBackgroundMusic()
 }
 
 void GameScreen::updater() {
-    ui->lifeCount->display(lives);
+    ui->lifeCount->display(gator->getLives());
     ui->scoreValue->display(score);
 
     // Debug character position
     ui->xPos->hide();
     ui->yPos->hide();
-    //ui->xPos->display(gator->posx);
-    //ui->yPos->display(gator->posy);
+    //ui->xPos->display(gator->getPosx());
+    //ui->yPos->display(gator->getPosy());
 
 
     playerMove();
@@ -117,8 +114,8 @@ void GameScreen::playerMove()
         switch(nextTmpDir)
         {
         case LEFT:
-            point.setX(gator->posx - speed);
-            point.setY(gator->posy);
+            point.setX(gator->getPosx() - speed);
+            point.setY(gator->getPosy());
             if (gameMap->canMove(point))
             {
                 currentTmpDir = nextTmpDir;
@@ -126,8 +123,8 @@ void GameScreen::playerMove()
             }
             break;
         case RIGHT:
-            point.setX(gator->posx + speed);
-            point.setY(gator->posy);
+            point.setX(gator->getPosx() + speed);
+            point.setY(gator->getPosy());
             if (gameMap->canMove(point))
             {
                 currentTmpDir = nextTmpDir;
@@ -135,8 +132,8 @@ void GameScreen::playerMove()
             }
             break;
         case UP:
-            point.setX(gator->posx);
-            point.setY(gator->posy - speed);
+            point.setX(gator->getPosx());
+            point.setY(gator->getPosy() - speed);
             if (gameMap->canMove(point))
             {
                 currentTmpDir = nextTmpDir;
@@ -144,8 +141,8 @@ void GameScreen::playerMove()
             }
             break;
         case DOWN:
-            point.setX(gator->posx);
-            point.setY(gator->posy + speed);
+            point.setX(gator->getPosx());
+            point.setY(gator->getPosy() + speed);
             if (gameMap->canMove(point))
             {
                 currentTmpDir = nextTmpDir;
@@ -160,83 +157,80 @@ void GameScreen::playerMove()
     {
     case LEFT:
         gator->setDirection(currentTmpDir);
-        point.setX(gator->posx - speed);
-        point.setY(gator->posy);
+        point.setX(gator->getPosx() - speed);
+        point.setY(gator->getPosy());
         if (gameMap->canMove(point))
         {
-            gator->posx -= speed;
-            gator->moving = true;
+            gator->setPosx(gator->getPosx() - speed);
+            gator->setMoving(true);
         }
         else
         {
-            gator->moving = false;
+            gator->setMoving(false);
         }
         break;
     case RIGHT:
         gator->setDirection(currentTmpDir);
-        point.setX(gator->posx + speed);
-        point.setY(gator->posy);
+        point.setX(gator->getPosx() + speed) ;
+        point.setY(gator->getPosy());
         if (gameMap->canMove(point))
         {
-            gator->posx += speed;
-            gator->moving = true;
+            gator->setPosx(gator->getPosx() + speed);
+            gator->setMoving(true);
         }
         else
         {
-            gator->moving = false;
+            gator->setMoving(false);
         }
         break;
     case UP:
         gator->setDirection(currentTmpDir);
-        point.setX(gator->posx);
-        point.setY(gator->posy - speed);
+        point.setX(gator->getPosx());
+        point.setY(gator->getPosy() - speed);
         if (gameMap->canMove(point))
         {
-            gator->posy -= speed;
-            gator->moving = true;
+            gator->setPosy(gator->getPosy() - speed);
+            gator->setMoving(true);
         }
         else
         {
-            gator->moving = false;
+            gator->setMoving(false);
         }
         break;
     case DOWN:
         gator->setDirection(currentTmpDir);
-        point.setX(gator->posx);
-        point.setY(gator->posy + speed);
+        point.setX(gator->getPosx());
+        point.setY(gator->getPosy() + speed);
         if (gameMap->canMove(point))
         {
-            gator->posy += speed;
-            gator->moving = true;
+            gator->setPosy(gator->getPosy() + speed);
+            gator->setMoving(true);
         }
         else
         {
-            gator->moving = false;
+            gator->setMoving(false);
         }
         break;
     case NONE:
         break;
     }
 
-    if (gator->posx == 0)
+    if (gator->getPosx() == 0)
     {
-        gator->posx = 520;
+        gator->setPosx(520);
     }
-    else if (gator->posx == 520)
+    else if (gator->getPosx() == 520)
     {
-        gator->posx = 0;
+        gator->setPosx(0);
     }
-
 }
-
-// PROTECTED Functions //
 
 void GameScreen::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key())
     {
     case Qt::Key_A:
-        if (!gator->moving)
+        if (!gator->isMoving())
         {
             currentTmpDir = Direction::LEFT;
         }
@@ -246,7 +240,7 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
         }
         break;
     case Qt::Key_D:
-        if (!gator->moving)
+        if (!gator->isMoving())
         {
             currentTmpDir = Direction::RIGHT;
         }
@@ -256,7 +250,7 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
         }
         break;
     case Qt::Key_W:
-        if (!gator->moving)
+        if (!gator->isMoving())
         {
             currentTmpDir = Direction::UP;
         }
@@ -266,7 +260,7 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
         }
         break;
     case Qt::Key_S:
-        if (!gator->moving)
+        if (!gator->isMoving())
         {
             currentTmpDir = Direction::DOWN;
         }

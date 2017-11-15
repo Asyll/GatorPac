@@ -24,6 +24,7 @@ private:
     Ui::TitleScreen *ui;
 
     QMediaPlaylist * playlist = new QMediaPlaylist();
+
     void playBackgroundMusic();
 };
 

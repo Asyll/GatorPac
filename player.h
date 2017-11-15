@@ -4,30 +4,42 @@
 #include <QGraphicsItem>
 #include <QPainter>
 
-// Indicates player direction
+// Used for indicating player direction
 enum Direction {UP, RIGHT, DOWN, LEFT, NONE};
 
 class Player : public QGraphicsItem
 {
 public:
-    Player(int,int,int);
+    Player(int posx,int posy,int speed);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    bool moving;
-
-    // Position in pixels
-    int posx, posy;
-
     int getSpeed() const;
-    void setDirection(Direction);
+    void setDirection(Direction direction);
+
+    int getPosx() const;
+    void setPosx(int x);
+
+    int getPosy() const;
+    void setPosy(int y);
+
+    bool isMoving() const;
+    void setMoving(bool value);
+
+    int getLives() const;
+    void setLives(int lives);
 
 private:
     QPixmap forward, reverse, up, down;
     int speed;
     Direction direction;
+    bool moving;
 
+    // Position in pixels
+    int posx, posy;
     // Image dimension in pixels
     const int charW, charH;
+
+    int lives;
 };
 
 #endif // PLAYER_H
