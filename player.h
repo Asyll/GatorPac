@@ -3,9 +3,7 @@
 
 #include <QGraphicsItem>
 #include <QPainter>
-
-// Used for indicating player direction
-enum Direction {UP, RIGHT, DOWN, LEFT, NONE};
+#include "direction.h"
 
 class Player : public QGraphicsItem
 {

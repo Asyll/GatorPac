@@ -30,14 +30,14 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
 
     score = 0;
 
-    fsu = new Enemy(260,210,"fsu");
-    lsu = new Enemy(220,270,"lsu");
-    georgia = new Enemy(260,270,"georgia");
-    kentucky = new Enemy(300,270,"kentucky");
-    scene->addItem(lsu);
+    fsu = new Enemy(260,210,2,"fsu");
+//    lsu = new Enemy(220,270,"lsu");
+//    georgia = new Enemy(260,270,"georgia");
+//    kentucky = new Enemy(300,270,"kentucky");
+//    scene->addItem(lsu);
     scene->addItem(fsu);
-    scene->addItem(georgia);
-    scene->addItem(kentucky);
+//    scene->addItem(georgia);
+//    scene->addItem(kentucky);
 
     playBackgroundMusic();
 
@@ -85,8 +85,12 @@ void GameScreen::updater() {
 
 
     playerMove();
+    fsu->chase(gator, gameMap);
+
+
     scene->update(gameMap->boundingRect());
     gator->update();
+    fsu->update();
 
     /*this loop is for collision test between GatorPac and the dots
         for() {
@@ -224,6 +228,7 @@ void GameScreen::playerMove()
         gator->setPosx(0);
     }
 }
+
 
 void GameScreen::keyPressEvent(QKeyEvent *event)
 {

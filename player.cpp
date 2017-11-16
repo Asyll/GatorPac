@@ -11,6 +11,7 @@ Player::Player(int posx, int posy, int speed) :
 
     lives = 3;
     moving = false;
+
     forward.load("://Images/Characters/gator_forward.png");
     reverse.load("://Images/Characters/gator_reverse.png");
     up.load("://Images/Characters/gator_forward_up.png");
@@ -75,7 +76,7 @@ int Player::getPosy() const
 
 void Player::setPosy(int y)
 {
-    if (y >= 0 && y <= 570)
+    if (y >= 10 && y <= 570)
     {
         posy = y;
     }

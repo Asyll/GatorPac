@@ -1,15 +1,20 @@
 #include "enemy.h"
 
-Enemy::Enemy(int posx, int posy, QString name) :
+Enemy::Enemy(int posx, int posy, int speed, QString name) :
     charW(40),
     charH(40)
 {
     this->posx = posx;
     this->posy = posy;
     this->name = name;
+    this->speed = speed;
+    this->facingDirection = Direction::RIGHT;
 
-    QString imageLocation = "://Images/Characters/" + name + "_forward.png";
-    forward.load(imageLocation);
+
+    forward.load("://Images/Characters/" + name + "_forward.png");
+    reverse.load("://Images/Characters/" + name + "_reverse.png");
+    up.load("://Images/Characters/" + name + "_forward_up.png");
+    down.load("://Images/Characters/" + name + "_forward_down.png");
 }
 
 QRectF Enemy::boundingRect() const
@@ -19,5 +24,274 @@ QRectF Enemy::boundingRect() const
 
 void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(posx,posy,charW,charH,forward);
+    switch(facingDirection)
+    {
+    case LEFT:
+        painter->drawPixmap(posx,posy,charW,charW,reverse);
+        break;
+    case RIGHT:
+        painter->drawPixmap(posx,posy,charW,charW,forward);
+        break;
+    case UP:
+        painter->drawPixmap(posx,posy,charW,charW,up);
+        break;
+    case DOWN:
+        painter->drawPixmap(posx,posy,charW,charW,down);
+        break;
+    case NONE:
+        painter->drawPixmap(posx,posy,charW,charW,forward);
+        break;
+    }
+}
+
+int Enemy::getSpeed() const
+{
+    return speed;
+}
+
+int Enemy::getPosx() const
+{
+    return posx;
+}
+
+void Enemy::setPosx(int x)
+{
+    if (x >= 0 && x <= 520)
+    {
+        posx = x;
+    }
+}
+
+int Enemy::getPosy() const
+{
+    return posy;
+}
+
+void Enemy::setPosy(int y)
+{
+    if (y >= 10 && y <= 570)
+    {
+        posy = y;
+    }
+}
+
+bool Enemy::isMoving() const
+{
+    return moving;
+}
+
+void Enemy::setMoving(bool value)
+{
+    moving = value;
+}
+
+void Enemy::chase(Player *gator, GameMap *gameMap)
+{
+    QPoint point;
+
+    if (moving)
+    {
+        if (direction == Direction::RIGHT || direction == Direction::LEFT)
+        {
+            if (this->posy < gator->getPosy())
+            {
+                nextDirection = Direction::DOWN;
+            }
+            else if (this->posy > gator->getPosy())
+            {
+                nextDirection = Direction::UP;
+            }
+        }
+        else if (direction == Direction::DOWN || direction == Direction::UP)
+        {
+            if (this->posx < gator->getPosx())
+            {
+                nextDirection = Direction::RIGHT;
+            }
+            else if (this->posx > gator->getPosx())
+            {
+                nextDirection = Direction::LEFT;
+            }
+        }
+    }
+    else
+    {
+        if (direction == Direction::RIGHT || direction == Direction::LEFT)
+        {
+            if (this->posy < gator->getPosy())
+            {
+                point.setX(posx);
+                point.setY(posy + speed);
+                if (gameMap->canMove(point))
+                {
+                    nextDirection = Direction::DOWN;
+                }
+                else
+                {
+                    nextDirection = Direction::UP;
+                }
+            }
+            else if (this->posy > gator->getPosy())
+            {
+                point.setX(posx);
+                point.setY(posy - speed);
+                if (gameMap->canMove(point))
+                {
+                    nextDirection = Direction::UP;
+                }
+                else
+                {
+                    nextDirection = Direction::DOWN;
+                }
+            }
+        }
+        else if (direction == Direction::DOWN || direction == Direction::UP)
+        {
+            if (this->posx < gator->getPosx())
+            {
+                point.setX(posx + speed);
+                point.setY(posy);
+                if (gameMap->canMove(point))
+                {
+                    nextDirection = Direction::RIGHT;
+                }
+                else
+                {
+                    nextDirection = Direction::LEFT;
+                }
+            }
+            else if (this->posx > gator->getPosx())
+            {
+                point.setX(posx - speed);
+                point.setY(posy);
+                if (gameMap->canMove(point))
+                {
+                    nextDirection = Direction::LEFT;
+                }
+                else
+                {
+                    nextDirection = Direction::RIGHT;
+                }
+            }
+        }
+    }
+
+
+
+    if (nextDirection != direction)
+    {
+        switch (nextDirection)
+        {
+        case LEFT:
+            point.setX(posx - speed);
+            point.setY(posy);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        case RIGHT:
+            point.setX(posx + speed);
+            point.setY(posy);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        case UP:
+            point.setX(posx);
+            point.setY(posy - speed);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        case DOWN:
+            point.setX(posx);
+            point.setY(posy + speed);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        }
+    }
+    switch (direction)
+    {
+    case LEFT:
+        point.setX(posx - speed);
+        point.setY(posy);
+        facingDirection = direction;
+
+        if (gameMap->canMove(point))
+        {
+            posx -= speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case RIGHT:
+        point.setX(posx + speed);
+        point.setY(posy);
+        facingDirection = direction;
+
+        if (gameMap->canMove(point))
+        {
+            posx += speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case UP:
+        point.setX(posx);
+        point.setY(posy - speed);
+        facingDirection = direction;
+
+        if (gameMap->canMove(point))
+        {
+            posy -= speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case DOWN:
+        point.setX(posx);
+        point.setY(posy + speed);
+        facingDirection = direction;
+
+        if (gameMap->canMove(point))
+        {
+            posy += speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case NONE:
+        break;
+    }
+
+    if (posx == 0)
+    {
+        posx = 520;
+    }
+    else if (posx == 520)
+    {
+        posx = 0;
+    }
 }

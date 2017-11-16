@@ -51,6 +51,7 @@ private:
 
     void playerMove();
 
+
     void keyPressEvent(QKeyEvent *event);
 
 private slots:
