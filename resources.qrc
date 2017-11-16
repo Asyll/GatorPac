@@ -37,5 +37,6 @@
         <file>Audio/IndianaJones.mp3</file>
         <file>Audio/PacmanChomp.wav</file>
         <file>Audio/GameScreenMusic.mp3</file>
+        <file>Audio/September.mp3</file>
     </qresource>
 </RCC>

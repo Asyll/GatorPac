@@ -31,6 +31,7 @@ private:
     QTimer *timer;
     QMediaPlaylist *playlist = new QMediaPlaylist();
     QMediaPlayer *finalDeathMusic = new QMediaPlayer;
+    QMediaPlayer *finalWinMusic = new QMediaPlayer;
 
     Player *gator;
     Enemy *lsu;
@@ -48,6 +49,7 @@ private:
     void playGatorWaka();
     //void start();
     void playDeathMusic();
+    void playWinMusic();
 
     void playerMove();
 
