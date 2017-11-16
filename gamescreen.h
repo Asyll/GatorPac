@@ -29,8 +29,9 @@ private:
     QGraphicsScene *scene;
     GameMap *gameMap;
     QTimer *timer;
-    QMediaPlaylist *playlist = new QMediaPlaylist;
+    QMediaPlaylist *playlist = new QMediaPlaylist();
     QMediaPlayer *finalDeathMusic = new QMediaPlayer;
+    QMediaPlayer *finalWinMusic = new QMediaPlayer;
 
     Player *gator;
     Enemy *lsu;
@@ -48,6 +49,7 @@ private:
     void playGatorWaka();
     //void start();
     void playDeathMusic();
+    void playWinMusic();
 
     void playerMove();
 
@@ -56,6 +58,7 @@ private:
 
 private slots:
     void updater();
+    void on_muteButton_clicked();
 
 };
 

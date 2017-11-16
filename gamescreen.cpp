@@ -62,9 +62,19 @@ void GameScreen::playDeathMusic()
     }
 }
 
+void GameScreen::playWinMusic() {
+    finalWinMusic->setMedia(QUrl("qrc:/Audio/September.mp3"));
+    if (finalWinMusic->state() == QMediaPlayer::PlayingState) {
+        finalWinMusic->setPosition(0);
+    }
+    else if (finalWinMusic->state() == QMediaPlayer::StoppedState) {
+        finalWinMusic->play();
+    }
+}
+
 void GameScreen::playBackgroundMusic()
 {
-    playlist = new QMediaPlaylist();
+    playlist= new QMediaPlaylist();
     playlist->addMedia(QUrl("qrc:/Audio/GameScreenMusic.mp3"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
@@ -72,6 +82,16 @@ void GameScreen::playBackgroundMusic()
     music->setPlaylist(playlist);
     music->play();
 }
+
+void GameScreen::on_muteButton_clicked() {
+    if (playlist->isEmpty()) {
+        playBackgroundMusic();
+    }
+    else {
+    playlist->clear();
+    }
+}
+
 
 void GameScreen::updater() {
     ui->lifeCount->display(gator->getLives());
