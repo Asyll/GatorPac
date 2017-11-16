@@ -29,7 +29,7 @@ private:
     QGraphicsScene *scene;
     GameMap *gameMap;
     QTimer *timer;
-    QMediaPlaylist *playlist = new QMediaPlaylist;
+    QMediaPlaylist *playlist = new QMediaPlaylist();
     QMediaPlayer *finalDeathMusic = new QMediaPlayer;
 
     Player *gator;
@@ -55,6 +55,7 @@ private:
 
 private slots:
     void updater();
+    void on_muteButton_clicked();
 
 };
 

@@ -173,7 +173,7 @@
   <widget class="QLCDNumber" name="xPos">
    <property name="geometry">
     <rect>
-     <x>380</x>
+     <x>230</x>
      <y>710</y>
      <width>64</width>
      <height>23</height>
@@ -183,11 +183,36 @@
   <widget class="QLCDNumber" name="yPos">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>310</x>
      <y>710</y>
      <width>64</width>
      <height>23</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="muteButton">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>710</y>
+     <width>113</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>30</pointsize>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(250,70,22);</string>
+   </property>
+   <property name="text">
+    <string>Mute</string>
    </property>
   </widget>
  </widget>
