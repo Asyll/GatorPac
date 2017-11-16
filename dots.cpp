@@ -1,13 +1,14 @@
 #include "dots.h"
+#include <QString>
 
-dots::dots(int posx, int posy, Qstring name)
-{
-    this->posx = posx;
-    this->posy = posy;
-    this->name = name;
+ dots::dots()
+ {
+     this->posx = posx;
+     this->posy = posy;
 
-QString imageLocation = "://Images/Characters/" + name + "_forward.png";
-forward.load(imageLocation);
+ //QString imageLocation = "://Images/Characters/" + name + "_forward.png";
+ //forward.load(imageLocation);
 
 
-}
+ }
+
