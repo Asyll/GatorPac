@@ -62,6 +62,16 @@ void GameScreen::playDeathMusic()
     }
 }
 
+void GameScreen::playWinMusic() {
+    finalWinMusic->setMedia(QUrl("qrc:/Audio/September.mp3"));
+    if (finalWinMusic->state() == QMediaPlayer::PlayingState) {
+        finalWinMusic->setPosition(0);
+    }
+    else if (finalWinMusic->state() == QMediaPlayer::StoppedState) {
+        finalWinMusic->play();
+    }
+}
+
 void GameScreen::playBackgroundMusic()
 {
     playlist= new QMediaPlaylist();
