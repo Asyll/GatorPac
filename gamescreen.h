@@ -58,7 +58,7 @@ private:
 
 private slots:
     void updater();
-    void on_muteButton_clicked();
+    void on_musicButton_clicked();
 
 };
 

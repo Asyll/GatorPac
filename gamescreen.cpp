@@ -83,12 +83,14 @@ void GameScreen::playBackgroundMusic()
     music->play();
 }
 
-void GameScreen::on_muteButton_clicked() {
+void GameScreen::on_musicButton_clicked() {
     if (playlist->isEmpty()) {
         playBackgroundMusic();
+        ui->musicButton->setText("Music Off");
     }
     else {
     playlist->clear();
+    ui->musicButton->setText("Music On");
     }
 }
 
