@@ -2,8 +2,6 @@
     <qresource prefix="/">
         <file>Images/gatorlogo.png</file>
         <file>Images/swampmap.png</file>
-        <file>Audio/TitleScreenMusic.mp3</file>
-        <file>Audio/FinalDeathMusic.mp3</file>
         <file>Images/Characters/fsu_forward_up.png</file>
         <file>Images/Characters/fsu_forward.png</file>
         <file>Images/Characters/fsu_reverse_down.png</file>
@@ -34,9 +32,5 @@
         <file>Images/Characters/lsu_reverse_up.png</file>
         <file>Images/Characters/lsu_reverse.png</file>
         <file>Images/Characters/fsu_forward_down.png</file>
-        <file>Audio/IndianaJones.mp3</file>
-        <file>Audio/PacmanChomp.wav</file>
-        <file>Audio/GameScreenMusic.mp3</file>
-        <file>Audio/September.mp3</file>
     </qresource>
 </RCC>

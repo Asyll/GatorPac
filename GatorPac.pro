@@ -37,11 +37,13 @@ HEADERS += \
     gamescreen.h \
     gamemap.h \
     player.h \
-    enemy.h
+    enemy.h \
+    direction.h
 
 FORMS += \
         titlescreen.ui \
     gamescreen.ui
 
 RESOURCES += \
-    resources.qrc
+    images.qrc \
+    audio.qrc

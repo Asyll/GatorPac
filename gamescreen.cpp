@@ -53,7 +53,7 @@ GameScreen::~GameScreen()
 When all lives lost then stops other music and plays final music. */
 void GameScreen::playDeathMusic()
 {
-    finalDeathMusic->setMedia(QUrl("qrc:/Audio/FinalDeathMusic.mp3"));
+    finalDeathMusic->setMedia(QUrl("/Audio/FinalDeathMusic.mp3"));
     if (finalDeathMusic->state() == QMediaPlayer::PlayingState) {
         finalDeathMusic->setPosition(0);
     }
@@ -63,7 +63,7 @@ void GameScreen::playDeathMusic()
 }
 
 void GameScreen::playWinMusic() {
-    finalWinMusic->setMedia(QUrl("qrc:/Audio/September.mp3"));
+    finalWinMusic->setMedia(QUrl("/Audio/September.mp3"));
     if (finalWinMusic->state() == QMediaPlayer::PlayingState) {
         finalWinMusic->setPosition(0);
     }
@@ -75,7 +75,7 @@ void GameScreen::playWinMusic() {
 void GameScreen::playBackgroundMusic()
 {
     playlist= new QMediaPlaylist();
-    playlist->addMedia(QUrl("qrc:/Audio/GameScreenMusic.mp3"));
+    playlist->addMedia(QUrl("/Audio/GameScreenMusic.mp3"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
     QMediaPlayer *music = new QMediaPlayer();
@@ -117,7 +117,7 @@ void GameScreen::updater() {
 
 
 
-            basicSounds->setMedia(QUrl("qrc:/Audio/PacmanChomp.wav"));
+            basicSounds->setMedia(QUrl("/Audio/PacmanChomp.wav"));
             if (basicSounds->state() == QMediaPlayer::PlayingState) {
                 basicSounds->setPosition(0);
             }
