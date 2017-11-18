@@ -40,6 +40,7 @@ private:
     Enemy *kentucky;
 
     int score;
+    bool win = false;
 
     Direction currentTmpDir;
     Direction nextTmpDir;

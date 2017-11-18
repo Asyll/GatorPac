@@ -86,7 +86,15 @@ void GameScreen::playBackgroundMusic()
 
 void GameScreen::on_musicButton_clicked() {
     if (playlist->isEmpty()) {
-        playBackgroundMusic();
+        if (gator->getLives() == 0 && win) {
+            playWinMusic();
+        }
+        else if (gator->getLives() == 0 && !win) {
+            playDeathMusic();
+        }
+        else {
+            playBackgroundMusic();
+        }
         ui->musicButton->setText("Music Off");
     }
     else {
@@ -96,6 +104,8 @@ void GameScreen::on_musicButton_clicked() {
 }
 
 void GameScreen::lostLife() {
+    gator->setLives(gator->getLives() - 1);
+
     fsu->setPosx(260);
     fsu->setPosy(210);
     gator->setPosx(260);
@@ -112,11 +122,11 @@ void GameScreen::ghostCollision() {
 
     if ((gator->getPosx() - fsu->getPosx() >= -10) && (gator->getPosx() - fsu->getPosx() <= 10) && (gator->getPosy() - fsu->getPosy() >= -10) && (gator->getPosy() - fsu->getPosy() <= 10)) {
         if (gator->getLives() > 1) {
-            gator->setLives(gator->getLives() - 1);
             lostLife();
         }
         else {
             gator->setLives(0);
+            win = false;
             gameOver();
         }
     }
