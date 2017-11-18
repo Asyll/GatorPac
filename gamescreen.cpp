@@ -2,6 +2,7 @@
 #include "ui_gamescreen.h"
 #include <QThread>
 #include <QtWidgets>
+#include <QList>
 #include "titlescreen.h"
 #include "player.h"
 
@@ -53,7 +54,7 @@ GameScreen::~GameScreen()
 When all lives lost then stops other music and plays final music. */
 void GameScreen::playDeathMusic()
 {
-    finalDeathMusic->setMedia(QUrl("/Audio/FinalDeathMusic.mp3"));
+    finalDeathMusic->setMedia(QUrl("qrc:/Audio/FinalDeathMusic.mp3"));
     if (finalDeathMusic->state() == QMediaPlayer::PlayingState) {
         finalDeathMusic->setPosition(0);
     }
@@ -63,7 +64,7 @@ void GameScreen::playDeathMusic()
 }
 
 void GameScreen::playWinMusic() {
-    finalWinMusic->setMedia(QUrl("/Audio/September.mp3"));
+    finalWinMusic->setMedia(QUrl("qrc:/Audio/September.mp3"));
     if (finalWinMusic->state() == QMediaPlayer::PlayingState) {
         finalWinMusic->setPosition(0);
     }
@@ -75,7 +76,7 @@ void GameScreen::playWinMusic() {
 void GameScreen::playBackgroundMusic()
 {
     playlist= new QMediaPlaylist();
-    playlist->addMedia(QUrl("/Audio/GameScreenMusic.mp3"));
+    playlist->addMedia(QUrl("qrc:/Audio/GameScreenMusic.mp3"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
     QMediaPlayer *music = new QMediaPlayer();
@@ -94,10 +95,39 @@ void GameScreen::on_musicButton_clicked() {
     }
 }
 
+void GameScreen::lostLife() {
+    fsu->setPosx(260);
+    fsu->setPosy(210);
+    gator->setPosx(260);
+    gator->setPosy(450);
+}
+
+void GameScreen::gameOver() {
+    playlist->clear();
+    playDeathMusic();
+    scene->removeItem(fsu);
+    scene->removeItem(gator);
+}
+
+void GameScreen::ghostCollision() {
+
+    if ((gator->getPosx() - fsu->getPosx() >= -10) && (gator->getPosx() - fsu->getPosx() <= 10) && (gator->getPosy() - fsu->getPosy() >= -10) && (gator->getPosy() - fsu->getPosy() <= 10)) {
+        if (gator->getLives() > 1) {
+            gator->setLives(gator->getLives() - 1);
+            lostLife();
+        }
+        else {
+            gator->setLives(0);
+            gameOver();
+        }
+    }
+}
+
 
 void GameScreen::updater() {
     ui->lifeCount->display(gator->getLives());
     ui->scoreValue->display(score);
+    ghostCollision();
 
     // Debug character position
     ui->xPos->hide();
@@ -119,7 +149,7 @@ void GameScreen::updater() {
 
 
 
-            basicSounds->setMedia(QUrl("/Audio/PacmanChomp.wav"));
+            basicSounds->setMedia(QUrl("qrc:/Audio/PacmanChomp.wav"));
             if (basicSounds->state() == QMediaPlayer::PlayingState) {
                 basicSounds->setPosition(0);
             }
@@ -132,6 +162,8 @@ void GameScreen::updater() {
 
 void GameScreen::playerMove()
 {
+
+
     QPoint point;
     const int speed = gator->getSpeed();
 

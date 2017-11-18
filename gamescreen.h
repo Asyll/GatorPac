@@ -52,6 +52,9 @@ private:
     void playWinMusic();
 
     void playerMove();
+    void lostLife();
+    void ghostCollision();
+    void gameOver();
 
 
     void keyPressEvent(QKeyEvent *event);
