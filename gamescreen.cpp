@@ -2,7 +2,6 @@
 #include "ui_gamescreen.h"
 #include <QThread>
 #include <QtWidgets>
-#include <QList>
 #include "titlescreen.h"
 #include "player.h"
 
@@ -54,23 +53,24 @@ GameScreen::~GameScreen()
 When all lives lost then stops other music and plays final music. */
 void GameScreen::playDeathMusic()
 {
-    finalDeathMusic->setMedia(QUrl("qrc:/Audio/FinalDeathMusic.mp3"));
-    if (finalDeathMusic->state() == QMediaPlayer::PlayingState) {
-        finalDeathMusic->setPosition(0);
-    }
-    else if (finalDeathMusic->state() == QMediaPlayer::StoppedState) {
-        finalDeathMusic->play();
-    }
+    playlist->clear();
+    playlist->addMedia(QUrl("qrc:/Audio/FinalDeathMusic.mp3"));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+
+    QMediaPlayer *music = new QMediaPlayer();
+    music->setPlaylist(playlist);
+    music->play();
 }
 
 void GameScreen::playWinMusic() {
-    finalWinMusic->setMedia(QUrl("qrc:/Audio/September.mp3"));
-    if (finalWinMusic->state() == QMediaPlayer::PlayingState) {
-        finalWinMusic->setPosition(0);
-    }
-    else if (finalWinMusic->state() == QMediaPlayer::StoppedState) {
-        finalWinMusic->play();
-    }
+
+    playlist->clear();
+    playlist->addMedia(QUrl("qrc:/Audio/September.mp3"));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+
+    QMediaPlayer *music = new QMediaPlayer();
+    music->setPlaylist(playlist);
+    music->play();
 }
 
 void GameScreen::playBackgroundMusic()
@@ -103,7 +103,6 @@ void GameScreen::lostLife() {
 }
 
 void GameScreen::gameOver() {
-    playlist->clear();
     playDeathMusic();
     scene->removeItem(fsu);
     scene->removeItem(gator);
