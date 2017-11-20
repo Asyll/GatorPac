@@ -9,6 +9,8 @@ Enemy::Enemy(int posx, int posy, int speed, QString name) :
     this->name = name;
     this->speed = speed;
     this->facingDirection = Direction::RIGHT;
+    this->direction = Direction::RIGHT;
+    this->nextDirection = Direction::NONE;
 
 
     forward.load("://Images/Characters/" + name + "_forward.png");

@@ -1,13 +1,13 @@
 #include "player.h"
 
-Player::Player(int posx, int posy, int speed) :
+Player::Player(int posx, int posy, int speed_) :
+    speed(speed_),
     charW(40),
     charH(40)
 {
     this->posx = posx;
     this->posy = posy;
-    this->speed = speed;
-    this->direction = Direction::RIGHT;
+    this->facingDirection = Direction::RIGHT;
 
     lives = 3;
     moving = false;
@@ -26,7 +26,7 @@ QRectF Player::boundingRect() const
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    switch(direction)
+    switch(facingDirection)
     {
     case LEFT:
         painter->drawPixmap(posx,posy,charW,charW,reverse);
@@ -49,11 +49,6 @@ void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 int Player::getSpeed() const
 {
     return speed;
-}
-
-void Player::setDirection(Direction direction)
-{
-    this->direction = direction;
 }
 
 int Player::getPosx() const
@@ -103,4 +98,134 @@ void Player::setLives(int lives)
     {
         this->lives = lives;
     }
+}
+
+void Player::move(GameMap *gameMap, QObject *ui)
+{
+    QPoint point;
+
+    if (direction != nextDirection)
+    {
+        switch(nextDirection)
+        {
+        case LEFT:
+            point.setX(posx - speed);
+            point.setY(posy);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        case RIGHT:
+            point.setX(posx + speed);
+            point.setY(posy);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        case UP:
+            point.setX(posx);
+            point.setY(posy - speed);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        case DOWN:
+            point.setX(posx);
+            point.setY(posy + speed);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        case NONE:
+            break;
+        }
+    }
+    switch(direction)
+    {
+    case LEFT:
+        facingDirection = direction;
+        point.setX(posx - speed);
+        point.setY(posy);
+        if (gameMap->canMove(point))
+        {
+            posx -= speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case RIGHT:
+        facingDirection = direction;
+        point.setX(posx + speed) ;
+        point.setY(posy);
+        if (gameMap->canMove(point))
+        {
+            posx += speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case UP:
+        facingDirection = direction;
+        point.setX(posx);
+        point.setY(posy - speed);
+        if (gameMap->canMove(point))
+        {
+            posy -= speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case DOWN:
+        facingDirection = direction;
+        point.setX(posx);
+        point.setY(posy + speed);
+        if (gameMap->canMove(point))
+        {
+            posy += speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case NONE:
+        break;
+    }
+
+    if (posx == 0)
+    {
+        posx = 520;;
+    }
+    else if (posx == 520)
+    {
+        posy = 0;
+    }
+}
+
+void Player::setDirection(Direction dir)
+{
+    direction = dir;
+}
+
+void Player::setNextDirection(Direction dir)
+{
+    nextDirection = dir;
 }

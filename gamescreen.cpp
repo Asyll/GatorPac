@@ -2,6 +2,7 @@
 #include "ui_gamescreen.h"
 #include <QThread>
 #include <QtWidgets>
+#include <cmath>
 #include "titlescreen.h"
 #include "player.h"
 
@@ -22,6 +23,9 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     // Default Player(260,450,3)
     gator = new Player(260,450,2);
     scene->addItem(gator);
+
+    currentTmpDir = Direction::NONE;
+    nextTmpDir= Direction::NONE;
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updater()));
@@ -114,13 +118,14 @@ void GameScreen::lostLife() {
 
 void GameScreen::gameOver() {
     playDeathMusic();
-    scene->removeItem(fsu);
-    scene->removeItem(gator);
+    // Crash bug
+    //scene->removeItem(fsu);
+    //scene->removeItem(gator);
 }
 
 void GameScreen::ghostCollision() {
 
-    if ((gator->getPosx() - fsu->getPosx() >= -10) && (gator->getPosx() - fsu->getPosx() <= 10) && (gator->getPosy() - fsu->getPosy() >= -10) && (gator->getPosy() - fsu->getPosy() <= 10)) {
+    if ((abs(gator->getPosx() - fsu->getPosx()) <= 20) && (abs(gator->getPosy() - fsu->getPosy()) <= 20)) {
         if (gator->getLives() > 1) {
             lostLife();
         }
@@ -131,7 +136,6 @@ void GameScreen::ghostCollision() {
         }
     }
 }
-
 
 void GameScreen::updater() {
     ui->lifeCount->display(gator->getLives());
@@ -291,7 +295,6 @@ void GameScreen::playerMove()
         gator->setPosx(0);
     }
 }
-
 
 void GameScreen::keyPressEvent(QKeyEvent *event)
 {

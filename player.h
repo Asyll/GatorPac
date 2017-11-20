@@ -3,16 +3,17 @@
 
 #include <QGraphicsItem>
 #include <QPainter>
+#include <QObject>
+#include "gamemap.h"
 #include "direction.h"
 
 class Player : public QGraphicsItem
 {
 public:
-    Player(int posx,int posy,int speed);
+    Player(int posx,int posy,int speed_);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     int getSpeed() const;
-    void setDirection(Direction direction);
 
     int getPosx() const;
     void setPosx(int x);
@@ -26,10 +27,16 @@ public:
     int getLives() const;
     void setLives(int lives);
 
+    void move(GameMap *gameMap, QObject *ui);
+
+    void setDirection(Direction dir);
+
+    void setNextDirection(Direction dir);
+
 private:
     QPixmap forward, reverse, up, down;
-    int speed;
-    Direction direction;
+    const int speed;
+    Direction direction, nextDirection, facingDirection;
     bool moving;
 
     // Position in pixels
