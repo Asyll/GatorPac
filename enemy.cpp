@@ -146,6 +146,19 @@ void Enemy::chase(Player *gator, GameMap *gameMap)
                     nextDirection = Direction::DOWN;
                 }
             }
+            else
+            {
+                point.setX(posx);
+                point.setY(posy + speed);
+                if (gameMap->canMove(point))
+                {
+                    nextDirection = Direction::DOWN;
+                }
+                else
+                {
+                    nextDirection = Direction::UP;
+                }
+            }
         }
         else if (direction == Direction::DOWN || direction == Direction::UP)
         {
