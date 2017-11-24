@@ -42,7 +42,6 @@ private:
 
     int score;
     bool win = false;
-    bool retryGame = false;
     QString retryString;
 
     Direction currentTmpDir;

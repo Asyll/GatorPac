@@ -39,9 +39,9 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     score = 0;
 
     fsu = new Enemy(260,210,2,"fsu");
-//    lsu = new Enemy(220,270,"lsu");
-//    georgia = new Enemy(260,270,"georgia");
-//    kentucky = new Enemy(300,270,"kentucky");
+//    lsu = new Enemy(220,270,2,"lsu");
+//    georgia = new Enemy(260,270,2,"georgia");
+//    kentucky = new Enemy(300,270,2,"kentucky");
 //    scene->addItem(lsu);
     scene->addItem(fsu);
 //    scene->addItem(georgia);
@@ -135,10 +135,7 @@ void GameScreen::gameOver() {
 }
 
 void GameScreen::on_yesButton_clicked() {
-
-    retryGame = true;
-//    reset();
-
+    //reset
 }
 
 void GameScreen::on_noButton_clicked() {
@@ -164,10 +161,6 @@ void GameScreen::updater() {
     ui->lifeCount->display(gator->getLives());
     ui->scoreValue->display(score);
     ghostCollision();
-
-    if (retryGame) {
-        return;
-    }
 
     // Debug character position
     ui->xPos->hide();

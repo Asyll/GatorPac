@@ -245,7 +245,7 @@
   <widget class="QPushButton" name="yesButton">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>310</x>
      <y>330</y>
      <width>113</width>
      <height>41</height>
@@ -267,7 +267,7 @@
   <widget class="QPushButton" name="noButton">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>430</x>
      <y>330</y>
      <width>121</width>
      <height>41</height>
