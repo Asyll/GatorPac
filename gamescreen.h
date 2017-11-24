@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
+#include <QString>
 #include "gamemap.h"
 #include "player.h"
 #include "enemy.h"
@@ -41,6 +42,8 @@ private:
 
     int score;
     bool win = false;
+    bool retryGame = false;
+    QString retryString;
 
     Direction currentTmpDir;
     Direction nextTmpDir;
@@ -63,6 +66,8 @@ private:
 private slots:
     void updater();
     void on_musicButton_clicked();
+    void on_yesButton_clicked();
+    void on_noButton_clicked();
 
 };
 

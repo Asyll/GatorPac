@@ -20,6 +20,10 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     gameMap = new GameMap();
     scene->addItem(gameMap);
 
+    ui->retryLabel->setVisible(false);
+    ui->yesButton->setVisible(false);
+    ui->noButton->setVisible(false);
+
     // Default Player(260,450,3)
     gator = new Player(260,450,2);
     scene->addItem(gator);
@@ -118,9 +122,27 @@ void GameScreen::lostLife() {
 
 void GameScreen::gameOver() {
     playDeathMusic();
-    // Crash bug
-    //scene->removeItem(fsu);
-    //scene->removeItem(gator);
+
+    score = 5;
+    retryString = QString("Score: ") + QString::number(score) + QString(" Would you like to retry?");
+
+    ui->lifeCount->display(gator->getLives());
+    timer->stop();
+    ui->retryLabel->setVisible(true);
+    ui->retryLabel->setText(retryString);
+    ui->yesButton->setVisible(true);
+    ui->noButton->setVisible(true);
+}
+
+void GameScreen::on_yesButton_clicked() {
+
+    retryGame = true;
+//    reset();
+
+}
+
+void GameScreen::on_noButton_clicked() {
+    exit(0);
 }
 
 void GameScreen::ghostCollision() {
@@ -138,9 +160,14 @@ void GameScreen::ghostCollision() {
 }
 
 void GameScreen::updater() {
+
     ui->lifeCount->display(gator->getLives());
     ui->scoreValue->display(score);
     ghostCollision();
+
+    if (retryGame) {
+        return;
+    }
 
     // Debug character position
     ui->xPos->hide();

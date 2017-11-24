@@ -222,7 +222,7 @@ void Player::move(GameMap *gameMap, QObject *ui)
 
 void Player::setDirection(Direction dir)
 {
-    direction = dir;
+    facingDirection = dir;
 }
 
 void Player::setNextDirection(Direction dir)
