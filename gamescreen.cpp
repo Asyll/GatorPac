@@ -92,12 +92,14 @@ void GameScreen::playWinMusic() {
 
 void GameScreen::playBackgroundMusic()
 {
+    playlist->clear();
     playlist= new QMediaPlaylist();
     playlist->addMedia(QUrl("qrc:/Audio/GameScreenMusic.mp3"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
     QMediaPlayer *music = new QMediaPlayer();
     music->setPlaylist(playlist);
+    music->setVolume(20);
     music->play();
 }
 
@@ -121,10 +123,28 @@ void GameScreen::on_musicButton_clicked() {
 }
 
 void GameScreen::lostLife() {
-    gator->setLives(gator->getLives() - 1);
+    if (yesBtnClicked) {
+        gator->setLives(3);
+        score = 0;
+        timer->start();
+        ui->retryLabel->setVisible(false);
+        ui->yesButton->setVisible(false);
+        ui->noButton->setVisible(false);
+        playBackgroundMusic();
+        yesBtnClicked = false;
+    }
+    else {
+        gator->setLives(gator->getLives() - 1);
+    }
 
     fsu->setPosx(260);
     fsu->setPosy(210);
+    georgia->setPosx(260);
+    georgia->setPosy(270);
+    lsu->setPosx(220);
+    lsu->setPosy(270);
+    kentucky->setPosx(300);
+    kentucky->setPosy(270);
     gator->setPosx(260);
     gator->setPosy(450);
 }
@@ -230,7 +250,8 @@ void GameScreen::releaseGeorgia()
 }
 
 void GameScreen::on_yesButton_clicked() {
-    //reset
+    yesBtnClicked = true;
+    lostLife();
 }
 
 void GameScreen::on_noButton_clicked() {
