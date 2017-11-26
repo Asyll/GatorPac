@@ -31,6 +31,7 @@ private:
     GameMap *gameMap;
     QTimer *timer;
     QMediaPlaylist *playlist = new QMediaPlaylist();
+    QMediaPlayer *basicSounds = new QMediaPlayer;
     QMediaPlayer *finalDeathMusic = new QMediaPlayer;
     QMediaPlayer *finalWinMusic = new QMediaPlayer;
 

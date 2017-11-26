@@ -6,5 +6,6 @@
         <file>Audio/IndianaJones.mp3</file>
         <file>Audio/PacmanChomp.wav</file>
         <file>Audio/September.mp3</file>
+        <file>Audio/pacmanDeath.wav</file>
     </qresource>
 </RCC>

@@ -99,7 +99,7 @@ void GameScreen::playBackgroundMusic()
 
     QMediaPlayer *music = new QMediaPlayer();
     music->setPlaylist(playlist);
-    music->setVolume(20);
+    music->setVolume(30);
     music->play();
 }
 
@@ -134,6 +134,14 @@ void GameScreen::lostLife() {
         yesBtnClicked = false;
     }
     else {
+        basicSounds->setMedia(QUrl("qrc:/Audio/pacmanDeath.wav"));
+        if (basicSounds->state() == QMediaPlayer::PlayingState) {
+            basicSounds->setPosition(0);
+        }
+        else if (basicSounds->state() == QMediaPlayer::StoppedState) {
+            basicSounds->setVolume(40);
+            basicSounds->play();
+        }
         gator->setLives(gator->getLives() - 1);
     }
 
@@ -147,13 +155,15 @@ void GameScreen::lostLife() {
     kentucky->setPosy(270);
     gator->setPosx(260);
     gator->setPosy(450);
+
+
 }
 
 void GameScreen::gameOver() {
     playDeathMusic();
 
     score = ui->scoreValue->value();
-    retryString = QString("Score: ") + QString::number(score) + QString(" Would you like to retry?");
+    retryString = QString("  Score: ") + QString::number(score) + QString(" Would you like to retry?");
 
     ui->lifeCount->display(gator->getLives());
     timer->stop();
@@ -327,7 +337,7 @@ void GameScreen::updater() {
         georgia->move();
     }
 
-
+    score++;
     ui->lifeCount->display(gator->getLives());
     ui->scoreValue->display(score);
 
