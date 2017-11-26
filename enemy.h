@@ -3,19 +3,22 @@
 
 #include <QGraphicsItem>
 #include <QPainter>
+#include <QTimer>
 #include "player.h"
 #include "gamemap.h"
 #include "direction.h"
 
+enum Movement {CHASE, SCATTER, FRIGHTENED};
+enum GhostType {RED, PINK, BLUE, ORANGE};
+
 class Enemy : public QGraphicsItem
 {
 public:
-    Enemy(int posx, int posy, int speed, QString name);
+    Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Player* gator, GhostType type);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    // Different enemy movement styles
-    void chase(Player *gator, GameMap *gameMap);
+    void move();
 
     int getSpeed() const;
 
@@ -28,21 +31,44 @@ public:
     bool isMoving() const;
     void setMoving(bool value);
 
+    void setMode(const Movement mode);
+
+    bool isReleased() const;
+    void setReleased(bool value);
+
+    bool isInitiated() const;
+    void initiate();
+
 private:
     QPixmap forward, reverse, up, down;
+    Direction direction, nextDirection, facingDirection;
+    Movement mode;
+    GhostType type;
+    GameMap *gameMap;
+    Player *gator;
+    bool moving;
+    bool released;
+    bool initiated;
+    int speed;
 
     // String used to find the pertaining image
     QString name;
-
-    int speed;
-    Direction direction, nextDirection, facingDirection;
-    bool moving;
 
     // Position in pixels
     int posx, posy;
 
     // Image dimension in pixels
     const int charW, charH;
+
+    // Scatter position in pixels
+    int scatx, scaty;
+
+    // Different enemy movement styles
+    void chase();
+    void scatter();
+    void frightened();
+
+    void setScatterPoint();
 
 };
 

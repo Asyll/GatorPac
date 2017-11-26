@@ -4,32 +4,22 @@
         <file>Images/swampmap.png</file>
         <file>Images/Characters/fsu_forward_up.png</file>
         <file>Images/Characters/fsu_forward.png</file>
-        <file>Images/Characters/fsu_reverse_down.png</file>
-        <file>Images/Characters/fsu_reverse_up.png</file>
         <file>Images/Characters/fsu_reverse.png</file>
         <file>Images/Characters/gator_forward_down.png</file>
         <file>Images/Characters/gator_forward_up.png</file>
         <file>Images/Characters/gator_forward.png</file>
-        <file>Images/Characters/gator_reverse_down.png</file>
-        <file>Images/Characters/gator_reverse_up.png</file>
         <file>Images/Characters/gator_reverse.png</file>
         <file>Images/Characters/georgia_forward_down.png</file>
         <file>Images/Characters/georgia_forward_up.png</file>
         <file>Images/Characters/georgia_forward.png</file>
-        <file>Images/Characters/georgia_reverse_down.png</file>
-        <file>Images/Characters/georgia_reverse_up.png</file>
         <file>Images/Characters/georgia_reverse.png</file>
         <file>Images/Characters/kentucky_forward_down.png</file>
         <file>Images/Characters/kentucky_forward_up.png</file>
         <file>Images/Characters/kentucky_forward.png</file>
-        <file>Images/Characters/kentucky_reverse_down.png</file>
-        <file>Images/Characters/kentucky_reverse_up.png</file>
         <file>Images/Characters/kentucky_reverse.png</file>
         <file>Images/Characters/lsu_forward_down.png</file>
         <file>Images/Characters/lsu_forward_up.png</file>
         <file>Images/Characters/lsu_forward.png</file>
-        <file>Images/Characters/lsu_reverse_down.png</file>
-        <file>Images/Characters/lsu_reverse_up.png</file>
         <file>Images/Characters/lsu_reverse.png</file>
         <file>Images/Characters/fsu_forward_down.png</file>
     </qresource>

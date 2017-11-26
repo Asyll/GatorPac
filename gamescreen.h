@@ -59,15 +59,24 @@ private:
     void ghostCollision();
     void gameOver();
 
+    void fsuInitSeq();
+    void georgiaInitSeq();
+
+    void releaseGeorgia();
 
     void keyPressEvent(QKeyEvent *event);
+
+    // Used for timing initial mode changes
+    int fsuCounter;
+    int georgiaCounter;
+    int lsuCounter;
+    int kentuckyCounter;
 
 private slots:
     void updater();
     void on_musicButton_clicked();
     void on_yesButton_clicked();
     void on_noButton_clicked();
-
 };
 
 #endif // GAMESCREEN_H

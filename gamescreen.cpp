@@ -24,8 +24,8 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     ui->yesButton->setVisible(false);
     ui->noButton->setVisible(false);
 
-    // Default Player(260,450,3)
-    gator = new Player(260,450,2);
+    // Default Player(260,450,5)
+    gator = new Player(260,450,5);
     scene->addItem(gator);
 
     currentTmpDir = Direction::NONE;
@@ -35,17 +35,26 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     connect(timer, SIGNAL(timeout()), this, SLOT(updater()));
     timer->start(1000/30);
 
+    fsu = new Enemy(260,210,5,"fsu", gameMap, gator, GhostType::RED);
+    scene->addItem(fsu);
+
+    georgia = new Enemy(260,270,5,"georgia", gameMap, gator, GhostType::PINK);
+    scene->addItem(georgia);
+
+    lsu = new Enemy(220,270,5,"lsu", gameMap, gator, GhostType::BLUE);
+    scene->addItem(lsu);
+
+    kentucky = new Enemy(300,270,5,"kentucky", gameMap, gator, GhostType::ORANGE);
+    scene->addItem(kentucky);
+
+
+    fsuCounter = 0;
+    georgiaCounter = 0;
+    lsuCounter = 0;
+    kentuckyCounter = 0;
 
     score = 0;
 
-    fsu = new Enemy(260,210,2,"fsu");
-//    lsu = new Enemy(220,270,2,"lsu");
-//    georgia = new Enemy(260,270,2,"georgia");
-//    kentucky = new Enemy(300,270,2,"kentucky");
-//    scene->addItem(lsu);
-    scene->addItem(fsu);
-//    scene->addItem(georgia);
-//    scene->addItem(kentucky);
 
     playBackgroundMusic();
 
@@ -123,7 +132,7 @@ void GameScreen::lostLife() {
 void GameScreen::gameOver() {
     playDeathMusic();
 
-    score = 5;
+    score = ui->scoreValue->value();
     retryString = QString("Score: ") + QString::number(score) + QString(" Would you like to retry?");
 
     ui->lifeCount->display(gator->getLives());
@@ -132,6 +141,92 @@ void GameScreen::gameOver() {
     ui->retryLabel->setText(retryString);
     ui->yesButton->setVisible(true);
     ui->noButton->setVisible(true);
+}
+
+void GameScreen::fsuInitSeq()
+{
+    // Counter measured in seconds * 30
+    if (fsuCounter <= 2400)
+    {
+        fsuCounter ++;
+        switch(fsuCounter)
+        {
+        case 150:
+            fsu->setMode(Movement::CHASE);
+            break;
+        case 750:
+            fsu->setMode(Movement::SCATTER);
+            break;
+        case 900:
+            fsu->setMode(Movement::CHASE);
+            break;
+        case 1500:
+            fsu->setMode(Movement::SCATTER);
+            break;
+        case 1650:
+            fsu->setMode(Movement::CHASE);
+            break;
+        case 2250:
+            fsu->setMode(Movement::SCATTER);
+            break;
+        case 2400:
+            fsu->setMode(Movement::CHASE);
+            break;
+        }
+    }
+    else
+    {
+        fsu->initiate();
+    }
+}
+
+void GameScreen::georgiaInitSeq()
+{
+    // Counter measured in seconds * 30
+    if (georgiaCounter <= 2400)
+    {
+        georgiaCounter ++;
+        switch(georgiaCounter)
+        {
+        case 150:
+            georgia->setMode(Movement::CHASE);
+            break;
+        case 750:
+            georgia->setMode(Movement::SCATTER);
+            break;
+        case 900:
+            georgia->setMode(Movement::CHASE);
+            break;
+        case 1500:
+            georgia->setMode(Movement::SCATTER);
+            break;
+        case 1650:
+            georgia->setMode(Movement::CHASE);
+            break;
+        case 2250:
+            georgia->setMode(Movement::SCATTER);
+            break;
+        case 2400:
+            georgia->setMode(Movement::CHASE);
+            break;
+        }
+    }
+    else
+    {
+        georgia->initiate();
+    }
+}
+
+void GameScreen::releaseGeorgia()
+{
+    if (georgia->getPosy() > 210 && georgia->getPosy() <= 270 && georgia->getPosx() == 260)
+    {
+        georgia->setPosy(georgia->getPosy() - 2);
+    }
+    else
+    {
+        georgia->setReleased(true);
+    }
 }
 
 void GameScreen::on_yesButton_clicked() {
@@ -154,28 +249,73 @@ void GameScreen::ghostCollision() {
             gameOver();
         }
     }
+    else if ((abs(gator->getPosx() - georgia->getPosx()) <= 20) && (abs(gator->getPosy() - georgia->getPosy()) <= 20)) {
+        if (gator->getLives() > 1) {
+            lostLife();
+        }
+        else {
+            gator->setLives(0);
+            win = false;
+            gameOver();
+        }
+    }
+    else if ((abs(gator->getPosx() - lsu->getPosx()) <= 20) && (abs(gator->getPosy() - lsu->getPosy()) <= 20)) {
+        if (gator->getLives() > 1) {
+            lostLife();
+        }
+        else {
+            gator->setLives(0);
+            win = false;
+            gameOver();
+        }
+    }
+    else if ((abs(gator->getPosx() - kentucky->getPosx()) <= 20) && (abs(gator->getPosy() - kentucky->getPosy()) <= 20)) {
+        if (gator->getLives() > 1) {
+            lostLife();
+        }
+        else {
+            gator->setLives(0);
+            win = false;
+            gameOver();
+        }
+    }
 }
 
 void GameScreen::updater() {
-
-    ui->lifeCount->display(gator->getLives());
-    ui->scoreValue->display(score);
-    ghostCollision();
-
-    // Debug character position
+    // For debuggin character position:
+    // - unhide xPos and yPos
+    // - uncomment the display functions
     ui->xPos->hide();
     ui->yPos->hide();
     //ui->xPos->display(gator->getPosx());
     //ui->yPos->display(gator->getPosy());
 
-
     playerMove();
-    fsu->chase(gator, gameMap);
 
+    if (!fsu->isInitiated())
+        fsuInitSeq();
+
+    fsu->move();
+
+    releaseGeorgia();
+    if (georgia->isReleased())
+    {
+        if (!georgia->isInitiated())
+            georgiaInitSeq();
+
+        georgia->move();
+    }
+
+
+    ui->lifeCount->display(gator->getLives());
+    ui->scoreValue->display(score);
+
+    ghostCollision();
 
     scene->update(gameMap->boundingRect());
     gator->update();
     fsu->update();
+    georgia->update();
 
     /*this loop is for collision test between GatorPac and the dots
         for() {
