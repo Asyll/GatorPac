@@ -503,6 +503,9 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key())
     {
+    case Qt::Key_Space:
+        on_pauseButton_clicked();
+        break;
     case Qt::Key_A:
         if (!gator->isMoving())
         {
