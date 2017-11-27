@@ -14,9 +14,8 @@ Enemy::Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Play
 
     setScatterPoint();
 
-    facingDirection = Direction::RIGHT;
-    direction = Direction::RIGHT;
-    nextDirection = Direction::NONE;
+    resetOrientation();
+
     mode = Movement::SCATTER;
     released = false;
     initiated = false;
@@ -115,9 +114,9 @@ bool Enemy::isInitiated() const
     return initiated;
 }
 
-void Enemy::initiate()
+void Enemy::setInitiated(bool value)
 {
-    initiated = true;
+    initiated = value;
 }
 
 // Sets scatter point based on what ghost type the object is
@@ -142,6 +141,13 @@ void Enemy::setScatterPoint()
         scaty = 550;
         break;
     }
+}
+
+void Enemy::resetOrientation()
+{
+    facingDirection = Direction::RIGHT;
+    direction = Direction::RIGHT;
+    nextDirection = Direction::NONE;
 }
 
 void Enemy::move()

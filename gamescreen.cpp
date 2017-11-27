@@ -122,47 +122,75 @@ void GameScreen::on_musicButton_clicked() {
     }
 }
 
-void GameScreen::lostLife() {
-    if (yesBtnClicked) {
-        gator->setLives(3);
-        score = 0;
-        timer->start();
-        ui->retryLabel->setVisible(false);
-        ui->yesButton->setVisible(false);
-        ui->noButton->setVisible(false);
-        playBackgroundMusic();
-        yesBtnClicked = false;
-    }
-    else {
-        basicSounds->setMedia(QUrl("qrc:/Audio/pacmanDeath.wav"));
-        if (basicSounds->state() == QMediaPlayer::PlayingState) {
-            basicSounds->setPosition(0);
-        }
-        else if (basicSounds->state() == QMediaPlayer::StoppedState) {
-            basicSounds->setVolume(40);
-            basicSounds->play();
-        }
-        gator->setLives(gator->getLives() - 1);
-    }
+void GameScreen::resetGame()
+{
+    ui->retryLabel->setVisible(false);
+    ui->yesButton->setVisible(false);
+    ui->noButton->setVisible(false);
 
+    resetCharacterPositions();
+
+    gator->setLives(3);
+    score = 0;
+
+    fsu->setInitiated(false);
+    georgia->setReleased(false);
+    georgia->setInitiated(false);
+    lsu->setReleased(false);
+    lsu->setInitiated(false);
+    kentucky->setReleased(false);
+    kentucky->setInitiated(false);
+    fsuCounter = 0;
+    georgiaCounter = 0;
+    lsuCounter = 0;
+    kentuckyCounter = 0;
+
+    playBackgroundMusic();
+    yesBtnClicked = false;
+    timer->start();
+}
+
+void GameScreen::resetCharacterPositions()
+{
     fsu->setPosx(260);
     fsu->setPosy(210);
+    fsu->resetOrientation();
+
     georgia->setPosx(260);
     georgia->setPosy(270);
+    georgia->resetOrientation();
+
     lsu->setPosx(220);
     lsu->setPosy(270);
+    lsu->resetOrientation();
+
     kentucky->setPosx(300);
     kentucky->setPosy(270);
+    kentucky->resetOrientation();
+
     gator->setPosx(260);
     gator->setPosy(450);
+    gator->resetOrientation();
+}
 
+void GameScreen::lostLife() {
 
+    basicSounds->setMedia(QUrl("qrc:/Audio/pacmanDeath.wav"));
+    if (basicSounds->state() == QMediaPlayer::PlayingState) {
+        basicSounds->setPosition(0);
+    }
+    else if (basicSounds->state() == QMediaPlayer::StoppedState) {
+        basicSounds->setVolume(40);
+        basicSounds->play();
+    }
+    gator->setLives(gator->getLives() - 1);
+
+    resetCharacterPositions();
 }
 
 void GameScreen::gameOver() {
     playDeathMusic();
 
-    score = ui->scoreValue->value();
     retryString = QString("  Score: ") + QString::number(score) + QString(" Would you like to retry?");
 
     ui->lifeCount->display(gator->getLives());
@@ -178,9 +206,11 @@ void GameScreen::fsuInitSeq()
     // Counter measured in seconds * 30
     if (fsuCounter <= 2400)
     {
-        fsuCounter ++;
         switch(fsuCounter)
         {
+        case 0:
+            fsu->setMode(Movement::SCATTER);
+            break;
         case 150:
             fsu->setMode(Movement::CHASE);
             break;
@@ -203,10 +233,11 @@ void GameScreen::fsuInitSeq()
             fsu->setMode(Movement::CHASE);
             break;
         }
+        fsuCounter ++;
     }
     else
     {
-        fsu->initiate();
+        fsu->setInitiated(true);
     }
 }
 
@@ -215,9 +246,11 @@ void GameScreen::georgiaInitSeq()
     // Counter measured in seconds * 30
     if (georgiaCounter <= 2400)
     {
-        georgiaCounter ++;
         switch(georgiaCounter)
         {
+        case 0:
+            georgia->setMode(Movement::SCATTER);
+            break;
         case 150:
             georgia->setMode(Movement::CHASE);
             break;
@@ -240,10 +273,11 @@ void GameScreen::georgiaInitSeq()
             georgia->setMode(Movement::CHASE);
             break;
         }
+        georgiaCounter ++;
     }
     else
     {
-        georgia->initiate();
+        georgia->setInitiated(true);
     }
 }
 
@@ -261,7 +295,7 @@ void GameScreen::releaseGeorgia()
 
 void GameScreen::on_yesButton_clicked() {
     yesBtnClicked = true;
-    lostLife();
+    resetGame();
 }
 
 void GameScreen::on_noButton_clicked() {
@@ -339,7 +373,7 @@ void GameScreen::updater() {
 
     score++;
     ui->lifeCount->display(gator->getLives());
-    ui->scoreValue->display(score);
+    ui->scoreValue->display(score/30);
 
     ghostCollision();
 

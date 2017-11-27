@@ -27,7 +27,7 @@ public:
     int getLives() const;
     void setLives(int lives);
 
-    void move(GameMap *gameMap, QObject *ui);
+    void resetOrientation();
 
     void setDirection(Direction dir);
 

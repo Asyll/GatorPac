@@ -19,6 +19,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     void move();
+    void resetOrientation();
 
     int getSpeed() const;
 
@@ -37,15 +38,16 @@ public:
     void setReleased(bool value);
 
     bool isInitiated() const;
-    void initiate();
+    void setInitiated(bool value);
 
 private:
     QPixmap forward, reverse, up, down;
     Direction direction, nextDirection, facingDirection;
-    Movement mode;
+
     GhostType type;
     GameMap *gameMap;
     Player *gator;
+    Movement mode;
     bool moving;
     bool released;
     bool initiated;

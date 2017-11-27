@@ -60,6 +60,8 @@ private:
     void lostLife();
     void ghostCollision();
     void gameOver();
+    void resetGame();
+    void resetCharacterPositions();
 
     void fsuInitSeq();
     void georgiaInitSeq();
