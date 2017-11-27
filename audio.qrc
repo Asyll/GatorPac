@@ -7,5 +7,6 @@
         <file>Audio/PacmanChomp.wav</file>
         <file>Audio/September.mp3</file>
         <file>Audio/pacmanDeath.wav</file>
+        <file>Audio/sonicDrowning.mp3</file>
     </qresource>
 </RCC>
