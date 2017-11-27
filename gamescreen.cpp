@@ -122,6 +122,18 @@ void GameScreen::on_musicButton_clicked() {
     }
 }
 
+void GameScreen::on_pauseButton_clicked() {
+    QString pauseBtn = ui->pauseButton->text();
+    if (pauseBtn == "Pause") {
+        timer->stop();
+        ui->pauseButton->setText("Resume");
+    }
+    else {
+        timer->start();
+        ui->pauseButton->setText("Pause");
+    }
+}
+
 void GameScreen::lostLife() {
     if (yesBtnClicked) {
         gator->setLives(3);
@@ -163,7 +175,7 @@ void GameScreen::gameOver() {
     playDeathMusic();
 
     score = ui->scoreValue->value();
-    retryString = QString("  Score: ") + QString::number(score) + QString(" Would you like to retry?");
+    retryString = QString(" Score: ") + QString::number(score) + QString(" Would you like to retry?");
 
     ui->lifeCount->display(gator->getLives());
     timer->stop();

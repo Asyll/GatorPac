@@ -79,6 +79,7 @@ private slots:
     void on_musicButton_clicked();
     void on_yesButton_clicked();
     void on_noButton_clicked();
+    void on_pauseButton_clicked();
 };
 
 #endif // GAMESCREEN_H
