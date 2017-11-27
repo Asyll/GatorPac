@@ -178,8 +178,8 @@
   <widget class="QLCDNumber" name="xPos">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>710</y>
+     <x>420</x>
+     <y>60</y>
      <width>64</width>
      <height>23</height>
     </rect>
@@ -188,8 +188,8 @@
   <widget class="QLCDNumber" name="yPos">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>710</y>
+     <x>490</x>
+     <y>60</y>
      <width>64</width>
      <height>23</height>
     </rect>
@@ -284,6 +284,28 @@
    </property>
    <property name="text">
     <string>No</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pauseButton">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>710</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica Neue</family>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(250,70,22);</string>
+   </property>
+   <property name="text">
+    <string>Pause</string>
    </property>
   </widget>
  </widget>

@@ -122,6 +122,18 @@ void GameScreen::on_musicButton_clicked() {
     }
 }
 
+void GameScreen::on_pauseButton_clicked() {
+    QString pauseBtn = ui->pauseButton->text();
+    if (pauseBtn == "Pause") {
+        timer->stop();
+        ui->pauseButton->setText("Resume");
+    }
+    else {
+        timer->start();
+        ui->pauseButton->setText("Pause");
+    }
+}
+
 void GameScreen::resetGame()
 {
     ui->retryLabel->setVisible(false);
@@ -525,6 +537,9 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key())
     {
+    case Qt::Key_Space:
+        on_pauseButton_clicked();
+        break;
     case Qt::Key_A:
         if (!gator->isMoving())
         {
