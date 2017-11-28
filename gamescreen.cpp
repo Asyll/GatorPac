@@ -449,6 +449,7 @@ void GameScreen::playerMove()
         }
         else
         {
+            gator->setNextDirection(Direction::NONE);
             gator->setMoving(false);
         }
         break;
@@ -463,6 +464,7 @@ void GameScreen::playerMove()
         }
         else
         {
+            gator->setNextDirection(Direction::NONE);
             gator->setMoving(false);
         }
         break;
@@ -477,6 +479,7 @@ void GameScreen::playerMove()
         }
         else
         {
+            gator->setNextDirection(Direction::NONE);
             gator->setMoving(false);
         }
         break;
@@ -491,6 +494,7 @@ void GameScreen::playerMove()
         }
         else
         {
+            gator->setNextDirection(Direction::NONE);
             gator->setMoving(false);
         }
         break;
