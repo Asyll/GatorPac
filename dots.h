@@ -1,19 +1,24 @@
 #ifndef DOTS_H
-#define DOTS_H
-
-#include <QPainter>
-#include <QGraphicsItem>
-#include <QGraphicsScene>
-
+#define DOTS_H#
+#include "player.h"
 
 class dots: public QGraphicsItem
 {
 public:
-    dots();
+    dots(int posx, int posy);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
     int posx;
     int posy;
+    QPixmap dot;
+
+
+    int getPosx() const;
+    void setPosx(int x);
+
+    int getPosy() const;
+    void setPosy(int y);
 
 };
 
