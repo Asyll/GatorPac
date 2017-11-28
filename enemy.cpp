@@ -334,7 +334,20 @@ void Enemy::chase()
         point.setY(posy);
         facingDirection = direction;
 
-        if (gameMap->canMove(point))
+        if (posx < 90 && posy == 270) {
+            posx -= 2;
+            moving = true;
+            if (posx <= 0)
+            {
+                posx = 520;
+            }
+        }
+        else if (posx > 430 && posy == 270) {
+            posx -= 2;
+            moving = true;
+        }
+
+        else if (gameMap->canMove(point))
         {
             posx -= speed;
             moving = true;
@@ -345,11 +358,25 @@ void Enemy::chase()
         }
         break;
     case RIGHT:
+
         point.setX(posx + speed);
         point.setY(posy);
         facingDirection = direction;
 
-        if (gameMap->canMove(point))
+        if (posx > 430 && posy == 270) {
+            posx += 2;
+            moving = true;
+            if (posx >= 520)
+            {
+                posx = 0;
+            }
+        }
+        else if (posx < 90 && posy == 270) {
+            posx += 2;
+            moving = true;
+        }
+
+        else if (gameMap->canMove(point))
         {
             posx += speed;
             moving = true;
@@ -393,14 +420,6 @@ void Enemy::chase()
         break;
     }
 
-    if (posx == 0)
-    {
-        posx = 520;
-    }
-    else if (posx == 520)
-    {
-        posx = 0;
-    }
 }
 
 void Enemy::scatter()
@@ -570,8 +589,20 @@ void Enemy::scatter()
         point.setX(posx - speed);
         point.setY(posy);
         facingDirection = direction;
+        if (posx < 90 && posy == 270) {
+            posx -= 2;
+            moving = true;
+            if (posx <= 0)
+            {
+                posx = 520;
+            }
+        }
+        else if (posx > 430 && posy == 270) {
+            posx -= 2;
+            moving = true;
+        }
 
-        if (gameMap->canMove(point))
+        else if (gameMap->canMove(point))
         {
             posx -= speed;
             moving = true;
@@ -586,7 +617,19 @@ void Enemy::scatter()
         point.setY(posy);
         facingDirection = direction;
 
-        if (gameMap->canMove(point))
+        if (posx > 430 && posy == 270) {
+            posx += 2;
+            moving = true;
+            if (posx >= 520)
+            {
+                posx = 0;
+            }
+        }
+        else if (posx < 90 && posy == 270) {
+            posx += 2;
+            moving = true;
+        }
+        else if (gameMap->canMove(point))
         {
             posx += speed;
             moving = true;
@@ -628,15 +671,6 @@ void Enemy::scatter()
         break;
     case NONE:
         break;
-    }
-
-    if (posx == 0)
-    {
-        posx = 520;
-    }
-    else if (posx == 520)
-    {
-        posx = 0;
     }
 }
 

@@ -44,6 +44,7 @@ private:
     int score;
     bool win = false;
     bool yesBtnClicked = false;
+    bool frighten = false;
     QString retryString;
 
     Direction currentTmpDir;
@@ -75,6 +76,7 @@ private:
     int georgiaCounter;
     int lsuCounter;
     int kentuckyCounter;
+    int mascotPoints;
 
 private slots:
     void updater();
