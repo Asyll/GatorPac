@@ -5,6 +5,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QVector>
+#include "dots.h"
 
 class GameMap : public QGraphicsItem
 {
@@ -18,7 +19,9 @@ public:
 private:
     QPixmap mapImage;
     void createPathPoints(int,int,int,int);
+    void createDotPoints(int, int, int, int);
     QVector<QPoint> moveablePath;
+    QVector<QPoint> dotLocations;
     void makeMapPaths();
 
 

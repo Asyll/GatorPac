@@ -4,22 +4,47 @@
 
 
 
-dots::dots(int posx, int posy)
+Dots::Dots(int posx, int posy):
+    dotH(20),
+    dotW(20)
 {
     this->posx = posx;
-    this->posy =posy;
+    this->posy = posy;
     dot.load("://Images/timdots.png");
 }
-void dots::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
-    painter->drawPixmap(posx, posy, 20, 20, dot);
+void Dots::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+    painter->drawPixmap(posx, posy, dotW, dotH, dot);
 }
 
-int dots::setposx(){
+QRectF Dots::boundingRect() const
+{
+    return QRect(0,0,dotW,dotH);
+}
 
+int Dots::getPosx() const
+{
+    return posx;
 }
-int dots::setposy(){
 
+void Dots::setPosx(int x)
+{
+    if (x >= 0 && x <= 520)
+    {
+        posx = x;
+    }
 }
-bool dots::visible(){
-    //for setting dot invisible when collided with gator
+
+int Dots::getPosy() const
+{
+    return posy;
 }
+
+void Dots::setPosy(int y)
+{
+    if (y >= 10 && y <= 570)
+    {
+        posy = y;
+    }
+}
+
+

@@ -2,11 +2,12 @@
 #define DOTS_H#
 #include "player.h"
 
-class dots: public QGraphicsItem
+class Dots: public QGraphicsItem
 {
 public:
-    dots(int posx, int posy);
+    Dots(int posx, int posy);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QRectF boundingRect() const;
 
 private:
     int posx;
@@ -14,11 +15,13 @@ private:
     QPixmap dot;
 
 
+
     int getPosx() const;
     void setPosx(int x);
 
     int getPosy() const;
     void setPosy(int y);
+    int dotW, dotH;
 
 };
 

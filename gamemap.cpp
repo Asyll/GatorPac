@@ -4,7 +4,7 @@
 // PUBLIC Functions //
 GameMap::GameMap()
 {
-    mapImage.load(":/Images/swampmap.png");
+    //mapImage.load(":/Images/swampmap.png");
 
     makeMapPaths();
 }
@@ -16,7 +16,13 @@ QRectF GameMap::boundingRect() const
 
 void GameMap::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(0,0,560,620,mapImage);
+    //painter->drawPixmap(0,0,560,620,mapImage);
+
+    for (QPoint point : dotLocations)
+    {
+        painter->drawPoint(point);
+    }
+
     /* Draw debug paths
     for (QPoint point : moveablePath)
     {
@@ -42,6 +48,76 @@ bool GameMap::canMove(QPoint point)
 // Creates all the moveable paths on the game map
 void GameMap::makeMapPaths()
 {
+    // Horizontal paths
+    // Top
+    createDotPoints(10,10,230,10);
+    createDotPoints(290,10,510,10);
+    createDotPoints(10,90,510,90);
+    createDotPoints(10,150,110,150);
+    createDotPoints(170,150,230,150);
+    createDotPoints(170,210,350,210);
+    createDotPoints(290,150,350,150);
+    createDotPoints(410,150,510,150);
+    // Teleport Dots
+    createDotPoints(0,270,170,270);
+    createDotPoints(350,270,520,270);
+    // Bottom
+    createDotPoints(170,330,350,330);
+    createDotPoints(10,390,230,390);
+    createDotPoints(290,390,510,390);
+    createDotPoints(10,450,50,450);
+    createDotPoints(110,450,410,450);
+    createDotPoints(470,450,510,450);
+    createDotPoints(10,510,110,510);
+    createDotPoints(170,510,230,510);
+    createDotPoints(290,510,350,510);
+    createDotPoints(410,510,510,510);
+    createDotPoints(10,570,510,570);
+
+    // Verticle Dots
+    // Left
+    createDotPoints(10,10,10,150);
+    createDotPoints(10,390,10,450);
+    createDotPoints(10,510,10,570);
+    createDotPoints(50,450,50,510);
+    createDotPoints(110,10,110,510);
+    createDotPoints(170,90,170,150);
+    createDotPoints(170,210,170,390);
+    createDotPoints(170,450,170,510);
+    createDotPoints(230,10,230,90);
+    createDotPoints(230,150,230,210);
+    createDotPoints(230,390,230,450);
+    createDotPoints(230,510,230,570);
+
+    // Right
+    createDotPoints(290,10,290,90);
+    createDotPoints(290,150,290,210);
+    createDotPoints(290,390,290,450);
+    createDotPoints(290,510,290,570);
+    createDotPoints(350,90,350,150);
+    createDotPoints(350,210,350,390);
+    createDotPoints(350,450,350,510);
+    createDotPoints(410,10,410,510);
+    createDotPoints(470,450,470,510);
+    createDotPoints(510,10,510,150);
+    createDotPoints(510,390,510,450);
+    createDotPoints(510,510,510,570);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Horizontal paths
     // Top
     createPathPoints(10,10,230,10);
@@ -97,11 +173,88 @@ void GameMap::makeMapPaths()
     createPathPoints(510,390,510,450);
     createPathPoints(510,510,510,570);
 }
+void GameMap::createDotPoints(int startx, int starty, int endx, int endy)
+{
+    QPoint point;
+    const int DIVISOR = 20;
+    int numOfDots = 0;
+    int x = startx;
+    int y = starty;
+
+    // If the line is horizontal
+    if (starty == endy)
+    {
+        // If line is given from left to right
+        if (startx < endx)
+        {
+            numOfDots = ((endx - startx) / DIVISOR) + 1;
+
+            for (int i = 0; i < numOfDots ; i++)
+            {
+                point.setX(x);
+                point.setY(starty);
+                if (!dotLocations.contains(point))
+                {
+                    dotLocations.append(point);
+                }
+
+                x += DIVISOR;
+            }
+        }
+        else
+        {
+             numOfDots = ((startx - endx) / DIVISOR) + 1;
+            for (int i = 0; i < numOfDots; i++)
+            {
+                point.setX(x);
+                point.setY(starty);
+                if (!dotLocations.contains(point))
+                {
+                    dotLocations.append(point);
+                }
+                x -= DIVISOR;
+            }
+        }
+    }
+    else
+    {
+        // If line is given bottom to top
+        if (starty < endy)
+        {
+            numOfDots = ((endy - starty) / DIVISOR) + 1;
+            for (int i = 0; i < numOfDots; i++)
+            {
+                point.setY(y);
+                point.setX(startx);
+                if (!dotLocations.contains(point))
+                {
+                    dotLocations.append(point);
+                }
+                y += DIVISOR;
+            }
+        }
+        else
+        {
+            numOfDots = ((starty - endy) / DIVISOR) + 1;
+            for (int i = 0; i < numOfDots; i++)
+            {
+                point.setY(y);
+                point.setX(startx);
+                if (!dotLocations.contains(point))
+                {
+                    dotLocations.append(point);
+                }
+                y -= DIVISOR;
+            }
+        }
+    }
+}
 
 // Creates the points on which characters will move
 void GameMap::createPathPoints(int startx, int starty, int endx, int endy)
 {
     QPoint point;
+
     // If the line is horizontal
     if (starty == endy)
     {
