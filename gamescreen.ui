@@ -168,10 +168,10 @@
   <widget class="QLabel" name="LifeLabel">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>705</y>
-     <width>71</width>
-     <height>41</height>
+     <x>-10</x>
+     <y>660</y>
+     <width>131</width>
+     <height>115</height>
     </rect>
    </property>
    <property name="font">
@@ -184,7 +184,13 @@
     <string notr="true">color:rgb(250, 70, 22);</string>
    </property>
    <property name="text">
-    <string>Lives: </string>
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="images.qrc">:/Images/Buttons/lives_plate.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLCDNumber" name="lifeCount">
@@ -325,10 +331,10 @@
   <widget class="QPushButton" name="pauseButton">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>700</y>
+     <x>230</x>
+     <y>685</y>
      <width>131</width>
-     <height>51</height>
+     <height>61</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -365,10 +371,10 @@
   <widget class="QPushButton" name="resumeButton">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>700</y>
+     <x>230</x>
+     <y>685</y>
      <width>131</width>
-     <height>51</height>
+     <height>61</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -407,13 +413,13 @@
     </size>
    </property>
   </widget>
+  <zorder>lifeCount</zorder>
+  <zorder>LifeLabel</zorder>
   <zorder>scoreLabel</zorder>
   <zorder>AwayLabel</zorder>
   <zorder>gameView</zorder>
   <zorder>scoreValue</zorder>
   <zorder>awayScore</zorder>
-  <zorder>LifeLabel</zorder>
-  <zorder>lifeCount</zorder>
   <zorder>xPos</zorder>
   <zorder>yPos</zorder>
   <zorder>musicButton</zorder>
