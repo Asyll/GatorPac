@@ -68,11 +68,17 @@
   <widget class="QLabel" name="scoreLabel">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>91</width>
-     <height>41</height>
+     <x>0</x>
+     <y>-30</y>
+     <width>141</width>
+     <height>121</height>
     </rect>
+   </property>
+   <property name="sizeIncrement">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
    </property>
    <property name="font">
     <font>
@@ -80,11 +86,29 @@
      <pointsize>30</pointsize>
     </font>
    </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(250, 70, 22);</string>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="lineWidth">
+    <number>1</number>
+   </property>
+   <property name="midLineWidth">
+    <number>0</number>
    </property>
    <property name="text">
-    <string>Home:</string>
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="images.qrc">:/Images/Buttons/home_plate.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
    </property>
   </widget>
   <widget class="QLCDNumber" name="scoreValue">
@@ -103,10 +127,10 @@
   <widget class="QLabel" name="AwayLabel">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>10</y>
-     <width>121</width>
-     <height>41</height>
+     <x>330</x>
+     <y>-30</y>
+     <width>141</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="font">
@@ -119,7 +143,13 @@
     <string notr="true">color:rgb(250, 70, 22);</string>
    </property>
    <property name="text">
-    <string>Away:</string>
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="images.qrc">:/Images/Buttons/away_plate.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLCDNumber" name="awayScore">
@@ -198,10 +228,10 @@
   <widget class="QPushButton" name="musicButton">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>710</y>
-     <width>113</width>
-     <height>41</height>
+     <x>460</x>
+     <y>690</y>
+     <width>80</width>
+     <height>60</height>
     </rect>
    </property>
    <property name="font">
@@ -214,10 +244,16 @@
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">color:rgb(250,70,22);</string>
+    <string notr="true">qproperty-icon: url(:/Images/Buttons/sound_plate_redux.png);</string>
    </property>
    <property name="text">
-    <string>Music Off</string>
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>175</width>
+     <height>175</height>
+    </size>
    </property>
   </widget>
   <widget class="QLabel" name="retryLabel">
@@ -289,11 +325,23 @@
   <widget class="QPushButton" name="pauseButton">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>710</y>
-     <width>121</width>
-     <height>41</height>
+     <x>210</x>
+     <y>700</y>
+     <width>131</width>
+     <height>51</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>131</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>131</width>
+     <height>131</height>
+    </size>
    </property>
    <property name="font">
     <font>
@@ -302,13 +350,82 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color:rgb(250,70,22);</string>
+    <string notr="true">qproperty-icon:url(:/Images/Buttons/pause_plate.png);</string>
    </property>
    <property name="text">
-    <string>Pause</string>
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>150</width>
+     <height>150</height>
+    </size>
    </property>
   </widget>
+  <widget class="QPushButton" name="resumeButton">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>700</y>
+     <width>131</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">qproperty-icon:url(:/Images/Buttons/resume_plate.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>150</width>
+     <height>150</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="muteButton">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>690</y>
+     <width>80</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">qproperty-icon:url(:/Images/Buttons/sound_muted_plate-reV2.png);
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>175</width>
+     <height>175</height>
+    </size>
+   </property>
+  </widget>
+  <zorder>scoreLabel</zorder>
+  <zorder>AwayLabel</zorder>
+  <zorder>gameView</zorder>
+  <zorder>scoreValue</zorder>
+  <zorder>awayScore</zorder>
+  <zorder>LifeLabel</zorder>
+  <zorder>lifeCount</zorder>
+  <zorder>xPos</zorder>
+  <zorder>yPos</zorder>
+  <zorder>musicButton</zorder>
+  <zorder>retryLabel</zorder>
+  <zorder>yesButton</zorder>
+  <zorder>noButton</zorder>
+  <zorder>pauseButton</zorder>
+  <zorder>resumeButton</zorder>
+  <zorder>muteButton</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

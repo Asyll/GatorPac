@@ -23,6 +23,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     ui->retryLabel->setVisible(false);
     ui->yesButton->setVisible(false);
     ui->noButton->setVisible(false);
+    ui->resumeButton->setVisible(false);
 
     // Default Player(260,450,5)
     gator = new Player(260,450,5);
@@ -104,34 +105,35 @@ void GameScreen::playBackgroundMusic()
 }
 
 void GameScreen::on_musicButton_clicked() {
-    if (playlist->isEmpty()) {
-        if (gator->getLives() == 0 && win) {
-            playWinMusic();
-        }
-        else if (gator->getLives() == 0 && !win) {
-            playDeathMusic();
-        }
-        else {
-            playBackgroundMusic();
-        }
-        ui->musicButton->setText("Music Off");
+    if (gator->getLives() == 0 && win) {
+        playWinMusic();
+    }
+    else if (gator->getLives() == 0 && !win) {
+        playDeathMusic();
     }
     else {
-    playlist->clear();
-    ui->musicButton->setText("Music On");
+        playBackgroundMusic();
     }
+    ui->musicButton->setVisible(false);
+    ui->muteButton->setVisible(true);
+}
+
+void GameScreen::on_muteButton_clicked() {
+    playlist->clear();
+    ui->muteButton->setVisible(false);
+    ui->musicButton->setVisible(true);
 }
 
 void GameScreen::on_pauseButton_clicked() {
-    QString pauseBtn = ui->pauseButton->text();
-    if (pauseBtn == "Pause") {
-        timer->stop();
-        ui->pauseButton->setText("Resume");
-    }
-    else {
-        timer->start();
-        ui->pauseButton->setText("Pause");
-    }
+    timer->stop();
+    ui->resumeButton->setVisible(true);
+    ui->pauseButton->setVisible(false);
+}
+
+void GameScreen::on_resumeButton_clicked() {
+    timer->start();
+    ui->resumeButton->setVisible(false);
+    ui->pauseButton->setVisible(true);
 }
 
 void GameScreen::resetGame()
@@ -517,7 +519,12 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
     switch(event->key())
     {
     case Qt::Key_Space:
-        on_pauseButton_clicked();
+        if (ui->pauseButton->isVisible() == true) {
+            on_pauseButton_clicked();
+        }
+        else {
+            on_resumeButton_clicked();
+        }
         break;
     case Qt::Key_A:
         if (!gator->isMoving())
