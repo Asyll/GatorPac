@@ -41,9 +41,11 @@ HEADERS += \
     direction.h
 
 FORMS += \
-        titlescreen.ui \
+    titlescreen.ui \
     gamescreen.ui
 
-RESOURCES += \
-    images.qrc \
-    audio.qrc
+RESOURCES += images.qrc \
+    titleaudio.qrc \
+    maingameaudio.qrc \
+    lifelostaudio.qrc
+

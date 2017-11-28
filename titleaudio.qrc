@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Audio/TitleScreenMusic.mp3</file>
+    </qresource>
+</RCC>

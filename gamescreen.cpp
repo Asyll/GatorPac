@@ -187,7 +187,7 @@ void GameScreen::resetCharacterPositions()
 
 void GameScreen::lostLife() {
 
-    basicSounds->setMedia(QUrl("qrc:/Audio/pacmanDeath.wav"));
+    basicSounds->setMedia(QUrl("qrc:/Audio/pacmanDeath.mp3"));
     if (basicSounds->state() == QMediaPlayer::PlayingState) {
         basicSounds->setPosition(0);
     }
@@ -195,6 +195,7 @@ void GameScreen::lostLife() {
         basicSounds->setVolume(40);
         basicSounds->play();
     }
+
     gator->setLives(gator->getLives() - 1);
 
     resetCharacterPositions();
@@ -316,37 +317,11 @@ void GameScreen::on_noButton_clicked() {
 
 void GameScreen::ghostCollision() {
 
-    if ((abs(gator->getPosx() - fsu->getPosx()) <= 20) && (abs(gator->getPosy() - fsu->getPosy()) <= 20)) {
-        if (gator->getLives() > 1) {
-            lostLife();
-        }
-        else {
-            gator->setLives(0);
-            win = false;
-            gameOver();
-        }
-    }
-    else if ((abs(gator->getPosx() - georgia->getPosx()) <= 20) && (abs(gator->getPosy() - georgia->getPosy()) <= 20)) {
-        if (gator->getLives() > 1) {
-            lostLife();
-        }
-        else {
-            gator->setLives(0);
-            win = false;
-            gameOver();
-        }
-    }
-    else if ((abs(gator->getPosx() - lsu->getPosx()) <= 20) && (abs(gator->getPosy() - lsu->getPosy()) <= 20)) {
-        if (gator->getLives() > 1) {
-            lostLife();
-        }
-        else {
-            gator->setLives(0);
-            win = false;
-            gameOver();
-        }
-    }
-    else if ((abs(gator->getPosx() - kentucky->getPosx()) <= 20) && (abs(gator->getPosy() - kentucky->getPosy()) <= 20)) {
+    if (((abs(gator->getPosx() - fsu->getPosx()) <= 20) && (abs(gator->getPosy() - fsu->getPosy()) <= 20))          ||
+        ((abs(gator->getPosx() - georgia->getPosx()) <= 20) && (abs(gator->getPosy() - georgia->getPosy()) <= 20))  ||
+        ((abs(gator->getPosx() - lsu->getPosx()) <= 20) && (abs(gator->getPosy() - lsu->getPosy()) <= 20))          ||
+        ((abs(gator->getPosx() - kentucky->getPosx()) <= 20) && (abs(gator->getPosy() - kentucky->getPosy()) <= 20))  )
+    {
         if (gator->getLives() > 1) {
             lostLife();
         }
@@ -399,7 +374,7 @@ void GameScreen::updater() {
 
 
 
-            basicSounds->setMedia(QUrl("qrc:/Audio/PacmanChomp.wav"));
+            basicSounds->setMedia(QUrl("qrc:/Audio/PacmanChomp.mp3"));
             if (basicSounds->state() == QMediaPlayer::PlayingState) {
                 basicSounds->setPosition(0);
             }
