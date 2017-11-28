@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>Audio/pacmanDeath.mp3</file>
+        <file>Audio/FinalDeathMusic.mp3</file>
     </qresource>
 </RCC>
