@@ -170,7 +170,7 @@
     <rect>
      <x>9</x>
      <y>705</y>
-     <width>61</width>
+     <width>71</width>
      <height>41</height>
     </rect>
    </property>
@@ -190,10 +190,10 @@
   <widget class="QLCDNumber" name="lifeCount">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>710</y>
-     <width>71</width>
-     <height>31</height>
+     <x>90</x>
+     <y>700</y>
+     <width>111</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
