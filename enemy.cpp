@@ -607,6 +607,7 @@ void Enemy::scatter()
             posx -= speed;
             moving = true;
         }
+
         else
         {
             moving = false;
