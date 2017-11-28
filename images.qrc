@@ -22,5 +22,13 @@
         <file>Images/Characters/lsu_forward.png</file>
         <file>Images/Characters/lsu_reverse.png</file>
         <file>Images/Characters/fsu_forward_down.png</file>
+        <file>Images/Buttons/away_plate.png</file>
+        <file>Images/Buttons/home_plate.png</file>
+        <file>Images/Buttons/lives_plate.png</file>
+        <file>Images/Buttons/pause_plate.png</file>
+        <file>Images/Buttons/resume_plate.png</file>
+        <file>Images/Buttons/sound_muted_plate.png</file>
+        <file>Images/Buttons/sound_plate.png</file>
+        <file>Images/Buttons/start_button.png</file>
     </qresource>
 </RCC>
