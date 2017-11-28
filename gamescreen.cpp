@@ -55,6 +55,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     kentuckyCounter = 0;
 
     score = 0;
+    mascotPoints = 200;
 
 
     playBackgroundMusic();
@@ -146,6 +147,15 @@ void GameScreen::resetGame()
     ui->retryLabel->setVisible(false);
     ui->yesButton->setVisible(false);
     ui->noButton->setVisible(false);
+    ui->AwayLabel->setVisible(true);
+    ui->awayScore->setVisible(true);
+    ui->gameView->setVisible(true);
+    ui->lifeCount->setVisible(true);
+    ui->LifeLabel->setVisible(true);
+    ui->pauseButton->setVisible(true);
+    ui->resumeButton->setVisible(true);
+    ui->scoreLabel->setVisible(true);
+    ui->scoreValue->setVisible(true);
 
     resetCharacterPositions();
 
@@ -219,6 +229,15 @@ void GameScreen::gameOver() {
     ui->retryLabel->setText(retryString);
     ui->yesButton->setVisible(true);
     ui->noButton->setVisible(true);
+    ui->AwayLabel->setVisible(false);
+    ui->awayScore->setVisible(false);
+    ui->gameView->setVisible(false);
+    ui->lifeCount->setVisible(false);
+    ui->LifeLabel->setVisible(false);
+    ui->pauseButton->setVisible(false);
+    ui->resumeButton->setVisible(false);
+    ui->scoreLabel->setVisible(false);
+    ui->scoreValue->setVisible(false);
 }
 
 void GameScreen::fsuInitSeq()
@@ -329,10 +348,33 @@ void GameScreen::ghostCollision() {
         ((abs(gator->getPosx() - lsu->getPosx()) <= 20) && (abs(gator->getPosy() - lsu->getPosy()) <= 20))          ||
         ((abs(gator->getPosx() - kentucky->getPosx()) <= 20) && (abs(gator->getPosy() - kentucky->getPosy()) <= 20))  )
     {
-        if (gator->getLives() > 1) {
+        if (frighten) {
+            score += mascotPoints;
+            mascotPoints *= 2;
+            if ((abs(gator->getPosx() - fsu->getPosx()) <= 20) && (abs(gator->getPosy() - fsu->getPosy()) <= 20)) {
+                fsu->setPosx(260);
+                fsu->setPosy(270);
+            }
+            else if ((abs(gator->getPosx() - georgia->getPosx()) <= 20) && (abs(gator->getPosy() - georgia->getPosy()) <= 20)) {
+                georgia->setPosx(260);
+                georgia->setPosy(270);
+            }
+            else if ((abs(gator->getPosx() - lsu->getPosx()) <= 20) && (abs(gator->getPosy() - lsu->getPosy()) <= 20)) {
+                lsu->setPosx(220);
+                lsu->setPosy(170);
+            }
+            else {
+                kentucky->setPosx(300);
+                kentucky->setPosy(270);
+            }
+        }
+
+        else if (gator->getLives() > 1) {
+            mascotPoints = 200;
             lostLife();
         }
         else {
+            mascotPoints = 200;
             gator->setLives(0);
             win = false;
             gameOver();
@@ -367,7 +409,7 @@ void GameScreen::updater() {
 
     score++;
     ui->lifeCount->display(gator->getLives());
-    ui->scoreValue->display(score/30);
+    ui->scoreValue->display(score);
 
     ghostCollision();
 
