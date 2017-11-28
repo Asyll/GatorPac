@@ -30,7 +30,8 @@ SOURCES += \
     gamescreen.cpp \
     gamemap.cpp \
     player.cpp \
-    enemy.cpp
+    enemy.cpp \
+    dots.cpp
 
 HEADERS += \
         titlescreen.h \
@@ -38,7 +39,8 @@ HEADERS += \
     gamemap.h \
     player.h \
     enemy.h \
-    direction.h
+    direction.h \
+    dots.h
 
 FORMS += \
     titlescreen.ui \
