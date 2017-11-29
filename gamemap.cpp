@@ -4,7 +4,7 @@
 // PUBLIC Functions //
 GameMap::GameMap()
 {
-    //mapImage.load(":/Images/swampmap.png");
+    mapImage.load(":/Images/swampmap.png");
 
     makeMapPaths();
 }
@@ -16,7 +16,7 @@ QRectF GameMap::boundingRect() const
 
 void GameMap::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    //painter->drawPixmap(0,0,560,620,mapImage);
+    painter->drawPixmap(0,0,560,620,mapImage);
 
     for (QPoint point : dotLocations)
     {

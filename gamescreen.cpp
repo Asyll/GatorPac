@@ -24,6 +24,8 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     ui->yesButton->setVisible(false);
     ui->noButton->setVisible(false);
     ui->resumeButton->setVisible(false);
+    ui->scoreLabel2->setVisible(false);
+    ui->scoreValue2->setVisible(false);
 
     // Default Player(260,450,5)
     gator = new Player(260,450,5);
@@ -147,6 +149,8 @@ void GameScreen::resetGame()
     ui->retryLabel->setVisible(false);
     ui->yesButton->setVisible(false);
     ui->noButton->setVisible(false);
+    ui->scoreLabel2->setVisible(false);
+    ui->scoreValue2->setVisible(false);
     ui->AwayLabel->setVisible(true);
     ui->awayScore->setVisible(true);
     ui->gameView->setVisible(true);
@@ -221,14 +225,14 @@ void GameScreen::lostLife() {
 void GameScreen::gameOver() {
     playDeathMusic();
 
-    retryString = QString("  Score: ") + QString::number(score) + QString(" Would you like to retry?");
-
     ui->lifeCount->display(gator->getLives());
     timer->stop();
     ui->retryLabel->setVisible(true);
-    ui->retryLabel->setText(retryString);
     ui->yesButton->setVisible(true);
     ui->noButton->setVisible(true);
+    ui->scoreLabel2->setVisible(true);
+    ui->scoreValue2->setVisible(true);
+    ui->scoreValue2->display(score);
     ui->AwayLabel->setVisible(false);
     ui->awayScore->setVisible(false);
     ui->gameView->setVisible(false);

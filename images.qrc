@@ -30,5 +30,10 @@
         <file>Images/Buttons/start_button.png</file>
         <file>Images/Buttons/sound_plate_redux.png</file>
         <file>Images/Buttons/sound_muted_plate-reV2.png</file>
+        <file>Images/Buttons/congratulations_plate.png</file>
+        <file>Images/Buttons/gameover_plate.png</file>
+        <file>Images/Buttons/retry_button.png</file>
+        <file>Images/Buttons/score_plate_v2.png</file>
+        <file>Images/Buttons/quit_button.png</file>
     </qresource>
 </RCC>

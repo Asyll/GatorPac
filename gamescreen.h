@@ -45,7 +45,6 @@ private:
     bool win = false;
     bool yesBtnClicked = false;
     bool frighten = false;
-    QString retryString;
 
     Direction currentTmpDir;
     Direction nextTmpDir;
