@@ -237,10 +237,10 @@
   <widget class="QPushButton" name="musicButton">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>480</x>
      <y>690</y>
-     <width>80</width>
-     <height>60</height>
+     <width>60</width>
+     <height>58</height>
     </rect>
    </property>
    <property name="font">
@@ -298,9 +298,15 @@
     <rect>
      <x>100</x>
      <y>510</y>
-     <width>131</width>
-     <height>61</height>
+     <width>115</width>
+     <height>55</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
    <property name="font">
     <font>
@@ -326,8 +332,8 @@
     <rect>
      <x>300</x>
      <y>510</y>
-     <width>131</width>
-     <height>61</height>
+     <width>115</width>
+     <height>55</height>
     </rect>
    </property>
    <property name="font">
@@ -353,21 +359,21 @@
    <property name="geometry">
     <rect>
      <x>230</x>
-     <y>685</y>
-     <width>131</width>
-     <height>61</height>
+     <y>690</y>
+     <width>116</width>
+     <height>52</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>131</width>
+     <width>0</width>
      <height>0</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>131</width>
-     <height>131</height>
+     <width>16777215</width>
+     <height>16777215</height>
     </size>
    </property>
    <property name="font">
@@ -384,7 +390,7 @@
    </property>
    <property name="iconSize">
     <size>
-     <width>150</width>
+     <width>155</width>
      <height>150</height>
     </size>
    </property>
@@ -393,9 +399,9 @@
    <property name="geometry">
     <rect>
      <x>230</x>
-     <y>685</y>
-     <width>131</width>
-     <height>61</height>
+     <y>690</y>
+     <width>116</width>
+     <height>52</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -406,7 +412,7 @@
    </property>
    <property name="iconSize">
     <size>
-     <width>150</width>
+     <width>155</width>
      <height>150</height>
     </size>
    </property>
@@ -414,10 +420,10 @@
   <widget class="QPushButton" name="muteButton">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>480</x>
      <y>690</y>
-     <width>80</width>
-     <height>60</height>
+     <width>60</width>
+     <height>58</height>
     </rect>
    </property>
    <property name="styleSheet">
