@@ -139,9 +139,14 @@ void GameScreen::on_pauseButton_clicked() {
 }
 
 void GameScreen::on_resumeButton_clicked() {
-    timer->start();
-    ui->resumeButton->setVisible(false);
-    ui->pauseButton->setVisible(true);
+    if (ui->yesButton->isVisible() == true) {
+        return;
+    }
+    else {
+        timer->start();
+        ui->resumeButton->setVisible(false);
+        ui->pauseButton->setVisible(true);
+    }
 }
 
 void GameScreen::resetGame()
