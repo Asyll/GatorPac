@@ -253,7 +253,7 @@ void GameScreen::waka() {
 }
 
 void GameScreen::winGame() {
-    //playWinMusic();
+    playWinMusic();
 
     ui->lifeCount->display(gator->getLives());
     timer->stop();

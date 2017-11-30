@@ -51,5 +51,6 @@ RESOURCES += images.qrc \
     maingameaudio.qrc \
     lifelostaudio.qrc \
     finaldeathaudio.qrc \
-    titleanimation.qrc
+    titleanimation.qrc \
+    wakasounds.qrc
 
