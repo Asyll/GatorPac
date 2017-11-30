@@ -50,5 +50,6 @@ RESOURCES += images.qrc \
     titleaudio.qrc \
     maingameaudio.qrc \
     lifelostaudio.qrc \
-    finaldeathaudio.qrc
+    finaldeathaudio.qrc \
+    titleanimation.qrc
 

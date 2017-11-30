@@ -1,7 +1,6 @@
 #include "gamemap.h"
 #include <iostream>
 
-// PUBLIC Functions //
 GameMap::GameMap()
 {
     mapImage.load(":/Images/swampmap.png");
@@ -18,10 +17,12 @@ void GameMap::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 {
     painter->drawPixmap(0,0,560,620,mapImage);
 
+    /* Draw debug dot points
     for (QPoint point : dotLocations)
     {
         painter->drawPoint(point);
     }
+    */
 
     /* Draw debug paths
     for (QPoint point : moveablePath)
@@ -43,137 +44,122 @@ bool GameMap::canMove(QPoint point)
     return false;
 }
 
-// PRIVATE Functions //
+const QVector<QPoint>* GameMap::getDotVector()
+{
+    makeMapDots();
+    return &dotLocations;
+}
 
 // Creates all the moveable paths on the game map
 void GameMap::makeMapPaths()
 {
     // Horizontal paths
     // Top
-    createDotPoints(10,10,230,10);
-    createDotPoints(290,10,510,10);
-    createDotPoints(10,90,510,90);
-    createDotPoints(10,150,110,150);
-    createDotPoints(170,150,230,150);
-    createDotPoints(170,210,350,210);
-    createDotPoints(290,150,350,150);
-    createDotPoints(410,150,510,150);
-    // Teleport Dots
-    createDotPoints(0,270,170,270);
-    createDotPoints(350,270,520,270);
-    // Bottom
-    createDotPoints(170,330,350,330);
-    createDotPoints(10,390,230,390);
-    createDotPoints(290,390,510,390);
-    createDotPoints(10,450,50,450);
-    createDotPoints(110,450,410,450);
-    createDotPoints(470,450,510,450);
-    createDotPoints(10,510,110,510);
-    createDotPoints(170,510,230,510);
-    createDotPoints(290,510,350,510);
-    createDotPoints(410,510,510,510);
-    createDotPoints(10,570,510,570);
-
-    // Verticle Dots
-    // Left
-    createDotPoints(10,10,10,150);
-    createDotPoints(10,390,10,450);
-    createDotPoints(10,510,10,570);
-    createDotPoints(50,450,50,510);
-    createDotPoints(110,10,110,510);
-    createDotPoints(170,90,170,150);
-    createDotPoints(170,210,170,390);
-    createDotPoints(170,450,170,510);
-    createDotPoints(230,10,230,90);
-    createDotPoints(230,150,230,210);
-    createDotPoints(230,390,230,450);
-    createDotPoints(230,510,230,570);
-
-    // Right
-    createDotPoints(290,10,290,90);
-    createDotPoints(290,150,290,210);
-    createDotPoints(290,390,290,450);
-    createDotPoints(290,510,290,570);
-    createDotPoints(350,90,350,150);
-    createDotPoints(350,210,350,390);
-    createDotPoints(350,450,350,510);
-    createDotPoints(410,10,410,510);
-    createDotPoints(470,450,470,510);
-    createDotPoints(510,10,510,150);
-    createDotPoints(510,390,510,450);
-    createDotPoints(510,510,510,570);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Horizontal paths
-    // Top
-    createPathPoints(10,10,230,10);
-    createPathPoints(290,10,510,10);
-    createPathPoints(10,90,510,90);
-    createPathPoints(10,150,110,150);
-    createPathPoints(170,150,230,150);
-    createPathPoints(170,210,350,210);
-    createPathPoints(290,150,350,150);
-    createPathPoints(410,150,510,150);
+    generatePath(10,10,230,10);
+    generatePath(290,10,510,10);
+    generatePath(10,90,510,90);
+    generatePath(10,150,110,150);
+    generatePath(170,150,230,150);
+    generatePath(170,210,350,210);
+    generatePath(290,150,350,150);
+    generatePath(410,150,510,150);
     // Teleport paths
-    createPathPoints(0,270,170,270);
-    createPathPoints(350,270,520,270);
+    generatePath(0,270,170,270);
+    generatePath(350,270,520,270);
     // Bottom
-    createPathPoints(170,330,350,330);
-    createPathPoints(10,390,230,390);
-    createPathPoints(290,390,510,390);
-    createPathPoints(10,450,50,450);
-    createPathPoints(110,450,410,450);
-    createPathPoints(470,450,510,450);
-    createPathPoints(10,510,110,510);
-    createPathPoints(170,510,230,510);
-    createPathPoints(290,510,350,510);
-    createPathPoints(410,510,510,510);
-    createPathPoints(10,570,510,570);
+    generatePath(170,330,350,330);
+    generatePath(10,390,230,390);
+    generatePath(290,390,510,390);
+    generatePath(10,450,50,450);
+    generatePath(110,450,410,450);
+    generatePath(470,450,510,450);
+    generatePath(10,510,110,510);
+    generatePath(170,510,230,510);
+    generatePath(290,510,350,510);
+    generatePath(410,510,510,510);
+    generatePath(10,570,510,570);
 
     // Verticle paths
     // Left
-    createPathPoints(10,10,10,150);
-    createPathPoints(10,390,10,450);
-    createPathPoints(10,510,10,570);
-    createPathPoints(50,450,50,510);
-    createPathPoints(110,10,110,510);
-    createPathPoints(170,90,170,150);
-    createPathPoints(170,210,170,390);
-    createPathPoints(170,450,170,510);
-    createPathPoints(230,10,230,90);
-    createPathPoints(230,150,230,210);
-    createPathPoints(230,390,230,450);
-    createPathPoints(230,510,230,570);
+    generatePath(10,10,10,150);
+    generatePath(10,390,10,450);
+    generatePath(10,510,10,570);
+    generatePath(50,450,50,510);
+    generatePath(110,10,110,510);
+    generatePath(170,90,170,150);
+    generatePath(170,210,170,390);
+    generatePath(170,450,170,510);
+    generatePath(230,10,230,90);
+    generatePath(230,150,230,210);
+    generatePath(230,390,230,450);
+    generatePath(230,510,230,570);
 
     // Right
-    createPathPoints(290,10,290,90);
-    createPathPoints(290,150,290,210);
-    createPathPoints(290,390,290,450);
-    createPathPoints(290,510,290,570);
-    createPathPoints(350,90,350,150);
-    createPathPoints(350,210,350,390);
-    createPathPoints(350,450,350,510);
-    createPathPoints(410,10,410,510);
-    createPathPoints(470,450,470,510);
-    createPathPoints(510,10,510,150);
-    createPathPoints(510,390,510,450);
-    createPathPoints(510,510,510,570);
+    generatePath(290,10,290,90);
+    generatePath(290,150,290,210);
+    generatePath(290,390,290,450);
+    generatePath(290,510,290,570);
+    generatePath(350,90,350,150);
+    generatePath(350,210,350,390);
+    generatePath(350,450,350,510);
+    generatePath(410,10,410,510);
+    generatePath(470,450,470,510);
+    generatePath(510,10,510,150);
+    generatePath(510,390,510,450);
+    generatePath(510,510,510,570);
 }
-void GameMap::createDotPoints(int startx, int starty, int endx, int endy)
+
+void GameMap::makeMapDots()
+{
+    // Horizontal dots
+    // Top
+    generateDot(10,10,230,10);
+    generateDot(290,10,510,10);
+    generateDot(10,90,510,90);
+    generateDot(10,150,110,150);
+    generateDot(170,150,230,150);
+    generateDot(290,150,350,150);
+    generateDot(410,150,510,150);
+    // Bottom
+    generateDot(10,390,230,390);
+    generateDot(290,390,510,390);
+    generateDot(10,450,50,450);
+    generateDot(110,450,230,450);
+    generateDot(290,450,410,450);
+    generateDot(470,450,510,450);
+    generateDot(10,510,110,510);
+    generateDot(170,510,230,510);
+    generateDot(290,510,350,510);
+    generateDot(410,510,510,510);
+    generateDot(10,570,510,570);
+
+    // Verticle Dots
+    // Left
+    generateDot(10,10,10,150);
+    generateDot(10,390,10,450);
+    generateDot(10,510,10,570);
+    generateDot(50,450,50,510);
+    generateDot(110,10,110,510);
+    generateDot(170,90,170,150);
+    generateDot(170,450,170,510);
+    generateDot(230,10,230,90);
+    generateDot(230,390,230,450);
+    generateDot(230,510,230,570);
+
+    // Right
+    generateDot(290,10,290,90);
+    generateDot(290,390,290,450);
+    generateDot(290,510,290,570);
+    generateDot(350,90,350,150);
+    generateDot(350,450,350,510);
+    generateDot(410,10,410,510);
+    generateDot(470,450,470,510);
+    generateDot(510,10,510,150);
+    generateDot(510,390,510,450);
+    generateDot(510,510,510,570);
+}
+
+void GameMap::generateDot(int startx, int starty, int endx, int endy)
 {
     QPoint point;
     const int DIVISOR = 20;
@@ -251,7 +237,7 @@ void GameMap::createDotPoints(int startx, int starty, int endx, int endy)
 }
 
 // Creates the points on which characters will move
-void GameMap::createPathPoints(int startx, int starty, int endx, int endy)
+void GameMap::generatePath(int startx, int starty, int endx, int endy)
 {
     QPoint point;
 

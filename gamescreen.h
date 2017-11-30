@@ -41,6 +41,8 @@ private:
     Enemy *georgia;
     Enemy *kentucky;
 
+    Dots *dots;
+
     int score;
     bool win = false;
     bool yesBtnClicked = false;

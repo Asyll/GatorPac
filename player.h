@@ -4,7 +4,6 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <QObject>
-#include "gamemap.h"
 #include "direction.h"
 
 class Player : public QGraphicsItem

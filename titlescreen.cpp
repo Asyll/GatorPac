@@ -2,14 +2,18 @@
 #include "gamescreen.h"
 #include "ui_titlescreen.h"
 #include <QMediaPlayer>
+#include <Qmovie>
 
 TitleScreen::TitleScreen(QWidget *parent) : QWidget(parent), ui(new Ui::TitleScreen)
 {
     ui->setupUi(this);
 
+    QMovie *animation = new QMovie(":/Images/AnimatedTitle.gif");
     QLabel *logo = ui->logo;
-    logo->setPixmap(QPixmap(":/Images/gatorlogo.png"));
+    logo->setMovie(animation);
+    //logo->setPixmap(QPixmap(":/Images/gatorlogo.png"));
     logo->setScaledContents( true );
+    animation->start();
 
     playBackgroundMusic();
 

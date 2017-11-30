@@ -13,17 +13,22 @@ public:
     GameMap();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
     bool canMove(QPoint);
+
+    const QVector<QPoint>* getDotVector();
 
 
 private:
+
     QPixmap mapImage;
-    void createPathPoints(int,int,int,int);
-    void createDotPoints(int, int, int, int);
     QVector<QPoint> moveablePath;
     QVector<QPoint> dotLocations;
-    void makeMapPaths();
 
+    void generatePath(int,int,int,int);
+    void generateDot(int, int, int, int);
+    void makeMapPaths();
+    void makeMapDots();
 
 };
 

@@ -35,5 +35,6 @@
         <file>Images/Buttons/retry_button.png</file>
         <file>Images/Buttons/score_plate_v2.png</file>
         <file>Images/Buttons/quit_button.png</file>
+        <file>Images/timdots.png</file>
     </qresource>
 </RCC>

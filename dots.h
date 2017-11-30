@@ -1,27 +1,23 @@
 #ifndef DOTS_H
-#define DOTS_H#
-#include "player.h"
+#define DOTS_H
 
-class Dots: public QGraphicsItem
+#include <QPainter>
+#include <QGraphicsItem>
+#include <QVector>
+
+class Dots : public QGraphicsItem
 {
 public:
-    Dots(int posx, int posy);
+    Dots(const QVector<QPoint>* points);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
 
+    void setPoints(const QVector<QPoint>* points);
+
 private:
-    int posx;
-    int posy;
-    QPixmap dot;
-
-
-
-    int getPosx() const;
-    void setPosx(int x);
-
-    int getPosy() const;
-    void setPosy(int y);
-    int dotW, dotH;
+    const int dotW, dotH;
+    QPixmap dotImg;
+    QVector<QPoint> points;
 
 };
 

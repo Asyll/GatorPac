@@ -29,6 +29,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
 
     // Default Player(260,450,5)
     gator = new Player(260,450,5);
+    gator->setZValue(4);
     scene->addItem(gator);
 
     currentTmpDir = Direction::NONE;
@@ -38,17 +39,30 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     connect(timer, SIGNAL(timeout()), this, SLOT(updater()));
     timer->start(1000/30);
 
+
+
+
     fsu = new Enemy(260,210,5,"fsu", gameMap, gator, GhostType::RED);
+    fsu->setZValue(5);
     scene->addItem(fsu);
 
     georgia = new Enemy(260,270,5,"georgia", gameMap, gator, GhostType::PINK);
+    georgia->setZValue(5);
     scene->addItem(georgia);
 
     lsu = new Enemy(220,270,5,"lsu", gameMap, gator, GhostType::BLUE);
+    lsu->setZValue(5);
     scene->addItem(lsu);
 
     kentucky = new Enemy(300,270,5,"kentucky", gameMap, gator, GhostType::ORANGE);
+    kentucky->setZValue(5);
     scene->addItem(kentucky);
+
+
+
+    dots = new Dots(gameMap->getDotVector());
+    scene->addItem(dots);
+
 
 
     fsuCounter = 0;
@@ -413,7 +427,7 @@ void GameScreen::updater() {
 
     score++;
     ui->lifeCount->display(gator->getLives());
-    ui->scoreValue->display(score);
+    ui->scoreValue->display(score/30);
 
     ghostCollision();
 

@@ -1,4 +1,5 @@
 #include "player.h"
+#include <iostream>
 
 Player::Player(int posx, int posy, int speed_) :
     speed(speed_),
@@ -22,6 +23,7 @@ Player::Player(int posx, int posy, int speed_) :
 QRectF Player::boundingRect() const
 {
     return QRect(0,0,charW,charH);
+    std::cout << "0" ;
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

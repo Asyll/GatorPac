@@ -1,19 +1,13 @@
-#include "dots.h"
-#include <QGraphicsItem>
-#include <QPainter>
+#include "Dots.h"
+#include <iostream>
 
-
-
-Dots::Dots(int posx, int posy):
-    dotH(20),
-    dotW(20)
+Dots::Dots(const QVector<QPoint>* points):
+    dotW(40),
+    dotH(40)
 {
-    this->posx = posx;
-    this->posy = posy;
-    dot.load("://Images/timdots.png");
-}
-void Dots::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
-    painter->drawPixmap(posx, posy, dotW, dotH, dot);
+    setPoints(points);
+
+    dotImg.load("://Images/timdots.png");
 }
 
 QRectF Dots::boundingRect() const
@@ -21,30 +15,18 @@ QRectF Dots::boundingRect() const
     return QRect(0,0,dotW,dotH);
 }
 
-int Dots::getPosx() const
+void Dots::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    return posx;
-}
-
-void Dots::setPosx(int x)
-{
-    if (x >= 0 && x <= 520)
+    for (QPoint point : points)
     {
-        posx = x;
+        painter->drawPixmap(point.x(), point.y(), dotW, dotH, dotImg);
     }
 }
 
-int Dots::getPosy() const
+void Dots::setPoints(const QVector<QPoint>* points)
 {
-    return posy;
-}
-
-void Dots::setPosy(int y)
-{
-    if (y >= 10 && y <= 570)
+    if (!points->isEmpty())
     {
-        posy = y;
+        this->points = *points;
     }
 }
-
-
