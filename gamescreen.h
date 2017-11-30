@@ -72,6 +72,7 @@ private:
     void fsuInitSeq();
     void georgiaInitSeq();
 
+    void releaseFSU();
     void releaseGeorgia();
 
     void keyPressEvent(QKeyEvent *event);
