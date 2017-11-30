@@ -36,5 +36,6 @@
         <file>Images/Buttons/score_plate_v2.png</file>
         <file>Images/Buttons/quit_button.png</file>
         <file>Images/timdots.png</file>
+        <file>Images/gabedots.png</file>
     </qresource>
 </RCC>

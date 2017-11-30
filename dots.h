@@ -17,6 +17,7 @@ public:
 private:
     const int dotW, dotH;
     QPixmap dotImg;
+    QPixmap largeDotImg;
     QVector<QPoint> points;
 
 };
