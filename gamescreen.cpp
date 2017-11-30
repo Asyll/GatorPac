@@ -201,6 +201,7 @@ void GameScreen::resetGame()
 
     playBackgroundMusic();
     yesBtnClicked = false;
+    win = false;
     timer->start();
 }
 
@@ -244,7 +245,7 @@ void GameScreen::lostLife() {
 }
 
 void GameScreen::winGame() {
-    playWinMusic();
+    //playWinMusic();
 
     ui->lifeCount->display(gator->getLives());
     timer->stop();
@@ -397,7 +398,9 @@ void GameScreen::ghostCollision() {
     {
         if (frighten) {
             score += mascotPoints;
-            mascotPoints *= 2;
+            if (mascotPoints < 1600) {
+                mascotPoints *= 2;
+            }
             if ((abs(gator->getPosx() - fsu->getPosx()) <= 20) && (abs(gator->getPosy() - fsu->getPosy()) <= 20)) {
                 fsu->setPosx(260);
                 fsu->setPosy(270);
@@ -440,6 +443,10 @@ void GameScreen::updater() {
 
     playerMove();
 
+    if (win == true) {
+        winGame();
+    }
+
     if (!fsu->isInitiated())
         fsuInitSeq();
 
@@ -454,9 +461,8 @@ void GameScreen::updater() {
         georgia->move();
     }
 
-    score++;
     ui->lifeCount->display(gator->getLives());
-    ui->scoreValue->display(score/30);
+    ui->scoreValue->display(score);
 
     ghostCollision();
 
@@ -465,20 +471,36 @@ void GameScreen::updater() {
     fsu->update();
     georgia->update();
 
-    /*this loop is for collision test between GatorPac and the dots
-        for() {
+    if (dots->points.isEmpty()) {
+        win = true;
+    }
+
+    //wakaSound->setMedia(QUrl("qrc:/Audio/PacmanChomp.mp3"));
+    //this loop is for collision test between GatorPac and the dots
+        for(int i = 0; i < dots->points.size(); i++) {
+            if (gator->getPosx() == dots->points[i].x() && gator->getPosy() == dots->points[i].y()) {
+                if ((dots->points[i].x() == 10 && dots->points[i].y() == 50) ||
+                    (dots->points[i].x() == 510 && dots->points[i].y() == 50) ||
+                    (dots->points[i].x() == 10 && dots->points[i].y() == 450) ||
+                    (dots->points[i].x() == 510 && dots->points[i].y() == 450)) {
+                    score += 50;
+                    frighten = true;
+                }
+                else {
+                    score += 10;
+                }
+                dots->points.remove(i);
 
 
-
-            basicSounds->setMedia(QUrl("qrc:/Audio/PacmanChomp.mp3"));
-            if (basicSounds->state() == QMediaPlayer::PlayingState) {
-                basicSounds->setPosition(0);
-            }
-            else if (basicSounds->state() == QMediaPlayer::StoppedState) {
-                basicSounds->play();
+//                wakaSound->play(QUrl("qrc:/Audio/PacmanChomp.mp3"));
+//                if (wakaSound->state() == QMediaPlayer::PlayingState) {
+//                    wakaSound->setPosition(0);
+//                }
+//                else if (wakaSound->state() == QMediaPlayer::StoppedState) {
+//                    wakaSound->play();
+//                }
             }
         }
-    */
 }
 
 void GameScreen::playerMove()
