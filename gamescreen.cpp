@@ -376,6 +376,18 @@ void GameScreen::georgiaInitSeq()
     }
 }
 
+void GameScreen::releaseFSU()
+{
+    if (fsu->getPosy() > 210 && fsu->getPosy() <= 270 && fsu->getPosx() == 260)
+    {
+        fsu->setPosy(fsu->getPosy() - 2);
+    }
+    else
+    {
+        fsu->setReleased(true);
+    }
+}
+
 void GameScreen::releaseGeorgia()
 {
     if (georgia->getPosy() > 210 && georgia->getPosy() <= 270 && georgia->getPosx() == 260)
@@ -455,10 +467,14 @@ void GameScreen::updater() {
         winGame();
     }
 
-    if (!fsu->isInitiated())
-        fsuInitSeq();
+    releaseFSU();
+    if (fsu->isReleased())
+    {
+        if (!fsu->isInitiated())
+            fsuInitSeq();
 
-    fsu->move();
+        fsu->move();
+    }
 
     releaseGeorgia();
     if (georgia->isReleased())

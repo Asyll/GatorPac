@@ -36,6 +36,7 @@ void Dots::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 void Dots::setPoints(const QVector<QPoint>* points)
 {
+    this->points.clear();
     if (!points->isEmpty())
     {
         this->points = *points;
