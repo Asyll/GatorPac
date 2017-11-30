@@ -27,6 +27,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     ui->scoreLabel2->setVisible(false);
     ui->scoreValue2->setVisible(false);
     ui->winLabel->setVisible(false);
+    wakaSound->setMedia(QUrl("qrc:/Audio/PacmanChomp.mp3"));
 
     // Default Player(260,450,5)
     gator = new Player(260,450,5);
@@ -242,6 +243,13 @@ void GameScreen::lostLife() {
     gator->setLives(gator->getLives() - 1);
 
     resetCharacterPositions();
+}
+
+void GameScreen::waka() {
+    if (wakaSound->state() == QMediaPlayer::StoppedState) {
+        wakaSound->setPosition(0);
+        wakaSound->play();
+    }
 }
 
 void GameScreen::winGame() {
@@ -475,7 +483,6 @@ void GameScreen::updater() {
         win = true;
     }
 
-    //wakaSound->setMedia(QUrl("qrc:/Audio/PacmanChomp.mp3"));
     //this loop is for collision test between GatorPac and the dots
         for(int i = 0; i < dots->points.size(); i++) {
             if (gator->getPosx() == dots->points[i].x() && gator->getPosy() == dots->points[i].y()) {
@@ -490,15 +497,7 @@ void GameScreen::updater() {
                     score += 10;
                 }
                 dots->points.remove(i);
-
-
-//                wakaSound->play(QUrl("qrc:/Audio/PacmanChomp.mp3"));
-//                if (wakaSound->state() == QMediaPlayer::PlayingState) {
-//                    wakaSound->setPosition(0);
-//                }
-//                else if (wakaSound->state() == QMediaPlayer::StoppedState) {
-//                    wakaSound->play();
-//                }
+                waka();
             }
         }
 }
