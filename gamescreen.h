@@ -60,6 +60,7 @@ private:
     void lostLife();
     void ghostCollision();
     void gameOver();
+    void winGame();
     void resetGame();
     void resetCharacterPositions();
 

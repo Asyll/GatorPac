@@ -26,6 +26,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     ui->resumeButton->setVisible(false);
     ui->scoreLabel2->setVisible(false);
     ui->scoreValue2->setVisible(false);
+    ui->winLabel->setVisible(false);
 
     // Default Player(260,450,5)
     gator = new Player(260,450,5);
@@ -156,6 +157,7 @@ void GameScreen::resetGame()
     ui->noButton->setVisible(false);
     ui->scoreLabel2->setVisible(false);
     ui->scoreValue2->setVisible(false);
+    ui->winLabel->setVisible(false);
     ui->AwayLabel->setVisible(true);
     ui->awayScore->setVisible(true);
     ui->gameView->setVisible(true);
@@ -225,6 +227,28 @@ void GameScreen::lostLife() {
     gator->setLives(gator->getLives() - 1);
 
     resetCharacterPositions();
+}
+
+void GameScreen::winGame() {
+    playWinMusic();
+
+    ui->lifeCount->display(gator->getLives());
+    timer->stop();
+    ui->winLabel->setVisible(true);
+    ui->yesButton->setVisible(true);
+    ui->noButton->setVisible(true);
+    ui->scoreLabel2->setVisible(true);
+    ui->scoreValue2->setVisible(true);
+    ui->scoreValue2->display(score);
+    ui->AwayLabel->setVisible(false);
+    ui->awayScore->setVisible(false);
+    ui->gameView->setVisible(false);
+    ui->lifeCount->setVisible(false);
+    ui->LifeLabel->setVisible(false);
+    ui->pauseButton->setVisible(false);
+    ui->resumeButton->setVisible(false);
+    ui->scoreLabel->setVisible(false);
+    ui->scoreValue->setVisible(false);
 }
 
 void GameScreen::gameOver() {
