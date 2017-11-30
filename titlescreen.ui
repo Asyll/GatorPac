@@ -56,10 +56,10 @@
   <widget class="QPushButton" name="startBtn">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>450</y>
-     <width>341</width>
-     <height>131</height>
+     <x>180</x>
+     <y>510</y>
+     <width>185</width>
+     <height>85</height>
     </rect>
    </property>
    <property name="font">
@@ -77,13 +77,19 @@
     <string notr="true">qproperty-icon:url(:/Images/Buttons/start_button.png);</string>
    </property>
    <property name="text">
-    <string>START</string>
+    <string/>
    </property>
    <property name="iconSize">
     <size>
      <width>250</width>
      <height>250</height>
     </size>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
+   <property name="default">
+    <bool>false</bool>
    </property>
    <property name="flat">
     <bool>true</bool>
