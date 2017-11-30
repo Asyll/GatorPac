@@ -13,11 +13,11 @@ public:
     QRectF boundingRect() const;
 
     void setPoints(const QVector<QPoint>* points);
+    QVector<QPoint> points;
 
 private:
     const int dotW, dotH;
     QPixmap dotImg;
-    QVector<QPoint> points;
 
 };
 

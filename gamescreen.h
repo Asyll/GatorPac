@@ -8,6 +8,7 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QString>
+#include <QSound>
 #include "gamemap.h"
 #include "player.h"
 #include "enemy.h"
@@ -31,6 +32,8 @@ private:
     GameMap *gameMap;
     QTimer *timer;
     QMediaPlaylist *playlist = new QMediaPlaylist();
+    //QMediaPlayer *wakaSound = new QMediaPlayer;
+    //QSound *wakaSound;
     QMediaPlayer *basicSounds = new QMediaPlayer;
     QMediaPlayer *finalDeathMusic = new QMediaPlayer;
     QMediaPlayer *finalWinMusic = new QMediaPlayer;
