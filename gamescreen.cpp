@@ -593,7 +593,6 @@ void GameScreen::collideWith(Enemy *enemy)
         {
             mascotPoints *= 2;
         }
-        enemy->setMode(Movement::CHASE);
         enemy->resetOrientation();
         enemy->setDefaultPosition();
     }
