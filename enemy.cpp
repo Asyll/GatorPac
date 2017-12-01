@@ -202,6 +202,8 @@ void Enemy::resetOrientation()
     facingDirection = Direction::RIGHT;
     direction = Direction::RIGHT;
     nextDirection = Direction::NONE;
+
+    mode = Movement::CHASE;
 }
 
 void Enemy::setDefaultPosition()
