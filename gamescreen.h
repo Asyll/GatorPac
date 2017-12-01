@@ -92,6 +92,7 @@ private slots:
     void on_noButton_clicked();
     void on_pauseButton_clicked();
     void on_resumeButton_clicked();
+    void end_fright();
 };
 
 #endif // GAMESCREEN_H

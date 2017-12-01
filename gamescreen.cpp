@@ -165,6 +165,11 @@ void GameScreen::on_resumeButton_clicked() {
     }
 }
 
+void GameScreen::end_fright()
+{
+    frighten = false;
+}
+
 void GameScreen::resetGame()
 {
     ui->retryLabel->setVisible(false);
@@ -508,6 +513,7 @@ void GameScreen::updater() {
                     (dots->points[i].x() == 510 && dots->points[i].y() == 450)) {
                     score += 50;
                     frighten = true;
+                    QTimer::singleShot(10000, this, SLOT(end_fright()));
                 }
                 else {
                     score += 10;
