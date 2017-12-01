@@ -293,7 +293,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="yesButton">
+  <widget class="QPushButton" name="retryButton">
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -327,7 +327,7 @@
     </size>
    </property>
   </widget>
-  <widget class="QPushButton" name="noButton">
+  <widget class="QPushButton" name="quitButton">
    <property name="geometry">
     <rect>
      <x>335</x>
@@ -503,8 +503,8 @@
   <zorder>yPos</zorder>
   <zorder>musicButton</zorder>
   <zorder>retryLabel</zorder>
-  <zorder>yesButton</zorder>
-  <zorder>noButton</zorder>
+  <zorder>retryButton</zorder>
+  <zorder>quitButton</zorder>
   <zorder>pauseButton</zorder>
   <zorder>resumeButton</zorder>
   <zorder>muteButton</zorder>

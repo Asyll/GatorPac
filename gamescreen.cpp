@@ -22,8 +22,8 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     scene->addItem(gameMap);
 
     ui->retryLabel->setVisible(false);
-    ui->yesButton->setVisible(false);
-    ui->noButton->setVisible(false);
+    ui->retryButton->setVisible(false);
+    ui->quitButton->setVisible(false);
     ui->resumeButton->setVisible(false);
     ui->scoreLabel2->setVisible(false);
     ui->scoreValue2->setVisible(false);
@@ -148,7 +148,7 @@ void GameScreen::on_muteButton_clicked() {
 }
 
 void GameScreen::on_pauseButton_clicked() {
-    if (ui->yesButton->isVisible() == true) {
+    if (ui->retryButton->isVisible() == true) {
         return;
     }
     else {
@@ -159,7 +159,7 @@ void GameScreen::on_pauseButton_clicked() {
 }
 
 void GameScreen::on_resumeButton_clicked() {
-    if (ui->yesButton->isVisible() == true) {
+    if (ui->retryButton->isVisible() == true) {
         return;
     }
     else {
@@ -195,8 +195,8 @@ void GameScreen::end_fright()
 void GameScreen::resetGame()
 {
     ui->retryLabel->setVisible(false);
-    ui->yesButton->setVisible(false);
-    ui->noButton->setVisible(false);
+    ui->retryButton->setVisible(false);
+    ui->quitButton->setVisible(false);
     ui->scoreLabel2->setVisible(false);
     ui->scoreValue2->setVisible(false);
     ui->winLabel->setVisible(false);
@@ -293,8 +293,8 @@ void GameScreen::winGame() {
     ui->lifeCount->display(gator->getLives());
     timer->stop();
     ui->winLabel->setVisible(true);
-    ui->yesButton->setVisible(true);
-    ui->noButton->setVisible(true);
+    ui->retryButton->setVisible(true);
+    ui->quitButton->setVisible(true);
     ui->scoreLabel2->setVisible(true);
     ui->scoreValue2->setVisible(true);
     ui->scoreValue2->display(score);
@@ -315,8 +315,8 @@ void GameScreen::gameOver() {
     ui->lifeCount->display(gator->getLives());
     timer->stop();
     ui->retryLabel->setVisible(true);
-    ui->yesButton->setVisible(true);
-    ui->noButton->setVisible(true);
+    ui->retryButton->setVisible(true);
+    ui->quitButton->setVisible(true);
     ui->scoreLabel2->setVisible(true);
     ui->scoreValue2->setVisible(true);
     ui->scoreValue2->display(score);
@@ -547,12 +547,12 @@ void GameScreen::releaseKentucky()
     }
 }
 
-void GameScreen::on_yesButton_clicked() {
+void GameScreen::on_retryButton_clicked() {
     yesBtnClicked = true;
     resetGame();
 }
 
-void GameScreen::on_noButton_clicked() {
+void GameScreen::on_quitButton_clicked() {
     exit(0);
 }
 

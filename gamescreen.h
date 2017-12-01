@@ -96,8 +96,8 @@ private slots:
     void updater();
     void on_musicButton_clicked();
     void on_muteButton_clicked();
-    void on_yesButton_clicked();
-    void on_noButton_clicked();
+    void on_retryButton_clicked();
+    void on_quitButton_clicked();
     void on_pauseButton_clicked();
     void on_resumeButton_clicked();
     void lsuAvailable();
