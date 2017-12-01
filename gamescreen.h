@@ -37,8 +37,9 @@ private:
     QMediaPlaylist *playlist = new QMediaPlaylist();
     QMediaPlayer *wakaSound = new QMediaPlayer;
     QMediaPlayer *basicSounds = new QMediaPlayer;
-    QMediaPlayer *finalDeathMusic = new QMediaPlayer;
-    QMediaPlayer *finalWinMusic = new QMediaPlayer;
+    QMediaPlayer *deathMusic = new QMediaPlayer;
+    QMediaPlayer *winMusic = new QMediaPlayer;
+    QMediaPlayer *backgroundMusic = new QMediaPlayer;
 
     Player *gator;
     Enemy *lsu;
@@ -51,7 +52,6 @@ private:
     int score;
     bool win = false;
     bool yesBtnClicked = false;
-    bool frighten = false;
     bool canReleaseLSU = false;
     bool canReleaseKentucky = false;
 
@@ -66,6 +66,7 @@ private:
     void playWinMusic();
 
     void playerMove();
+    void enemiesMove();
     void lostLife();
     void waka();
     void ghostCollision();

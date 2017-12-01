@@ -52,5 +52,6 @@ RESOURCES += images.qrc \
     lifelostaudio.qrc \
     finaldeathaudio.qrc \
     titleanimation.qrc \
-    wakasounds.qrc
+    wakasounds.qrc \
+    winmusic.qrc
 

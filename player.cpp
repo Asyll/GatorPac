@@ -8,6 +8,8 @@ Player::Player(int posx, int posy, int speed_) :
 {
     this->posx = posx;
     this->posy = posy;
+    defaultPosx = posx;
+    defaultPosy = posy;
     this->facingDirection = Direction::RIGHT;
 
     lives = 3;
@@ -23,7 +25,6 @@ Player::Player(int posx, int posy, int speed_) :
 QRectF Player::boundingRect() const
 {
     return QRect(0,0,charW,charH);
-    std::cout << "0" ;
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -105,7 +106,7 @@ void Player::setLives(int lives)
 void Player::resetOrientation()
 {
     facingDirection = Direction::RIGHT;
-    direction = Direction::RIGHT;
+    direction = Direction::NONE;
     nextDirection = Direction::NONE;
 }
 
@@ -117,4 +118,10 @@ void Player::setDirection(Direction dir)
 void Player::setNextDirection(Direction dir)
 {
     nextDirection = dir;
+}
+
+void Player::setDefaultPosition()
+{
+    posx = defaultPosx;
+    posy = defaultPosy;
 }

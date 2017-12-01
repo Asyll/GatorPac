@@ -3,7 +3,9 @@
 
 Enemy::Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Player* gator, GhostType type) :
     charW(40),
-    charH(40)
+    charH(40),
+    defaultPosx(posx),
+    defaultPosy(posy)
 {
     this->posx = posx;
     this->posy = posy;
@@ -199,8 +201,12 @@ void Enemy::resetOrientation()
     facingDirection = Direction::RIGHT;
     direction = Direction::RIGHT;
     nextDirection = Direction::NONE;
+}
 
-    setMode(Movement::CHASE);
+void Enemy::setDefaultPosition()
+{
+    setPosx(defaultPosx);
+    setPosy(defaultPosy);
 }
 
 void Enemy::move()

@@ -27,6 +27,7 @@ public:
     void setLives(int lives);
 
     void resetOrientation();
+    void setDefaultPosition();
 
     void setDirection(Direction dir);
 
@@ -40,6 +41,8 @@ private:
 
     // Position in pixels
     int posx, posy;
+    int defaultPosx, defaultPosy;
+
     // Image dimension in pixels
     const int charW, charH;
 

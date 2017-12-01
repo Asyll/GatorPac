@@ -116,9 +116,8 @@ void GameScreen::playDeathMusic()
     playlist->addMedia(QUrl("qrc:/Audio/FinalDeathMusic.mp3"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
-    QMediaPlayer *music = new QMediaPlayer();
-    music->setPlaylist(playlist);
-    music->play();
+    deathMusic->setPlaylist(playlist);
+    deathMusic->play();
 }
 
 void GameScreen::playWinMusic() {
@@ -127,22 +126,19 @@ void GameScreen::playWinMusic() {
     playlist->addMedia(QUrl("qrc:/Audio/September.mp3"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
-    QMediaPlayer *music = new QMediaPlayer();
-    music->setPlaylist(playlist);
-    music->play();
+    winMusic->setPlaylist(playlist);
+    winMusic->play();
 }
 
 void GameScreen::playBackgroundMusic()
 {
     playlist->clear();
-    playlist= new QMediaPlaylist();
     playlist->addMedia(QUrl("qrc:/Audio/GameScreenMusic.mp3"));
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
-    QMediaPlayer *music = new QMediaPlayer();
-    music->setPlaylist(playlist);
-    music->setVolume(30);
-    music->play();
+    backgroundMusic->setPlaylist(playlist);
+    backgroundMusic->setVolume(30);
+    backgroundMusic->play();
 }
 
 void GameScreen::on_musicButton_clicked() {
@@ -199,15 +195,17 @@ void GameScreen::kentuckyAvailable()
 
 void GameScreen::end_fright()
 {
-    frighten = false;
+    if (fsu->isReleased())
+        fsu->setMode(Movement::CHASE);
 
-    fsu->setMode(Movement::CHASE);
+    if (fsu->isReleased())
+        georgia->setMode(Movement::CHASE);
 
-    georgia->setMode(Movement::CHASE);
+    if (fsu->isReleased())
+        lsu->setMode(Movement::CHASE);
 
-    lsu->setMode(Movement::CHASE);
-
-    kentucky->setMode(Movement::CHASE);
+    if (fsu->isReleased())
+        kentucky->setMode(Movement::CHASE);
 }
 
 void GameScreen::resetGame()
@@ -255,30 +253,23 @@ void GameScreen::resetGame()
 
 void GameScreen::resetCharacters()
 {
-    fsu->setPosx(260);
-    fsu->setPosy(210);
+    fsu->setDefaultPosition();
     fsu->resetOrientation();
 
-    georgia->setPosx(260);
-    georgia->setPosy(270);
+    georgia->setDefaultPosition();
     georgia->resetOrientation();
 
-    lsu->setPosx(220);
-    lsu->setPosy(270);
+    lsu->setDefaultPosition();
     lsu->resetOrientation();
-
     canReleaseLSU = false;
     lsuReleaseTimer->start();
 
-    kentucky->setPosx(300);
-    kentucky->setPosy(270);
+    kentucky->setDefaultPosition();
     kentucky->resetOrientation();
-
     canReleaseKentucky = false;
     kentuckyReleaseTimer->start();
 
-    gator->setPosx(260);
-    gator->setPosy(450);
+    gator->setDefaultPosition();
     gator->resetOrientation();
 }
 
@@ -594,20 +585,25 @@ void GameScreen::ghostCollision() {
 
 void GameScreen::collideWith(Enemy *enemy)
 {
-    if (enemy->getMode() == Movement::FRIGHTENED) {
+    if (enemy->getMode() == Movement::FRIGHTENED)
+    {
+
         score += mascotPoints;
-        if (mascotPoints < 1600) {
+        if (mascotPoints < 1600)
+        {
             mascotPoints *= 2;
         }
+        enemy->setMode(Movement::CHASE);
         enemy->resetOrientation();
-        enemy->setPosx(260);
-        enemy->setPosy(270);
+        enemy->setDefaultPosition();
     }
-    else if (gator->getLives() > 1) {
+    else if (gator->getLives() > 1)
+    {
         mascotPoints = 200;
         lostLife();
     }
-    else {
+    else
+    {
         mascotPoints = 200;
         gator->setLives(0);
         win = false;
@@ -624,79 +620,32 @@ void GameScreen::updater() {
     //ui->xPos->display(gator->getPosx());
     //ui->yPos->display(gator->getPosy());
 
-    playerMove();
-
     if (win == true) {
         winGame();
     }
 
-    releaseFSU();
-    if (fsu->isReleased())
-    {
-        if (!fsu->isInitiated() && !frighten)
-            fsuInitSeq();
-
-        fsu->move();
-    }
-
-    releaseGeorgia();
-    if (georgia->isReleased())
-    {
-        if (!georgia->isInitiated() && !frighten)
-            georgiaInitSeq();
-
-        georgia->move();
-    }
-
-    if(canReleaseLSU)
-    {
-        releaseLSU();
-    }
-    if (lsu->isReleased())
-    {
-        if (!lsu->isInitiated() && !frighten)
-            lsuInitSeq();
-
-        lsu->move();
-    }
-
-    if (canReleaseKentucky)
-    {
-        releaseKentucky();
-    }
-    if (kentucky->isReleased())
-    {
-        if (!kentucky->isInitiated() && !frighten)
-            kentuckyInitSeq();
-
-        kentucky->move();
-    }
+    playerMove();
+    enemiesMove();
 
     ui->lifeCount->display(gator->getLives());
     ui->scoreValue->display(score);
 
     ghostCollision();
 
-    scene->update(gameMap->boundingRect());
-    gator->update();
-    fsu->update();
-    georgia->update();
-    lsu->update();
-    kentucky->update();
-
     if (dots->points.isEmpty()) {
         win = true;
     }
-
-    //this loop is for collision test between GatorPac and the dots
-        for(int i = 0; i < dots->points.size(); i++) {
-            if (gator->getPosx() == dots->points[i].x() && gator->getPosy() == dots->points[i].y()) {
-                if ((dots->points[i].x() == 10 && dots->points[i].y() == 50) ||
-                    (dots->points[i].x() == 510 && dots->points[i].y() == 50) ||
-                    (dots->points[i].x() == 10 && dots->points[i].y() == 450) ||
-                    (dots->points[i].x() == 510 && dots->points[i].y() == 450)) {
+    else
+    {
+        int pointsIndex = 0;
+        for(QPoint point : dots->points)
+        {
+            if (gator->getPosx() == point.x() && gator->getPosy() == point.y()) {
+                if ((point.x() == 10 && point.y() == 50) ||
+                    (point.x() == 510 && point.y() == 50) ||
+                    (point.x() == 10 && point.y() == 450) ||
+                    (point.x() == 510 && point.y() == 450)) {
                     score += 50;
-                    frighten = true;
 
                     fsu->setMode(Movement::FRIGHTENED);
                     georgia->setMode(Movement::FRIGHTENED);
@@ -709,10 +658,20 @@ void GameScreen::updater() {
                 else {
                     score += 10;
                 }
-                dots->points.remove(i);
+                dots->points.remove(pointsIndex);
                 waka();
             }
+            pointsIndex++;
         }
+    }
+
+    scene->update();
+    gator->update();
+    fsu->update();
+    georgia->update();
+    lsu->update();
+    kentucky->update();
+    dots->update();
 }
 
 void GameScreen::playerMove()
@@ -839,6 +798,51 @@ void GameScreen::playerMove()
     else if (gator->getPosx() == 520)
     {
         gator->setPosx(0);
+    }
+}
+
+void GameScreen::enemiesMove()
+{
+    releaseFSU();
+    if (fsu->isReleased())
+    {
+        if (!fsu->isInitiated() && fsu->getMode() != Movement::FRIGHTENED)
+            fsuInitSeq();
+
+        fsu->move();
+    }
+
+    releaseGeorgia();
+    if (georgia->isReleased())
+    {
+        if (!georgia->isInitiated() && georgia->getMode() != Movement::FRIGHTENED)
+            georgiaInitSeq();
+
+        georgia->move();
+    }
+
+    if(canReleaseLSU)
+    {
+        releaseLSU();
+    }
+    if (lsu->isReleased())
+    {
+        if (!lsu->isInitiated() && lsu->getMode() != Movement::FRIGHTENED)
+            lsuInitSeq();
+
+        lsu->move();
+    }
+
+    if (canReleaseKentucky)
+    {
+        releaseKentucky();
+    }
+    if (kentucky->isReleased())
+    {
+        if (!kentucky->isInitiated() && kentucky->getMode() != Movement::FRIGHTENED)
+            kentuckyInitSeq();
+
+        kentucky->move();
     }
 }
 

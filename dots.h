@@ -13,7 +13,7 @@ public:
     QRectF boundingRect() const;
 
     void setPoints(const QVector<QPoint>* points);
-    int dotsConsumed();
+
     QVector<QPoint> points;
 
 private:

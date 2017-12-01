@@ -43,8 +43,3 @@ void Dots::setPoints(const QVector<QPoint>* points)
         this->points = *points;
     }
 }
-
-int Dots::dotsConsumed()
-{
-    return maxDots - points.length();
-}

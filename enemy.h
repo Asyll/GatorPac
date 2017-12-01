@@ -20,6 +20,7 @@ public:
 
     void move();
     void resetOrientation();
+    void setDefaultPosition();
 
     int getSpeed() const;
     void setSpeed(int speed);
@@ -63,6 +64,7 @@ private:
 
     // Position in pixels
     int posx, posy;
+    const int defaultPosx, defaultPosy;
 
     // Image dimension in pixels
     const int charW, charH;
