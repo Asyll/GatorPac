@@ -579,7 +579,7 @@ void GameScreen::collideWith(Enemy *enemy)
         if (mascotPoints < 1600) {
             mascotPoints *= 2;
         }
-        enemy->setMode(Movement::CHASE);
+        enemy->resetOrientation();
         enemy->setPosx(260);
         enemy->setPosy(270);
     }
