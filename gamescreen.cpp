@@ -142,7 +142,7 @@ void GameScreen::playBackgroundMusic()
 }
 
 void GameScreen::on_musicButton_clicked() {
-    if (gator->getLives() == 0 && win) {
+    if (dots->points.isEmpty()) {
         playWinMusic();
     }
     else if (gator->getLives() == 0 && !win) {
@@ -246,7 +246,6 @@ void GameScreen::resetGame()
 
     playBackgroundMusic();
     yesBtnClicked = false;
-    win = false;
     timer->start();
 }
 
@@ -559,6 +558,7 @@ void GameScreen::releaseKentucky()
 
 void GameScreen::on_retryButton_clicked() {
     yesBtnClicked = true;
+    win = false;
     resetGame();
 }
 
