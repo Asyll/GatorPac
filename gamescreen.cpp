@@ -198,13 +198,13 @@ void GameScreen::end_fright()
     if (fsu->isReleased())
         fsu->setMode(Movement::CHASE);
 
-    if (fsu->isReleased())
+    if (georgia->isReleased())
         georgia->setMode(Movement::CHASE);
 
-    if (fsu->isReleased())
+    if (lsu->isReleased())
         lsu->setMode(Movement::CHASE);
 
-    if (fsu->isReleased())
+    if (kentucky->isReleased())
         kentucky->setMode(Movement::CHASE);
 }
 
