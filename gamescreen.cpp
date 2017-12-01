@@ -38,6 +38,8 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     currentTmpDir = Direction::NONE;
     nextTmpDir= Direction::NONE;
 
+
+
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updater()));
     timer->start(1000/30);
@@ -46,6 +48,19 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     frightTimer->setInterval(10000);
     frightTimer->setSingleShot(true);
     connect(frightTimer, SIGNAL(timeout()), this, SLOT(end_fright()));
+
+    lsuReleaseTimer = new QTimer(this);
+    lsuReleaseTimer->setInterval(4000);
+    lsuReleaseTimer->setSingleShot(true);
+    connect(lsuReleaseTimer, SIGNAL(timeout()), this, SLOT(lsuAvailable()));
+    lsuReleaseTimer->start();
+
+    kentuckyReleaseTimer = new QTimer(this);
+    kentuckyReleaseTimer->setInterval(10000);
+    kentuckyReleaseTimer->setSingleShot(true);
+    connect(kentuckyReleaseTimer, SIGNAL(timeout()), this, SLOT(kentuckyAvailable()));
+    kentuckyReleaseTimer->start();
+
 
 
     fsu = new Enemy(260,210,5,"fsu", gameMap, gator, GhostType::RED);
@@ -75,6 +90,9 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     georgiaCounter = 0;
     lsuCounter = 0;
     kentuckyCounter = 0;
+
+    canReleaseLSU = false;
+    canReleaseKentucky = false;
 
     score = 0;
     mascotPoints = 200;
@@ -210,10 +228,7 @@ void GameScreen::resetGame()
     ui->scoreLabel->setVisible(true);
     ui->scoreValue->setVisible(true);
 
-    resetCharacterPositions();
-
-    canReleaseLSU = false;
-    canReleaseKentucky = false;
+    resetCharacters();
 
     gator->setLives(3);
     score = 0;
@@ -238,7 +253,7 @@ void GameScreen::resetGame()
     timer->start();
 }
 
-void GameScreen::resetCharacterPositions()
+void GameScreen::resetCharacters()
 {
     fsu->setPosx(260);
     fsu->setPosy(210);
@@ -252,9 +267,15 @@ void GameScreen::resetCharacterPositions()
     lsu->setPosy(270);
     lsu->resetOrientation();
 
+    canReleaseLSU = false;
+    lsuReleaseTimer->start();
+
     kentucky->setPosx(300);
     kentucky->setPosy(270);
     kentucky->resetOrientation();
+
+    canReleaseKentucky = false;
+    kentuckyReleaseTimer->start();
 
     gator->setPosx(260);
     gator->setPosy(450);
@@ -274,10 +295,7 @@ void GameScreen::lostLife() {
 
     gator->setLives(gator->getLives() - 1);
 
-    resetCharacterPositions();
-
-    canReleaseLSU = false;
-    canReleaseKentucky = false;
+    resetCharacters();
 }
 
 void GameScreen::waka() {
@@ -319,7 +337,9 @@ void GameScreen::gameOver() {
     ui->quitButton->setVisible(true);
     ui->scoreLabel2->setVisible(true);
     ui->scoreValue2->setVisible(true);
+
     ui->scoreValue2->display(score);
+
     ui->AwayLabel->setVisible(false);
     ui->awayScore->setVisible(false);
     ui->gameView->setVisible(false);
@@ -628,11 +648,7 @@ void GameScreen::updater() {
         georgia->move();
     }
 
-    if(!canReleaseLSU)
-    {
-        QTimer::singleShot(4000, this, SLOT(lsuAvailable()));
-    }
-    else
+    if(canReleaseLSU)
     {
         releaseLSU();
     }
@@ -644,11 +660,7 @@ void GameScreen::updater() {
         lsu->move();
     }
 
-    if (!canReleaseKentucky)
-    {
-        QTimer::singleShot(10000, this, SLOT(kentuckyAvailable()));
-    }
-    else
+    if (canReleaseKentucky)
     {
         releaseKentucky();
     }
