@@ -5,6 +5,7 @@
 #include <cmath>
 #include "titlescreen.h"
 #include "player.h"
+#include <iostream>
 
 GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen)
 {
@@ -41,7 +42,10 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     connect(timer, SIGNAL(timeout()), this, SLOT(updater()));
     timer->start(1000/30);
 
-
+    frightTimer = new QTimer(this);
+    frightTimer->setInterval(10000);
+    frightTimer->setSingleShot(true);
+    connect(frightTimer, SIGNAL(timeout()), this, SLOT(end_fright()));
 
 
     fsu = new Enemy(260,210,5,"fsu", gameMap, gator, GhostType::RED);
@@ -165,9 +169,27 @@ void GameScreen::on_resumeButton_clicked() {
     }
 }
 
+void GameScreen::lsuAvailable()
+{
+    canReleaseLSU = true;
+}
+
+void GameScreen::kentuckyAvailable()
+{
+    canReleaseKentucky = true;
+}
+
 void GameScreen::end_fright()
 {
     frighten = false;
+
+    fsu->setMode(Movement::CHASE);
+
+    georgia->setMode(Movement::CHASE);
+
+    lsu->setMode(Movement::CHASE);
+
+    kentucky->setMode(Movement::CHASE);
 }
 
 void GameScreen::resetGame()
@@ -189,6 +211,9 @@ void GameScreen::resetGame()
     ui->scoreValue->setVisible(true);
 
     resetCharacterPositions();
+
+    canReleaseLSU = false;
+    canReleaseKentucky = false;
 
     gator->setLives(3);
     score = 0;
@@ -248,6 +273,9 @@ void GameScreen::lostLife() {
     gator->setLives(gator->getLives() - 1);
 
     resetCharacterPositions();
+
+    canReleaseLSU = false;
+    canReleaseKentucky = false;
 }
 
 void GameScreen::waka() {
@@ -381,6 +409,86 @@ void GameScreen::georgiaInitSeq()
     }
 }
 
+void GameScreen::lsuInitSeq()
+{
+    // Counter measured in seconds * 30
+    if (lsuCounter <= 2400)
+    {
+        switch(lsuCounter)
+        {
+        case 0:
+            lsu->setMode(Movement::SCATTER);
+            break;
+        case 150:
+            lsu->setMode(Movement::CHASE);
+            break;
+        case 750:
+            lsu->setMode(Movement::SCATTER);
+            break;
+        case 900:
+            lsu->setMode(Movement::CHASE);
+            break;
+        case 1500:
+            lsu->setMode(Movement::SCATTER);
+            break;
+        case 1650:
+            lsu->setMode(Movement::CHASE);
+            break;
+        case 2250:
+            lsu->setMode(Movement::SCATTER);
+            break;
+        case 2400:
+            lsu->setMode(Movement::CHASE);
+            break;
+        }
+        lsuCounter ++;
+    }
+    else
+    {
+        lsu->setInitiated(true);
+    }
+}
+
+void GameScreen::kentuckyInitSeq()
+{
+    // Counter measured in seconds * 30
+    if (kentuckyCounter <= 2400)
+    {
+        switch(kentuckyCounter)
+        {
+        case 0:
+            kentucky->setMode(Movement::SCATTER);
+            break;
+        case 150:
+            kentucky->setMode(Movement::CHASE);
+            break;
+        case 750:
+            kentucky->setMode(Movement::SCATTER);
+            break;
+        case 900:
+            kentucky->setMode(Movement::CHASE);
+            break;
+        case 1500:
+            kentucky->setMode(Movement::SCATTER);
+            break;
+        case 1650:
+            kentucky->setMode(Movement::CHASE);
+            break;
+        case 2250:
+            kentucky->setMode(Movement::SCATTER);
+            break;
+        case 2400:
+            kentucky->setMode(Movement::CHASE);
+            break;
+        }
+        kentuckyCounter ++;
+    }
+    else
+    {
+        kentucky->setInitiated(true);
+    }
+}
+
 void GameScreen::releaseFSU()
 {
     if (fsu->getPosy() > 210 && fsu->getPosy() <= 270 && fsu->getPosx() == 260)
@@ -402,6 +510,38 @@ void GameScreen::releaseGeorgia()
     else
     {
         georgia->setReleased(true);
+    }
+}
+
+void GameScreen::releaseLSU()
+{
+    if (lsu->getPosy() == 270 && lsu->getPosx() >= 220 && lsu->getPosx() < 260)
+    {
+        lsu->setPosx(lsu->getPosx() + 2);
+    }
+    else if (lsu->getPosy() > 210 && lsu->getPosy() <= 270 && lsu->getPosx() == 260)
+    {
+        lsu->setPosy(lsu->getPosy() - 2);
+    }
+    else
+    {
+        lsu->setReleased(true);
+    }
+}
+
+void GameScreen::releaseKentucky()
+{
+    if (kentucky->getPosy() == 270 && kentucky->getPosx() > 260 && kentucky->getPosx() <= 300)
+    {
+        kentucky->setPosx(kentucky->getPosx() - 2);
+    }
+    else if (kentucky->getPosy() > 210 && kentucky->getPosy() <= 270 && kentucky->getPosx() == 260)
+    {
+        kentucky->setPosy(kentucky->getPosy() - 2);
+    }
+    else
+    {
+        kentucky->setReleased(true);
     }
 }
 
@@ -427,18 +567,22 @@ void GameScreen::ghostCollision() {
                 mascotPoints *= 2;
             }
             if ((abs(gator->getPosx() - fsu->getPosx()) <= 20) && (abs(gator->getPosy() - fsu->getPosy()) <= 20)) {
+                fsu->setMode(Movement::CHASE);
                 fsu->setPosx(260);
                 fsu->setPosy(270);
             }
             else if ((abs(gator->getPosx() - georgia->getPosx()) <= 20) && (abs(gator->getPosy() - georgia->getPosy()) <= 20)) {
+                georgia->setMode(Movement::CHASE);
                 georgia->setPosx(260);
                 georgia->setPosy(270);
             }
             else if ((abs(gator->getPosx() - lsu->getPosx()) <= 20) && (abs(gator->getPosy() - lsu->getPosy()) <= 20)) {
+                lsu->setMode(Movement::CHASE);
                 lsu->setPosx(220);
-                lsu->setPosy(170);
+                lsu->setPosy(270);
             }
             else {
+                kentucky->setMode(Movement::CHASE);
                 kentucky->setPosx(300);
                 kentucky->setPosy(270);
             }
@@ -475,7 +619,7 @@ void GameScreen::updater() {
     releaseFSU();
     if (fsu->isReleased())
     {
-        if (!fsu->isInitiated())
+        if (!fsu->isInitiated() && !frighten)
             fsuInitSeq();
 
         fsu->move();
@@ -484,10 +628,42 @@ void GameScreen::updater() {
     releaseGeorgia();
     if (georgia->isReleased())
     {
-        if (!georgia->isInitiated())
+        if (!georgia->isInitiated() && !frighten)
             georgiaInitSeq();
 
         georgia->move();
+    }
+
+    if(!canReleaseLSU)
+    {
+        QTimer::singleShot(4000, this, SLOT(lsuAvailable()));
+    }
+    else
+    {
+        releaseLSU();
+    }
+    if (lsu->isReleased())
+    {
+        if (!lsu->isInitiated() && !frighten)
+            lsuInitSeq();
+
+        lsu->move();
+    }
+
+    if (!canReleaseKentucky)
+    {
+        QTimer::singleShot(10000, this, SLOT(kentuckyAvailable()));
+    }
+    else
+    {
+        releaseKentucky();
+    }
+    if (kentucky->isReleased())
+    {
+        if (!kentucky->isInitiated() && !frighten)
+            kentuckyInitSeq();
+
+        kentucky->move();
     }
 
     ui->lifeCount->display(gator->getLives());
@@ -499,6 +675,8 @@ void GameScreen::updater() {
     gator->update();
     fsu->update();
     georgia->update();
+    lsu->update();
+    kentucky->update();
 
     if (dots->points.isEmpty()) {
         win = true;
@@ -513,7 +691,14 @@ void GameScreen::updater() {
                     (dots->points[i].x() == 510 && dots->points[i].y() == 450)) {
                     score += 50;
                     frighten = true;
-                    QTimer::singleShot(10000, this, SLOT(end_fright()));
+
+                    fsu->setMode(Movement::FRIGHTENED);
+                    georgia->setMode(Movement::FRIGHTENED);
+                    lsu->setMode(Movement::FRIGHTENED);
+                    kentucky->setMode(Movement::FRIGHTENED);
+
+
+                    frightTimer->start();
                 }
                 else {
                     score += 10;

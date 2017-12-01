@@ -37,5 +37,21 @@
         <file>Images/Buttons/quit_button.png</file>
         <file>Images/timdots.png</file>
         <file>Images/gabedots.png</file>
+        <file>Images/Characters/fsu_forward_scared_down.png</file>
+        <file>Images/Characters/fsu_forward_scared_up.png</file>
+        <file>Images/Characters/fsu_forward_scared.png</file>
+        <file>Images/Characters/fsu_reverse_scared.png</file>
+        <file>Images/Characters/georgia_forward_scared_down.png</file>
+        <file>Images/Characters/georgia_forward_scared_up.png</file>
+        <file>Images/Characters/georgia_forward_scared.png</file>
+        <file>Images/Characters/georgia_reverse_scared.png</file>
+        <file>Images/Characters/kentucky_forward_scared_down.png</file>
+        <file>Images/Characters/kentucky_forward_scared_up.png</file>
+        <file>Images/Characters/kentucky_forward_scared.png</file>
+        <file>Images/Characters/kentucky_reverse_scared.png</file>
+        <file>Images/Characters/lsu_forward_scared_down.png</file>
+        <file>Images/Characters/lsu_forward_scared_up.png</file>
+        <file>Images/Characters/lsu_forward_scared.png</file>
+        <file>Images/Characters/lsu_reverse_scared.png</file>
     </qresource>
 </RCC>

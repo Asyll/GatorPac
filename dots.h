@@ -13,10 +13,12 @@ public:
     QRectF boundingRect() const;
 
     void setPoints(const QVector<QPoint>* points);
+    int dotsConsumed();
     QVector<QPoint> points;
 
 private:
     const int dotW, dotH;
+    const int maxDots;
     QPixmap dotImg;
     QPixmap largeDotImg;
 

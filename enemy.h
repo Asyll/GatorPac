@@ -22,6 +22,7 @@ public:
     void resetOrientation();
 
     int getSpeed() const;
+    void setSpeed(int speed);
 
     int getPosx() const;
     void setPosx(int x);
@@ -42,12 +43,14 @@ public:
 
 private:
     QPixmap forward, reverse, up, down;
+    QPixmap forwardScared, reverseScared, upScared, downScared;
     Direction direction, nextDirection, facingDirection;
 
     GhostType type;
+    Movement mode;
     GameMap *gameMap;
     Player *gator;
-    Movement mode;
+
     bool moving;
     bool released;
     bool initiated;

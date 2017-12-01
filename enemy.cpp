@@ -1,4 +1,5 @@
 #include "enemy.h"
+#include <iostream>
 
 Enemy::Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Player* gator, GhostType type) :
     charW(40),
@@ -24,6 +25,10 @@ Enemy::Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Play
     reverse.load("://Images/Characters/" + name + "_reverse.png");
     up.load("://Images/Characters/" + name + "_forward_up.png");
     down.load("://Images/Characters/" + name + "_forward_down.png");
+    forwardScared.load("://Images/Characters/" + name + "_forward_scared.png");
+    reverseScared.load("://Images/Characters/" + name + "_reverse_scared.png");
+    upScared.load("://Images/Characters/" + name + "_forward_scared_up.png");
+    downScared.load("://Images/Characters/" + name + "_forward_scared_down.png");
 }
 
 QRectF Enemy::boundingRect() const
@@ -33,29 +38,62 @@ QRectF Enemy::boundingRect() const
 
 void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    switch(facingDirection)
+    if (mode == Movement::FRIGHTENED)
     {
-    case LEFT:
-        painter->drawPixmap(posx,posy,charW,charW,reverse);
-        break;
-    case RIGHT:
-        painter->drawPixmap(posx,posy,charW,charW,forward);
-        break;
-    case UP:
-        painter->drawPixmap(posx,posy,charW,charW,up);
-        break;
-    case DOWN:
-        painter->drawPixmap(posx,posy,charW,charW,down);
-        break;
-    case NONE:
-        painter->drawPixmap(posx,posy,charW,charW,forward);
-        break;
+        switch(facingDirection)
+        {
+        case LEFT:
+            painter->drawPixmap(posx,posy,charW,charW,reverseScared);
+            break;
+        case RIGHT:
+            painter->drawPixmap(posx,posy,charW,charW,forwardScared);
+            break;
+        case UP:
+            painter->drawPixmap(posx,posy,charW,charW,upScared);
+            break;
+        case DOWN:
+            painter->drawPixmap(posx,posy,charW,charW,downScared);
+            break;
+        case NONE:
+            painter->drawPixmap(posx,posy,charW,charW,forwardScared);
+            break;
+        }
+    }
+    else
+    {
+        switch(facingDirection)
+        {
+        case LEFT:
+            painter->drawPixmap(posx,posy,charW,charW,reverse);
+            break;
+        case RIGHT:
+            painter->drawPixmap(posx,posy,charW,charW,forward);
+            break;
+        case UP:
+            painter->drawPixmap(posx,posy,charW,charW,up);
+            break;
+        case DOWN:
+            painter->drawPixmap(posx,posy,charW,charW,down);
+            break;
+        case NONE:
+            painter->drawPixmap(posx,posy,charW,charW,forward);
+            break;
+        }
     }
 }
 
 int Enemy::getSpeed() const
 {
     return speed;
+}
+
+void Enemy::setSpeed(int speed)
+{
+    while ((posx % speed) != 0 || ((posy % speed) != 0))
+    {
+        move();
+    }
+    this->speed = speed;
 }
 
 int Enemy::getPosx() const
@@ -96,6 +134,14 @@ void Enemy::setMoving(bool value)
 
 void Enemy::setMode(const Movement mode)
 {
+    if (mode == Movement::FRIGHTENED)
+    {
+        setSpeed(2);
+    }
+    else
+    {
+        setSpeed(5);
+    }
     this->mode = mode;
 }
 
@@ -277,7 +323,7 @@ void Enemy::chase()
                 }
                 else
                 {
-                    nextDirection = Direction::DOWN;
+                    nextDirection = Direction::LEFT;
                 }
             }
         }
@@ -676,5 +722,167 @@ void Enemy::scatter()
 
 void Enemy::frightened()
 {
+    QPoint point;
 
+    int ranDir = 0;
+    if (!moving)
+    {
+        ranDir = qrand() % 3;
+        switch(ranDir)
+        {
+        case 0: // RIGHT
+            point.setX(posx + speed);
+            point.setY(posy);
+            nextDirection = Direction::RIGHT;
+            break;
+        case 1: // DOWN
+            point.setX(posx);
+            point.setY(posy + speed);
+            nextDirection = Direction::DOWN;
+            break;
+        case 2: // LEFT
+            point.setX(posx - speed);
+            point.setY(posy);
+            nextDirection = Direction::LEFT;
+            break;
+        case 3: // UP
+            point.setX(posx);
+            point.setY(posy - speed);
+            nextDirection = Direction::UP;
+            break;
+        }
+    }
+
+
+    if (nextDirection != direction)
+    {
+        switch (nextDirection)
+        {
+        case LEFT:
+            point.setX(posx - speed);
+            point.setY(posy);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        case RIGHT:
+            point.setX(posx + speed);
+            point.setY(posy);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        case UP:
+            point.setX(posx);
+            point.setY(posy - speed);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        case DOWN:
+            point.setX(posx);
+            point.setY(posy + speed);
+            if (gameMap->canMove(point))
+            {
+                direction = nextDirection;
+                nextDirection = Direction::NONE;
+            }
+            break;
+        }
+    }
+    switch (direction)
+    {
+    case LEFT:
+        point.setX(posx - speed);
+        point.setY(posy);
+        facingDirection = direction;
+        if (posx < 90 && posy == 270) {
+            posx -= 2;
+            moving = true;
+            if (posx <= 0)
+            {
+                posx = 520;
+            }
+        }
+        else if (posx > 430 && posy == 270) {
+            posx -= 2;
+            moving = true;
+        }
+
+        else if (gameMap->canMove(point))
+        {
+            posx -= speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case RIGHT:
+        point.setX(posx + speed);
+        point.setY(posy);
+        facingDirection = direction;
+
+        if (posx > 430 && posy == 270) {
+            posx += 2;
+            moving = true;
+            if (posx >= 520)
+            {
+                posx = 0;
+            }
+        }
+        else if (posx < 90 && posy == 270) {
+            posx += 2;
+            moving = true;
+        }
+        else if (gameMap->canMove(point))
+        {
+            posx += speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case UP:
+        point.setX(posx);
+        point.setY(posy - speed);
+        facingDirection = direction;
+
+        if (gameMap->canMove(point))
+        {
+            posy -= speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case DOWN:
+        point.setX(posx);
+        point.setY(posy + speed);
+        facingDirection = direction;
+
+        if (gameMap->canMove(point))
+        {
+            posy += speed;
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        break;
+    case NONE:
+        break;
+    }
 }

@@ -31,6 +31,7 @@ private:
     QGraphicsScene *scene;
     GameMap *gameMap;
     QTimer *timer;
+    QTimer *frightTimer;
     QMediaPlaylist *playlist = new QMediaPlaylist();
     QMediaPlayer *wakaSound = new QMediaPlayer;
     QMediaPlayer *basicSounds = new QMediaPlayer;
@@ -49,6 +50,8 @@ private:
     bool win = false;
     bool yesBtnClicked = false;
     bool frighten = false;
+    bool canReleaseLSU = false;
+    bool canReleaseKentucky = false;
 
     Direction currentTmpDir;
     Direction nextTmpDir;
@@ -71,9 +74,13 @@ private:
 
     void fsuInitSeq();
     void georgiaInitSeq();
+    void lsuInitSeq();
+    void kentuckyInitSeq();
 
     void releaseFSU();
     void releaseGeorgia();
+    void releaseLSU();
+    void releaseKentucky();
 
     void keyPressEvent(QKeyEvent *event);
 
@@ -92,6 +99,8 @@ private slots:
     void on_noButton_clicked();
     void on_pauseButton_clicked();
     void on_resumeButton_clicked();
+    void lsuAvailable();
+    void kentuckyAvailable();
     void end_fright();
 };
 
