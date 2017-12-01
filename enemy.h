@@ -34,12 +34,14 @@ public:
     void setMoving(bool value);
 
     void setMode(const Movement mode);
+    Movement getMode() const;
 
     bool isReleased() const;
     void setReleased(bool value);
 
     bool isInitiated() const;
     void setInitiated(bool value);
+
 
 private:
     QPixmap forward, reverse, up, down;

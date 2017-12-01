@@ -165,6 +165,11 @@ void Enemy::setInitiated(bool value)
     initiated = value;
 }
 
+Movement Enemy::getMode() const
+{
+    return mode;
+}
+
 // Sets scatter point based on what ghost type the object is
 void Enemy::setScatterPoint()
 {

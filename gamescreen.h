@@ -67,6 +67,7 @@ private:
     void lostLife();
     void waka();
     void ghostCollision();
+    void collideWith(Enemy *enemy);
     void gameOver();
     void winGame();
     void resetGame();

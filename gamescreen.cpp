@@ -230,6 +230,8 @@ void GameScreen::resetGame()
     lsuCounter = 0;
     kentuckyCounter = 0;
 
+    dots->setPoints(gameMap->getDotVector());
+
     playBackgroundMusic();
     yesBtnClicked = false;
     win = false;
@@ -556,48 +558,40 @@ void GameScreen::on_noButton_clicked() {
 
 void GameScreen::ghostCollision() {
 
-    if (((abs(gator->getPosx() - fsu->getPosx()) <= 20) && (abs(gator->getPosy() - fsu->getPosy()) <= 20))          ||
-        ((abs(gator->getPosx() - georgia->getPosx()) <= 20) && (abs(gator->getPosy() - georgia->getPosy()) <= 20))  ||
-        ((abs(gator->getPosx() - lsu->getPosx()) <= 20) && (abs(gator->getPosy() - lsu->getPosy()) <= 20))          ||
-        ((abs(gator->getPosx() - kentucky->getPosx()) <= 20) && (abs(gator->getPosy() - kentucky->getPosy()) <= 20))  )
-    {
-        if (frighten) {
-            score += mascotPoints;
-            if (mascotPoints < 1600) {
-                mascotPoints *= 2;
-            }
-            if ((abs(gator->getPosx() - fsu->getPosx()) <= 20) && (abs(gator->getPosy() - fsu->getPosy()) <= 20)) {
-                fsu->setMode(Movement::CHASE);
-                fsu->setPosx(260);
-                fsu->setPosy(270);
-            }
-            else if ((abs(gator->getPosx() - georgia->getPosx()) <= 20) && (abs(gator->getPosy() - georgia->getPosy()) <= 20)) {
-                georgia->setMode(Movement::CHASE);
-                georgia->setPosx(260);
-                georgia->setPosy(270);
-            }
-            else if ((abs(gator->getPosx() - lsu->getPosx()) <= 20) && (abs(gator->getPosy() - lsu->getPosy()) <= 20)) {
-                lsu->setMode(Movement::CHASE);
-                lsu->setPosx(220);
-                lsu->setPosy(270);
-            }
-            else {
-                kentucky->setMode(Movement::CHASE);
-                kentucky->setPosx(300);
-                kentucky->setPosy(270);
-            }
-        }
+    if((abs(gator->getPosx() - fsu->getPosx()) <= 20) && (abs(gator->getPosy() - fsu->getPosy()) <= 20)) {
+        collideWith(fsu);
+    }
+    else if ((abs(gator->getPosx() - georgia->getPosx()) <= 20) && (abs(gator->getPosy() - georgia->getPosy()) <= 20)) {
+        collideWith(georgia);
+    }
+    else if ((abs(gator->getPosx() - lsu->getPosx()) <= 20) && (abs(gator->getPosy() - lsu->getPosy()) <= 20)) {
+       collideWith(lsu);
+    }
+    else if ((abs(gator->getPosx() - kentucky->getPosx()) <= 20) && (abs(gator->getPosy() - kentucky->getPosy()) <= 20)) {
+        collideWith(kentucky);
+    }
+}
 
-        else if (gator->getLives() > 1) {
-            mascotPoints = 200;
-            lostLife();
+void GameScreen::collideWith(Enemy *enemy)
+{
+    if (enemy->getMode() == Movement::FRIGHTENED) {
+        score += mascotPoints;
+        if (mascotPoints < 1600) {
+            mascotPoints *= 2;
         }
-        else {
-            mascotPoints = 200;
-            gator->setLives(0);
-            win = false;
-            gameOver();
-        }
+        enemy->setMode(Movement::CHASE);
+        enemy->setPosx(260);
+        enemy->setPosy(270);
+    }
+    else if (gator->getLives() > 1) {
+        mascotPoints = 200;
+        lostLife();
+    }
+    else {
+        mascotPoints = 200;
+        gator->setLives(0);
+        win = false;
+        gameOver();
     }
 }
 
