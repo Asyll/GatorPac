@@ -222,7 +222,6 @@ void GameScreen::resetGame()
     ui->lifeCount->setVisible(true);
     ui->LifeLabel->setVisible(true);
     ui->pauseButton->setVisible(true);
-    ui->resumeButton->setVisible(true);
     ui->scoreLabel->setVisible(true);
     ui->scoreValue->setVisible(true);
 
@@ -518,7 +517,7 @@ void GameScreen::releaseGeorgia()
 {
     if (georgia->getPosy() > 210 && georgia->getPosy() <= 270 && georgia->getPosx() == 260)
     {
-        georgia->setPosy(georgia->getPosy() - 2);
+        georgia->setPosy(georgia->getPosy() - 5);
     }
     else
     {
@@ -573,7 +572,7 @@ void GameScreen::ghostCollision() {
         collideWith(fsu);
     }
     else if ((abs(gator->getPosx() - georgia->getPosx()) <= 20) && (abs(gator->getPosy() - georgia->getPosy()) <= 20)) {
-        collideWith(georgia);
+       collideWith(georgia);
     }
     else if ((abs(gator->getPosx() - lsu->getPosx()) <= 20) && (abs(gator->getPosy() - lsu->getPosy()) <= 20)) {
        collideWith(lsu);
