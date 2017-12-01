@@ -32,6 +32,8 @@ private:
     GameMap *gameMap;
     QTimer *timer;
     QTimer *frightTimer;
+    QTimer *lsuReleaseTimer;
+    QTimer *kentuckyReleaseTimer;
     QMediaPlaylist *playlist = new QMediaPlaylist();
     QMediaPlayer *wakaSound = new QMediaPlayer;
     QMediaPlayer *basicSounds = new QMediaPlayer;
@@ -71,7 +73,7 @@ private:
     void gameOver();
     void winGame();
     void resetGame();
-    void resetCharacterPositions();
+    void resetCharacters();
 
     void fsuInitSeq();
     void georgiaInitSeq();
