@@ -141,6 +141,17 @@ void GameScreen::playBackgroundMusic()
     backgroundMusic->play();
 }
 
+void GameScreen::playFrightenMusic() {
+    frightenSound->setMedia(QUrl("qrc:/Audio/sonicDrowning.mp3"));
+    if (frightenSound->state() == QMediaPlayer::PlayingState) {
+        frightenSound->setPosition(0);
+    }
+    else if (frightenSound->state() == QMediaPlayer::StoppedState) {
+        frightenSound->play();
+    }
+    backgroundMusic->setVolume(0);
+}
+
 void GameScreen::on_musicButton_clicked() {
     if (dots->points.isEmpty()) {
         playWinMusic();
@@ -206,6 +217,8 @@ void GameScreen::end_fright()
 
     if (kentucky->isReleased())
         kentucky->setMode(Movement::CHASE);
+
+    backgroundMusic->setVolume(30);
 }
 
 void GameScreen::resetGame()
@@ -652,6 +665,7 @@ void GameScreen::updater() {
 
 
                     frightTimer->start();
+                    playFrightenMusic();
                 }
                 else {
                     score += 10;

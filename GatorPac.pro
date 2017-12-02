@@ -53,5 +53,6 @@ RESOURCES += images.qrc \
     finaldeathaudio.qrc \
     titleanimation.qrc \
     wakasounds.qrc \
-    winmusic.qrc
+    winmusic.qrc \
+    frightenedmusic.qrc
 
