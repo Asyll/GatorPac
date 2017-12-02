@@ -136,7 +136,7 @@ void GameScreen::playBackgroundMusic()
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
     backgroundMusic->setPlaylist(playlist);
-    backgroundMusic->setVolume(30);
+    backgroundMusic->setVolume(50);
     backgroundMusic->play();
 }
 
@@ -187,6 +187,9 @@ void GameScreen::on_pauseButton_clicked() {
         return;
     }
     else {
+        if (frightenSound->state() == QMediaPlayer::PlayingState) {
+            frightenSound->pause();
+        }
         timer->stop();
         ui->resumeButton->setVisible(true);
         ui->pauseButton->setVisible(false);
@@ -198,6 +201,9 @@ void GameScreen::on_resumeButton_clicked() {
         return;
     }
     else {
+        if (frightenSound->state() == QMediaPlayer::PausedState) {
+            frightenSound->play();
+        }
         timer->start();
         ui->resumeButton->setVisible(false);
         ui->pauseButton->setVisible(true);
@@ -233,7 +239,7 @@ void GameScreen::end_fright()
     if (kentucky->isReleased())
         kentucky->setMode(Movement::CHASE);
 
-    backgroundMusic->setVolume(30);
+    backgroundMusic->setVolume(50);
 }
 
 void GameScreen::resetGame()
@@ -345,6 +351,7 @@ void GameScreen::winGame() {
 }
 
 void GameScreen::gameOver() {
+    frightenSound->setVolume(0);
     playDeathMusic();
 
     ui->lifeCount->display(gator->getLives());
