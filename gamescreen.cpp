@@ -157,9 +157,11 @@ void GameScreen::playFrightenMusic() {
         frightenSound->setPosition(0);
     }
     else if (frightenSound->state() == QMediaPlayer::StoppedState) {
+        frightenSound->setVolume(40);
         frightenSound->play();
     }
     backgroundMusic->setVolume(0);
+
 }
 
 void GameScreen::on_musicButton_clicked() {
@@ -407,14 +409,15 @@ void GameScreen::fsuInitSeq()
             fsu->setMode(Movement::CHASE);
             break;
         default:
-            if (fsu->isReleased())
-                fsu->setMode(Movement::CHASE);
             break;
         }
         fsuCounter ++;
     }
     else
     {
+        if (fsu->isReleased())
+            fsu->setMode(Movement::CHASE);
+
         fsu->setInitiated(true);
     }
 }
@@ -451,14 +454,14 @@ void GameScreen::georgiaInitSeq()
             georgia->setMode(Movement::CHASE);
             break;
         default:
-            if (georgia->isReleased())
-                georgia->setMode(Movement::CHASE);
             break;
         }
         georgiaCounter ++;
     }
     else
     {
+        if (georgia->isReleased())
+            georgia->setMode(Movement::CHASE);
         georgia->setInitiated(true);
     }
 }
@@ -495,14 +498,14 @@ void GameScreen::lsuInitSeq()
             lsu->setMode(Movement::CHASE);
             break;
         default:
-            if (lsu->isReleased())
-                lsu->setMode(Movement::CHASE);
             break;
         }
         lsuCounter ++;
     }
     else
     {
+        if (lsu->isReleased())
+            lsu->setMode(Movement::CHASE);
         lsu->setInitiated(true);
     }
 }
@@ -539,14 +542,14 @@ void GameScreen::kentuckyInitSeq()
             kentucky->setMode(Movement::CHASE);
             break;
         default:
-            if (kentucky->isReleased())
-                kentucky->setMode(Movement::CHASE);
             break;
         }
         kentuckyCounter ++;
     }
     else
     {
+        if (kentucky->isReleased())
+            kentucky->setMode(Movement::CHASE);
         kentucky->setInitiated(true);
     }
 }

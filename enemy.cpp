@@ -396,7 +396,8 @@ void Enemy::chase()
         point.setY(posy);
         facingDirection = direction;
 
-        if (posx < 90 && posy == 270) {
+        if (posx < 90 && posy == 270)
+        {
             posx -= 2;
             moving = true;
             if (posx <= 0)
@@ -404,11 +405,11 @@ void Enemy::chase()
                 posx = 520;
             }
         }
-        else if (posx > 430 && posy == 270) {
+        else if (posx > 430 && posy == 270)
+        {
             posx -= 2;
             moving = true;
         }
-
         else if (gameMap->canMove(point))
         {
             posx -= speed;
@@ -437,7 +438,6 @@ void Enemy::chase()
             posx += 2;
             moving = true;
         }
-
         else if (gameMap->canMove(point))
         {
             posx += speed;
