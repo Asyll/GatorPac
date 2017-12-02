@@ -400,6 +400,10 @@ void GameScreen::fsuInitSeq()
         case 2400:
             fsu->setMode(Movement::CHASE);
             break;
+        default:
+            if (fsu->isReleased())
+                fsu->setMode(Movement::CHASE);
+            break;
         }
         fsuCounter ++;
     }
@@ -439,6 +443,10 @@ void GameScreen::georgiaInitSeq()
             break;
         case 2400:
             georgia->setMode(Movement::CHASE);
+            break;
+        default:
+            if (georgia->isReleased())
+                georgia->setMode(Movement::CHASE);
             break;
         }
         georgiaCounter ++;
@@ -480,6 +488,10 @@ void GameScreen::lsuInitSeq()
         case 2400:
             lsu->setMode(Movement::CHASE);
             break;
+        default:
+            if (lsu->isReleased())
+                lsu->setMode(Movement::CHASE);
+            break;
         }
         lsuCounter ++;
     }
@@ -519,6 +531,10 @@ void GameScreen::kentuckyInitSeq()
             break;
         case 2400:
             kentucky->setMode(Movement::CHASE);
+            break;
+        default:
+            if (kentucky->isReleased())
+                kentucky->setMode(Movement::CHASE);
             break;
         }
         kentuckyCounter ++;
