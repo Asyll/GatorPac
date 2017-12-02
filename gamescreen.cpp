@@ -308,6 +308,7 @@ void GameScreen::waka() {
 }
 
 void GameScreen::winGame() {
+    frightenSound->setVolume(0);
     playWinMusic();
 
     ui->lifeCount->display(gator->getLives());
