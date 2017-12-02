@@ -4,10 +4,13 @@
 #include <QMediaPlayer>
 #include <Qmovie>
 
+//sets up the title screen for the game
+
 TitleScreen::TitleScreen(QWidget *parent) : QWidget(parent), ui(new Ui::TitleScreen)
 {
     ui->setupUi(this);
 
+    //displays the animation for the gatorpac title screen
     QMovie *animation = new QMovie(":/Images/AnimatedTitle.gif");
     QLabel *logo = ui->logo;
     logo->setMovie(animation);
@@ -19,11 +22,13 @@ TitleScreen::TitleScreen(QWidget *parent) : QWidget(parent), ui(new Ui::TitleScr
 
 }
 
+//?
 TitleScreen::~TitleScreen()
 {
     delete ui;
 }
 
+//implements the start button
 void TitleScreen::on_startBtn_clicked()
 {
     GameScreen *game = new GameScreen();

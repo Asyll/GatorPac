@@ -1,18 +1,21 @@
 #include "gamemap.h"
 #include <iostream>
 
+//sets up the game map
 GameMap::GameMap()
 {
-    mapImage.load(":/Images/swampmap.png");
+    mapImage.load(":/Images/swampmap.png"); //loads the game map from it's image
 
-    makeMapPaths();
+    makeMapPaths(); //sets up the paths for the game map.
 }
 
+//creates bounding rectangle for game map
 QRectF GameMap::boundingRect() const
 {
     return QRect(0,0,560,620);
 }
 
+//
 void GameMap::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(0,0,560,620,mapImage);
@@ -32,6 +35,7 @@ void GameMap::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     */
 }
 
+//sets up the movement path for the game map
 bool GameMap::canMove(QPoint point)
 {
     for (int i = 0; i < moveablePath.size(); i++)
@@ -44,6 +48,7 @@ bool GameMap::canMove(QPoint point)
     return false;
 }
 
+//sets up the dot positions for the game map
 const QVector<QPoint>* GameMap::getDotVector()
 {
     makeMapDots();
@@ -109,6 +114,7 @@ void GameMap::makeMapPaths()
     generatePath(510,510,510,570);
 }
 
+//sets where the dots are on the map
 void GameMap::makeMapDots()
 {
     // Horizontal dots
@@ -159,6 +165,7 @@ void GameMap::makeMapDots()
     generateDot(510,510,510,570);
 }
 
+//generates dots for the game map
 void GameMap::generateDot(int startx, int starty, int endx, int endy)
 {
     QPoint point;

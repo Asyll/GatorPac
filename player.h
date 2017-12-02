@@ -14,24 +14,24 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     int getSpeed() const;
 
-    int getPosx() const;
-    void setPosx(int x);
+    int getPosx() const; //gets x-position for player
+    void setPosx(int x); //sets x-position for player
 
-    int getPosy() const;
-    void setPosy(int y);
+    int getPosy() const; //gets y-position for player
+    void setPosy(int y); //sets y-position for player
 
-    bool isMoving() const;
-    void setMoving(bool value);
+    bool isMoving() const; //checks if player is moving
+    void setMoving(bool value); //sets whether player is moving or not
 
-    int getLives() const;
-    void setLives(int lives);
+    int getLives() const; //gets the total lives that the player has
+    void setLives(int lives); //sets the lives for the player
 
-    void resetOrientation();
-    void setDefaultPosition();
+    void resetOrientation(); //resets the orientation for the player
+    void setDefaultPosition(); //sets the default position for the player
 
-    void setDirection(Direction dir);
+    void setDirection(Direction dir); //sets direcetion of the player
 
-    void setNextDirection(Direction dir);
+    void setNextDirection(Direction dir); //sets the next direction for the player
 
 private:
     QPixmap forward, reverse, up, down;

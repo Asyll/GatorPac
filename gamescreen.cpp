@@ -7,6 +7,8 @@
 #include "player.h"
 #include <iostream>
 
+
+//
 GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen)
 {
     ui->setupUi(this);
@@ -49,12 +51,14 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     frightTimer->setSingleShot(true);
     connect(frightTimer, SIGNAL(timeout()), this, SLOT(end_fright()));
 
+    //creates timer for the LSU enemy to be released
     lsuReleaseTimer = new QTimer(this);
     lsuReleaseTimer->setInterval(4000);
     lsuReleaseTimer->setSingleShot(true);
     connect(lsuReleaseTimer, SIGNAL(timeout()), this, SLOT(lsuAvailable()));
     lsuReleaseTimer->start();
 
+    //creates timer for the Kentucky enemy to be released
     kentuckyReleaseTimer = new QTimer(this);
     kentuckyReleaseTimer->setInterval(10000);
     kentuckyReleaseTimer->setSingleShot(true);
@@ -62,30 +66,33 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     kentuckyReleaseTimer->start();
 
 
-
+    //sets the starting position for FSU
     fsu = new Enemy(260,210,5,"fsu", gameMap, gator, GhostType::RED);
     fsu->setZValue(5);
     scene->addItem(fsu);
 
+    //sets the starting position for Georgia
     georgia = new Enemy(260,270,5,"georgia", gameMap, gator, GhostType::PINK);
     georgia->setZValue(5);
     scene->addItem(georgia);
 
+    //sets the starting position for LSU
     lsu = new Enemy(220,270,5,"lsu", gameMap, gator, GhostType::BLUE);
     lsu->setZValue(5);
     scene->addItem(lsu);
 
+    //sets the starting position for Kentucky
     kentucky = new Enemy(300,270,5,"kentucky", gameMap, gator, GhostType::ORANGE);
     kentucky->setZValue(5);
     scene->addItem(kentucky);
 
 
-
+    //
     dots = new Dots(gameMap->getDotVector());
     scene->addItem(dots);
 
 
-
+    //counters for each enemy
     fsuCounter = 0;
     georgiaCounter = 0;
     lsuCounter = 0;
@@ -97,18 +104,19 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     score = 0;
     mascotPoints = 200;
 
-
+    //plays the background gatorpac music when the game starts
     playBackgroundMusic();
 
 }
 
+//?
 GameScreen::~GameScreen()
 {
     delete ui;
 }
 
 
-/*Play 8 bit evil morty for the eventual death scene when we get there.
+/*Play 8 bit evil *burp* morty music for the eventual death scene when we get there.
 When all lives lost then stops other music and plays final music. */
 void GameScreen::playDeathMusic()
 {
@@ -120,6 +128,7 @@ void GameScreen::playDeathMusic()
     deathMusic->play();
 }
 
+//plays the music for the win screen ("September" by Earth Wind and Fire)
 void GameScreen::playWinMusic() {
 
     playlist->clear();
@@ -130,6 +139,7 @@ void GameScreen::playWinMusic() {
     winMusic->play();
 }
 
+//plays the music for the background
 void GameScreen::playBackgroundMusic()
 {
     playlist->clear();
@@ -141,6 +151,7 @@ void GameScreen::playBackgroundMusic()
     backgroundMusic->play();
 }
 
+//plays the music for frighten mode
 void GameScreen::playFrightenMusic() {
     frightenSound->setMedia(QUrl("qrc:/Audio/sonicDrowning.mp3"));
     if (frightenSound->state() == QMediaPlayer::PlayingState) {
@@ -152,6 +163,7 @@ void GameScreen::playFrightenMusic() {
     backgroundMusic->setVolume(0);
 }
 
+//while the music button is clicked, plays appropriate music
 void GameScreen::on_musicButton_clicked() {
     if (dots->points.isEmpty()) {
         playWinMusic();
@@ -166,12 +178,14 @@ void GameScreen::on_musicButton_clicked() {
     ui->muteButton->setVisible(true);
 }
 
+//mutes music when the mute button is clicked
 void GameScreen::on_muteButton_clicked() {
     playlist->clear();
     ui->muteButton->setVisible(false);
     ui->musicButton->setVisible(true);
 }
 
+// pauses game when this button is pressed
 void GameScreen::on_pauseButton_clicked() {
     if (ui->retryButton->isVisible() == true) {
         return;
@@ -183,6 +197,7 @@ void GameScreen::on_pauseButton_clicked() {
     }
 }
 
+//resumes game when this button is pressed
 void GameScreen::on_resumeButton_clicked() {
     if (ui->retryButton->isVisible() == true) {
         return;
@@ -194,16 +209,19 @@ void GameScreen::on_resumeButton_clicked() {
     }
 }
 
+//releases the lsu enemy from the spawn box
 void GameScreen::lsuAvailable()
 {
     canReleaseLSU = true;
 }
 
+//releases the kentucky enemy from the spawn box
 void GameScreen::kentuckyAvailable()
 {
     canReleaseKentucky = true;
 }
 
+//sets the enemy's movement mode to chase after the frigtened mode ends
 void GameScreen::end_fright()
 {
     if (fsu->isReleased())
@@ -221,6 +239,7 @@ void GameScreen::end_fright()
     backgroundMusic->setVolume(30);
 }
 
+//method that resets all parts of the game and ui
 void GameScreen::resetGame()
 {
     ui->retryLabel->setVisible(false);
@@ -263,6 +282,7 @@ void GameScreen::resetGame()
     timer->start();
 }
 
+//resets characters to default positions
 void GameScreen::resetCharacters()
 {
     fsu->setDefaultPosition();
@@ -285,6 +305,7 @@ void GameScreen::resetCharacters()
     gator->resetOrientation();
 }
 
+//plays music for when the player dies and decreases their total lives by 1
 void GameScreen::lostLife() {
 
     basicSounds->setMedia(QUrl("qrc:/Audio/pacmanDeath.mp3"));
@@ -301,6 +322,7 @@ void GameScreen::lostLife() {
     resetCharacters();
 }
 
+//plays the waka sound while gatorpac eats dots
 void GameScreen::waka() {
     if (wakaSound->state() == QMediaPlayer::StoppedState) {
         wakaSound->setPosition(0);
@@ -308,6 +330,7 @@ void GameScreen::waka() {
     }
 }
 
+//sets up the win screen after gatorpac eats all of the dots
 void GameScreen::winGame() {
     frightenSound->setVolume(0);
     playWinMusic();
@@ -331,6 +354,7 @@ void GameScreen::winGame() {
     ui->scoreValue->setVisible(false);
 }
 
+//sets up the game over screen when the player runs out of lives.
 void GameScreen::gameOver() {
     playDeathMusic();
 
@@ -355,6 +379,7 @@ void GameScreen::gameOver() {
     ui->scoreValue->setVisible(false);
 }
 
+//changes the movement modes for FSU based on certain times as the game persists
 void GameScreen::fsuInitSeq()
 {
     // Counter measured in seconds * 30
@@ -395,6 +420,7 @@ void GameScreen::fsuInitSeq()
     }
 }
 
+//changes the movement modes for Georgia based on certain times as the game persists
 void GameScreen::georgiaInitSeq()
 {
     // Counter measured in seconds * 30
@@ -435,6 +461,7 @@ void GameScreen::georgiaInitSeq()
     }
 }
 
+//changes the movement modes for LSU based on certain times as the game persists
 void GameScreen::lsuInitSeq()
 {
     // Counter measured in seconds * 30
@@ -475,6 +502,7 @@ void GameScreen::lsuInitSeq()
     }
 }
 
+//changes the movement modes for Kentucky based on certain times as the game persists
 void GameScreen::kentuckyInitSeq()
 {
     // Counter measured in seconds * 30
@@ -515,6 +543,7 @@ void GameScreen::kentuckyInitSeq()
     }
 }
 
+//releases FSU from the spawn box
 void GameScreen::releaseFSU()
 {
     if (fsu->getPosy() > 210 && fsu->getPosy() <= 270 && fsu->getPosx() == 260)
@@ -527,6 +556,7 @@ void GameScreen::releaseFSU()
     }
 }
 
+//releases Georgia from the spawn box
 void GameScreen::releaseGeorgia()
 {
     if (georgia->getPosy() > 210 && georgia->getPosy() <= 270 && georgia->getPosx() == 260)
@@ -539,6 +569,7 @@ void GameScreen::releaseGeorgia()
     }
 }
 
+//releases LSU from the spawn box
 void GameScreen::releaseLSU()
 {
     if (lsu->getPosy() == 270 && lsu->getPosx() >= 220 && lsu->getPosx() < 260)
@@ -555,6 +586,7 @@ void GameScreen::releaseLSU()
     }
 }
 
+//releases Kentucky from the spawn box
 void GameScreen::releaseKentucky()
 {
     if (kentucky->getPosy() == 270 && kentucky->getPosx() > 260 && kentucky->getPosx() <= 300)
@@ -571,16 +603,19 @@ void GameScreen::releaseKentucky()
     }
 }
 
+//button that lets the player restart the game
 void GameScreen::on_retryButton_clicked() {
     yesBtnClicked = true;
     win = false;
     resetGame();
 }
 
+//button that lets the player exit out of the game
 void GameScreen::on_quitButton_clicked() {
     exit(0);
 }
 
+//determines if an enemy is touching the player
 void GameScreen::ghostCollision() {
 
     if((abs(gator->getPosx() - fsu->getPosx()) <= 20) && (abs(gator->getPosy() - fsu->getPosy()) <= 20)) {
@@ -597,9 +632,10 @@ void GameScreen::ghostCollision() {
     }
 }
 
+//implements what happens when the player collides with a ghost for mode
 void GameScreen::collideWith(Enemy *enemy)
 {
-    if (enemy->getMode() == Movement::FRIGHTENED)
+    if (enemy->getMode() == Movement::FRIGHTENED) //if player collides with ghost in frightened mode, ghost goes to spawn box
     {
 
         score += mascotPoints;
@@ -610,12 +646,12 @@ void GameScreen::collideWith(Enemy *enemy)
         enemy->resetOrientation();
         enemy->setDefaultPosition();
     }
-    else if (gator->getLives() > 1)
+    else if (gator->getLives() > 1) //if player collides with ghost in normal mode, player loses a life if they have more than one
     {
         mascotPoints = 200;
         lostLife();
     }
-    else
+    else //ends game when player collides with ghost, having only one life left
     {
         mascotPoints = 200;
         gator->setLives(0);
@@ -624,8 +660,9 @@ void GameScreen::collideWith(Enemy *enemy)
     }
 }
 
+//
 void GameScreen::updater() {
-    // For debuggin character position:
+    // For debugging character position:
     // - unhide xPos and yPos
     // - uncomment the display functions
     ui->xPos->hide();
@@ -633,6 +670,7 @@ void GameScreen::updater() {
     //ui->xPos->display(gator->getPosx());
     //ui->yPos->display(gator->getPosy());
 
+    //if player wins game display the wins screen
     if (win == true) {
         winGame();
     }
@@ -645,6 +683,7 @@ void GameScreen::updater() {
 
     ghostCollision();
 
+    //player wins game when all dots are eaten
     if (dots->points.isEmpty()) {
         win = true;
     }
@@ -688,6 +727,7 @@ void GameScreen::updater() {
     dots->update();
 }
 
+//?
 void GameScreen::playerMove()
 {
 
@@ -739,6 +779,8 @@ void GameScreen::playerMove()
             break;
         }
     }
+
+    //?
     switch(currentTmpDir)
     {
     case LEFT:
@@ -815,11 +857,13 @@ void GameScreen::playerMove()
     }
 }
 
+//sets up movement for enemies
 void GameScreen::enemiesMove()
 {
     releaseFSU();
     if (fsu->isReleased())
     {
+        //starts movement for FSU
         if (!fsu->isInitiated() && fsu->getMode() != Movement::FRIGHTENED)
             fsuInitSeq();
 
@@ -829,30 +873,33 @@ void GameScreen::enemiesMove()
     releaseGeorgia();
     if (georgia->isReleased())
     {
+        //starts movement for Georgia
         if (!georgia->isInitiated() && georgia->getMode() != Movement::FRIGHTENED)
             georgiaInitSeq();
 
         georgia->move();
     }
 
-    if(canReleaseLSU)
+    if(canReleaseLSU) //checks if LSU can be released then releases them if possible
     {
         releaseLSU();
     }
     if (lsu->isReleased())
     {
+        //starts movement for LSU
         if (!lsu->isInitiated() && lsu->getMode() != Movement::FRIGHTENED)
             lsuInitSeq();
 
         lsu->move();
     }
 
-    if (canReleaseKentucky)
+    if (canReleaseKentucky) //checks if Kentucky can be released then releases them if possible
     {
         releaseKentucky();
     }
     if (kentucky->isReleased())
     {
+        //starts movement for Kentucky
         if (!kentucky->isInitiated() && kentucky->getMode() != Movement::FRIGHTENED)
             kentuckyInitSeq();
 
@@ -860,11 +907,12 @@ void GameScreen::enemiesMove()
     }
 }
 
+//sets up keys that will be used to control the gatorpac character
 void GameScreen::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key())
     {
-    case Qt::Key_Space:
+    case Qt::Key_Space: //pressing space pauses the game
         if (ui->pauseButton->isVisible() == true) {
             on_pauseButton_clicked();
         }
@@ -872,7 +920,7 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
             on_resumeButton_clicked();
         }
         break;
-    case Qt::Key_A:
+    case Qt::Key_A: //pressing the 'A' key moves the player to the left
         if (!gator->isMoving())
         {
             currentTmpDir = Direction::LEFT;
@@ -882,7 +930,7 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
             nextTmpDir = Direction::LEFT;
         }
         break;
-    case Qt::Key_D:
+    case Qt::Key_D: //pressing the 'D' key moves the player to the right
         if (!gator->isMoving())
         {
             currentTmpDir = Direction::RIGHT;
@@ -892,7 +940,7 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
             nextTmpDir = Direction::RIGHT;
         }
         break;
-    case Qt::Key_W:
+    case Qt::Key_W: //pressing the 'W' key moves the player upwards
         if (!gator->isMoving())
         {
             currentTmpDir = Direction::UP;
@@ -902,7 +950,7 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
             nextTmpDir = Direction::UP;
         }
         break;
-    case Qt::Key_S:
+    case Qt::Key_S: //pressing the 'S' key moves the player downwards
         if (!gator->isMoving())
         {
             currentTmpDir = Direction::DOWN;
