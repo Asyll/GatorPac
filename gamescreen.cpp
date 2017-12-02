@@ -954,8 +954,8 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key())
     {
-    case Qt::Key_Space: //pressing space pauses the game
-        if (ui->pauseButton->isVisible() == true) {
+    case Qt::Key_Space: //pressing space mutes the game
+        if (ui->muteButton->isVisible() == true) {
             on_muteButton_clicked();
         }
         else {
