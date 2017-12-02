@@ -259,6 +259,7 @@ void GameScreen::resetGame()
 
     playBackgroundMusic();
     yesBtnClicked = false;
+    frightenSound->setVolume(100);
     timer->start();
 }
 
