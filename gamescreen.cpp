@@ -38,7 +38,6 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     nextTmpDir= Direction::NONE;
 
 
-
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updater()));
     timer->start(1000/30);
