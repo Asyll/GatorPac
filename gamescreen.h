@@ -38,6 +38,7 @@ private:
     QMediaPlaylist *wakaPlaylist = new QMediaPlaylist();
     QMediaPlayer *wakaSound = new QMediaPlayer;
     QMediaPlayer *basicSounds = new QMediaPlayer;
+    QMediaPlayer *frightenSound = new QMediaPlayer;
     QMediaPlayer *deathMusic = new QMediaPlayer;
     QMediaPlayer *winMusic = new QMediaPlayer;
     QMediaPlayer *backgroundMusic = new QMediaPlayer;
@@ -63,7 +64,7 @@ private:
     void playBackgroundMusic();
     void playWakaSound();
     void playGatorWaka();
-    //void start();
+    void playFrightenMusic();
     void playDeathMusic();
     void playWinMusic();
 

@@ -152,8 +152,19 @@ void GameScreen::playWakaSound()
     wakaSound->play();
 }
 
+void GameScreen::playFrightenMusic() {
+    frightenSound->setMedia(QUrl("qrc:/Audio/sonicDrowning.mp3"));
+    if (frightenSound->state() == QMediaPlayer::PlayingState) {
+        frightenSound->setPosition(0);
+    }
+    else if (frightenSound->state() == QMediaPlayer::StoppedState) {
+        frightenSound->play();
+    }
+    backgroundMusic->setVolume(0);
+}
+
 void GameScreen::on_musicButton_clicked() {
-    if (gator->getLives() == 0 && win) {
+    if (dots->points.isEmpty()) {
         playWinMusic();
     }
     else if (gator->getLives() == 0 && !win) {
@@ -222,6 +233,8 @@ void GameScreen::end_fright()
 
     if (kentucky->isReleased())
         kentucky->setMode(Movement::CHASE);
+
+    backgroundMusic->setVolume(30);
 }
 
 void GameScreen::resetGame()
@@ -262,7 +275,7 @@ void GameScreen::resetGame()
 
     playBackgroundMusic();
     yesBtnClicked = false;
-    win = false;
+    frightenSound->setVolume(100);
     timer->start();
 }
 
@@ -310,6 +323,7 @@ void GameScreen::waka() {
 }
 
 void GameScreen::winGame() {
+    frightenSound->setVolume(0);
     playWinMusic();
 
     ui->lifeCount->display(gator->getLives());
@@ -573,6 +587,7 @@ void GameScreen::releaseKentucky()
 
 void GameScreen::on_retryButton_clicked() {
     yesBtnClicked = true;
+    win = false;
     resetGame();
 }
 
@@ -666,6 +681,7 @@ void GameScreen::updater() {
 
 
                     frightTimer->start();
+                    playFrightenMusic();
                 }
                 else {
                     score += 10;
