@@ -104,8 +104,8 @@ private slots:
     void on_muteButton_clicked();
     void on_retryButton_clicked();
     void on_quitButton_clicked();
-    void on_pauseButton_clicked();
-    void on_resumeButton_clicked();
+    //void on_pauseButton_clicked();
+    //void on_resumeButton_clicked();
     void lsuAvailable();
     void kentuckyAvailable();
     void wakaOff();

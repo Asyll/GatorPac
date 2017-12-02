@@ -25,6 +25,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     ui->retryButton->setVisible(false);
     ui->quitButton->setVisible(false);
     ui->resumeButton->setVisible(false);
+    ui->pauseButton->setVisible(false);
     ui->scoreLabel2->setVisible(false);
     ui->scoreValue2->setVisible(false);
     ui->winLabel->setVisible(false);
@@ -184,33 +185,33 @@ void GameScreen::on_muteButton_clicked() {
     ui->musicButton->setVisible(true);
 }
 
-void GameScreen::on_pauseButton_clicked() {
-    if (ui->retryButton->isVisible() == true) {
-        return;
-    }
-    else {
-        if (frightenSound->state() == QMediaPlayer::PlayingState) {
-            frightenSound->pause();
-        }
-        timer->stop();
-        ui->resumeButton->setVisible(true);
-        ui->pauseButton->setVisible(false);
-    }
-}
+//void GameScreen::on_pauseButton_clicked() {
+//    if (ui->retryButton->isVisible() == true) {
+//        return;
+//    }
+//    else {
+//        if (frightenSound->state() == QMediaPlayer::PlayingState) {
+//            frightenSound->pause();
+//        }
+//        timer->stop();
+//        ui->resumeButton->setVisible(true);
+//        ui->pauseButton->setVisible(false);
+//    }
+//}
 
-void GameScreen::on_resumeButton_clicked() {
-    if (ui->retryButton->isVisible() == true) {
-        return;
-    }
-    else {
-        if (frightenSound->state() == QMediaPlayer::PausedState) {
-            frightenSound->play();
-        }
-        timer->start();
-        ui->resumeButton->setVisible(false);
-        ui->pauseButton->setVisible(true);
-    }
-}
+//void GameScreen::on_resumeButton_clicked() {
+//    if (ui->retryButton->isVisible() == true) {
+//        return;
+//    }
+//    else {
+//        if (frightenSound->state() == QMediaPlayer::PausedState) {
+//            frightenSound->play();
+//        }
+//        timer->start();
+//        ui->resumeButton->setVisible(false);
+//        ui->pauseButton->setVisible(true);
+//    }
+//}
 
 void GameScreen::lsuAvailable()
 {
@@ -257,7 +258,7 @@ void GameScreen::resetGame()
     ui->gameView->setVisible(true);
     ui->lifeCount->setVisible(true);
     ui->LifeLabel->setVisible(true);
-    ui->pauseButton->setVisible(true);
+    //ui->pauseButton->setVisible(true);
     ui->scoreLabel->setVisible(true);
     ui->scoreValue->setVisible(true);
 
@@ -346,8 +347,8 @@ void GameScreen::winGame() {
     ui->gameView->setVisible(false);
     ui->lifeCount->setVisible(false);
     ui->LifeLabel->setVisible(false);
-    ui->pauseButton->setVisible(false);
-    ui->resumeButton->setVisible(false);
+    //ui->pauseButton->setVisible(false);
+    //ui->resumeButton->setVisible(false);
     ui->scoreLabel->setVisible(false);
     ui->scoreValue->setVisible(false);
 }
@@ -371,8 +372,8 @@ void GameScreen::gameOver() {
     ui->gameView->setVisible(false);
     ui->lifeCount->setVisible(false);
     ui->LifeLabel->setVisible(false);
-    ui->pauseButton->setVisible(false);
-    ui->resumeButton->setVisible(false);
+    //ui->pauseButton->setVisible(false);
+    //ui->resumeButton->setVisible(false);
     ui->scoreLabel->setVisible(false);
     ui->scoreValue->setVisible(false);
 }
@@ -904,11 +905,11 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
     switch(event->key())
     {
     case Qt::Key_Space:
-        if (ui->pauseButton->isVisible() == true) {
-            on_pauseButton_clicked();
+        if (ui->muteButton->isVisible() == true) {
+            on_muteButton_clicked();
         }
         else {
-            on_resumeButton_clicked();
+            on_musicButton_clicked();
         }
         break;
     case Qt::Key_A:
