@@ -100,8 +100,7 @@ int Enemy::getSpeed() const
 //sets enemy's speed
 void Enemy::setSpeed(int speed)
 {
-    //prints to console the positiona nd speed of enemy
-    std::cout << ": " << posx << ", " << posy << " changing to: " << speed << std::endl;
+    //prints to console the position and speed of enemy
     while ((posx % speed) != 0 || ((posy % speed) != 0))
     {
         move();
@@ -435,7 +434,8 @@ void Enemy::chase()
         point.setY(posy);
         facingDirection = direction;
 
-        if (posx < 90 && posy == 270) {
+        if (posx < 90 && posy == 270)
+        {
             posx -= 2;
             moving = true;
             if (posx <= 0)
@@ -443,11 +443,11 @@ void Enemy::chase()
                 posx = 520;
             }
         }
-        else if (posx > 430 && posy == 270) {
+        else if (posx > 430 && posy == 270)
+        {
             posx -= 2;
             moving = true;
         }
-
         else if (gameMap->canMove(point))
         {
             posx -= speed;
@@ -476,7 +476,6 @@ void Enemy::chase()
             posx += 2;
             moving = true;
         }
-
         else if (gameMap->canMove(point))
         {
             posx += speed;

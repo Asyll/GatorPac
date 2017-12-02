@@ -11,12 +11,12 @@ TitleScreen::TitleScreen(QWidget *parent) : QWidget(parent), ui(new Ui::TitleScr
     ui->setupUi(this);
 
     //displays the animation for the gatorpac title screen
-    QMovie *animation = new QMovie(":/Images/AnimatedTitle.gif");
+    //QMovie *animation = new QMovie(":/Images/AnimatedTitle.gif");
     QLabel *logo = ui->logo;
-    logo->setMovie(animation);
-    //logo->setPixmap(QPixmap(":/Images/gatorlogo.png"));
-    logo->setScaledContents( true );
-    animation->start();
+    //logo->setMovie(animation);
+    ui->logo->setPixmap(QPixmap(":/Images/gatorlogo.png"));
+    ui->logo->setScaledContents( true );
+    //animation->start();
 
     playBackgroundMusic();
 

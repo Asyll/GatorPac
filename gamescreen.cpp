@@ -27,10 +27,10 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     ui->retryButton->setVisible(false);
     ui->quitButton->setVisible(false);
     ui->resumeButton->setVisible(false);
+    ui->pauseButton->setVisible(false);
     ui->scoreLabel2->setVisible(false);
     ui->scoreValue2->setVisible(false);
     ui->winLabel->setVisible(false);
-    wakaSound->setMedia(QUrl("qrc:/Audio/PacmanChomp.mp3"));
 
     // Default Player(260,450,5)
     gator = new Player(260,450,5);
@@ -39,7 +39,6 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
 
     currentTmpDir = Direction::NONE;
     nextTmpDir= Direction::NONE;
-
 
 
     timer = new QTimer(this);
@@ -106,6 +105,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
 
     //plays the background gatorpac music when the game starts
     playBackgroundMusic();
+    playWakaSound();
 
 }
 
@@ -147,8 +147,20 @@ void GameScreen::playBackgroundMusic()
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
     backgroundMusic->setPlaylist(playlist);
-    backgroundMusic->setVolume(30);
+    backgroundMusic->setVolume(50);
     backgroundMusic->play();
+}
+
+
+void GameScreen::playWakaSound()
+{
+    wakaPlaylist->clear();
+    wakaPlaylist->addMedia(QUrl("qrc:/Audio/PacmanChomp.mp3"));
+    wakaPlaylist->setPlaybackMode(QMediaPlaylist::Loop);
+
+    wakaSound->setPlaylist(wakaPlaylist);
+    wakaSound->setVolume(0);
+    wakaSound->play();
 }
 
 //plays the music for frighten mode
@@ -158,9 +170,11 @@ void GameScreen::playFrightenMusic() {
         frightenSound->setPosition(0);
     }
     else if (frightenSound->state() == QMediaPlayer::StoppedState) {
+        frightenSound->setVolume(40);
         frightenSound->play();
     }
     backgroundMusic->setVolume(0);
+
 }
 
 //while the music button is clicked, plays appropriate music
@@ -186,28 +200,35 @@ void GameScreen::on_muteButton_clicked() {
 }
 
 // pauses game when this button is pressed
-void GameScreen::on_pauseButton_clicked() {
-    if (ui->retryButton->isVisible() == true) {
-        return;
-    }
-    else {
-        timer->stop();
-        ui->resumeButton->setVisible(true);
-        ui->pauseButton->setVisible(false);
-    }
-}
+//void GameScreen::on_pauseButton_clicked() {
+//    if (ui->retryButton->isVisible() == true) {
+//        return;
+//    }
+//    else {
+//        if (frightenSound->state() == QMediaPlayer::PlayingState) {
+//            frightenSound->pause();
+//        }
+//        timer->stop();
+//        ui->resumeButton->setVisible(true);
+//        ui->pauseButton->setVisible(false);
+//    }
+//}
 
 //resumes game when this button is pressed
-void GameScreen::on_resumeButton_clicked() {
-    if (ui->retryButton->isVisible() == true) {
-        return;
-    }
-    else {
-        timer->start();
-        ui->resumeButton->setVisible(false);
-        ui->pauseButton->setVisible(true);
-    }
-}
+//void GameScreen::on_resumeButton_clicked() {
+//    if (ui->retryButton->isVisible() == true) {
+//        return;
+//    }
+//    else {
+//        if (frightenSound->state() == QMediaPlayer::PausedState) {
+//            frightenSound->play();
+//        }
+//        timer->start();
+//        ui->resumeButton->setVisible(false);
+//        ui->pauseButton->setVisible(true);
+//    }
+//}
+
 
 //releases the lsu enemy from the spawn box
 void GameScreen::lsuAvailable()
@@ -219,6 +240,11 @@ void GameScreen::lsuAvailable()
 void GameScreen::kentuckyAvailable()
 {
     canReleaseKentucky = true;
+}
+
+void GameScreen::wakaOff()
+{
+    wakaSound->setVolume(0);
 }
 
 //sets the enemy's movement mode to chase after the frigtened mode ends
@@ -236,7 +262,7 @@ void GameScreen::end_fright()
     if (kentucky->isReleased())
         kentucky->setMode(Movement::CHASE);
 
-    backgroundMusic->setVolume(30);
+    backgroundMusic->setVolume(50);
 }
 
 //method that resets all parts of the game and ui
@@ -253,7 +279,7 @@ void GameScreen::resetGame()
     ui->gameView->setVisible(true);
     ui->lifeCount->setVisible(true);
     ui->LifeLabel->setVisible(true);
-    ui->pauseButton->setVisible(true);
+    //ui->pauseButton->setVisible(true);
     ui->scoreLabel->setVisible(true);
     ui->scoreValue->setVisible(true);
 
@@ -324,10 +350,8 @@ void GameScreen::lostLife() {
 
 //plays the waka sound while gatorpac eats dots
 void GameScreen::waka() {
-    if (wakaSound->state() == QMediaPlayer::StoppedState) {
-        wakaSound->setPosition(0);
-        wakaSound->play();
-    }
+    wakaSound->setVolume(30);
+    QTimer::singleShot(613, this, SLOT(wakaOff()));
 }
 
 //sets up the win screen after gatorpac eats all of the dots
@@ -348,14 +372,15 @@ void GameScreen::winGame() {
     ui->gameView->setVisible(false);
     ui->lifeCount->setVisible(false);
     ui->LifeLabel->setVisible(false);
-    ui->pauseButton->setVisible(false);
-    ui->resumeButton->setVisible(false);
+    //ui->pauseButton->setVisible(false);
+    //ui->resumeButton->setVisible(false);
     ui->scoreLabel->setVisible(false);
     ui->scoreValue->setVisible(false);
 }
 
 //sets up the game over screen when the player runs out of lives.
 void GameScreen::gameOver() {
+    frightenSound->setVolume(0);
     playDeathMusic();
 
     ui->lifeCount->display(gator->getLives());
@@ -373,8 +398,8 @@ void GameScreen::gameOver() {
     ui->gameView->setVisible(false);
     ui->lifeCount->setVisible(false);
     ui->LifeLabel->setVisible(false);
-    ui->pauseButton->setVisible(false);
-    ui->resumeButton->setVisible(false);
+    //ui->pauseButton->setVisible(false);
+    //ui->resumeButton->setVisible(false);
     ui->scoreLabel->setVisible(false);
     ui->scoreValue->setVisible(false);
 }
@@ -411,11 +436,16 @@ void GameScreen::fsuInitSeq()
         case 2400:
             fsu->setMode(Movement::CHASE);
             break;
+        default:
+            break;
         }
         fsuCounter ++;
     }
     else
     {
+        if (fsu->isReleased())
+            fsu->setMode(Movement::CHASE);
+
         fsu->setInitiated(true);
     }
 }
@@ -452,11 +482,15 @@ void GameScreen::georgiaInitSeq()
         case 2400:
             georgia->setMode(Movement::CHASE);
             break;
+        default:
+            break;
         }
         georgiaCounter ++;
     }
     else
     {
+        if (georgia->isReleased())
+            georgia->setMode(Movement::CHASE);
         georgia->setInitiated(true);
     }
 }
@@ -493,11 +527,15 @@ void GameScreen::lsuInitSeq()
         case 2400:
             lsu->setMode(Movement::CHASE);
             break;
+        default:
+            break;
         }
         lsuCounter ++;
     }
     else
     {
+        if (lsu->isReleased())
+            lsu->setMode(Movement::CHASE);
         lsu->setInitiated(true);
     }
 }
@@ -534,11 +572,15 @@ void GameScreen::kentuckyInitSeq()
         case 2400:
             kentucky->setMode(Movement::CHASE);
             break;
+        default:
+            break;
         }
         kentuckyCounter ++;
     }
     else
     {
+        if (kentucky->isReleased())
+            kentucky->setMode(Movement::CHASE);
         kentucky->setInitiated(true);
     }
 }
@@ -914,10 +956,10 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
     {
     case Qt::Key_Space: //pressing space pauses the game
         if (ui->pauseButton->isVisible() == true) {
-            on_pauseButton_clicked();
+            on_muteButton_clicked();
         }
         else {
-            on_resumeButton_clicked();
+            on_musicButton_clicked();
         }
         break;
     case Qt::Key_A: //pressing the 'A' key moves the player to the left
