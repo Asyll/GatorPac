@@ -91,7 +91,6 @@ int Enemy::getSpeed() const
 
 void Enemy::setSpeed(int speed)
 {
-    std::cout << ": " << posx << ", " << posy << " changing to: " << speed << std::endl;
     while ((posx % speed) != 0 || ((posy % speed) != 0))
     {
         move();

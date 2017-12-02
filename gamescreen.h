@@ -35,6 +35,7 @@ private:
     QTimer *lsuReleaseTimer;
     QTimer *kentuckyReleaseTimer;
     QMediaPlaylist *playlist = new QMediaPlaylist();
+    QMediaPlaylist *wakaPlaylist = new QMediaPlaylist();
     QMediaPlayer *wakaSound = new QMediaPlayer;
     QMediaPlayer *basicSounds = new QMediaPlayer;
     QMediaPlayer *deathMusic = new QMediaPlayer;
@@ -60,6 +61,7 @@ private:
 
 
     void playBackgroundMusic();
+    void playWakaSound();
     void playGatorWaka();
     //void start();
     void playDeathMusic();
@@ -105,6 +107,7 @@ private slots:
     void on_resumeButton_clicked();
     void lsuAvailable();
     void kentuckyAvailable();
+    void wakaOff();
     void end_fright();
 };
 

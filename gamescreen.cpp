@@ -28,7 +28,6 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
     ui->scoreLabel2->setVisible(false);
     ui->scoreValue2->setVisible(false);
     ui->winLabel->setVisible(false);
-    wakaSound->setMedia(QUrl("qrc:/Audio/PacmanChomp.mp3"));
 
     // Default Player(260,450,5)
     gator = new Player(260,450,5);
@@ -99,6 +98,7 @@ GameScreen::GameScreen(QWidget *parent) : QWidget(parent), ui(new Ui::GameScreen
 
 
     playBackgroundMusic();
+    playWakaSound();
 
 }
 
@@ -139,6 +139,17 @@ void GameScreen::playBackgroundMusic()
     backgroundMusic->setPlaylist(playlist);
     backgroundMusic->setVolume(30);
     backgroundMusic->play();
+}
+
+void GameScreen::playWakaSound()
+{
+    wakaPlaylist->clear();
+    wakaPlaylist->addMedia(QUrl("qrc:/Audio/PacmanChomp.mp3"));
+    wakaPlaylist->setPlaybackMode(QMediaPlaylist::Loop);
+
+    wakaSound->setPlaylist(wakaPlaylist);
+    wakaSound->setVolume(0);
+    wakaSound->play();
 }
 
 void GameScreen::on_musicButton_clicked() {
@@ -191,6 +202,11 @@ void GameScreen::lsuAvailable()
 void GameScreen::kentuckyAvailable()
 {
     canReleaseKentucky = true;
+}
+
+void GameScreen::wakaOff()
+{
+    wakaSound->setVolume(0);
 }
 
 void GameScreen::end_fright()
@@ -289,10 +305,8 @@ void GameScreen::lostLife() {
 }
 
 void GameScreen::waka() {
-    if (wakaSound->state() == QMediaPlayer::StoppedState) {
-        wakaSound->setPosition(0);
-        wakaSound->play();
-    }
+    wakaSound->setVolume(30);
+    QTimer::singleShot(613, this, SLOT(wakaOff()));
 }
 
 void GameScreen::winGame() {
