@@ -19,14 +19,14 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     void move();
-    void resetOrientation();
-    void setDefaultPosition();
+    void resetOrientation(); //resets orientation for the enemy
+    void setDefaultPosition(); //sets the default position for the enemy
 
-    int getSpeed() const;
-    void setSpeed(int speed);
+    int getSpeed() const; //gets speed for the enemy
+    void setSpeed(int speed); //sets speed for the enmy
 
-    int getPosx() const;
-    void setPosx(int x);
+    int getPosx() const; //gets x-position for the enemy
+    void setPosx(int x); //sets x-positon for the enemy
 
     int getPosy() const;
     void setPosy(int y);

@@ -5,6 +5,7 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 
+
 namespace Ui {
 class TitleScreen;
 }

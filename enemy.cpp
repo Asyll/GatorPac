@@ -1,6 +1,8 @@
 #include "enemy.h"
 #include <iostream>
 
+//class that implements the enemies
+
 Enemy::Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Player* gator, GhostType type) :
     charW(40),
     charH(40),
@@ -15,83 +17,70 @@ Enemy::Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Play
     this->gator = gator;
     this->type = type;
 
-    setScatterPoint();
+    setScatterPoint(); //calls ScatterPoint method
 
-    resetOrientation();
+    resetOrientation(); //calls resetOrientation method
 
     mode = Movement::SCATTER;
     released = false;
     initiated = false;
 
+    //loads images for each possible orientation in normal and frightened mode
     forward.load("://Images/Characters/" + name + "_forward.png");
     reverse.load("://Images/Characters/" + name + "_reverse.png");
     up.load("://Images/Characters/" + name + "_forward_up.png");
     down.load("://Images/Characters/" + name + "_forward_down.png");
-//    forwardScared.load("://Images/Characters/" + name + "_forward_scared.png");
-//    reverseScared.load("://Images/Characters/" + name + "_reverse_scared.png");
-//    upScared.load("://Images/Characters/" + name + "_forward_scared_up.png");
-//    downScared.load("://Images/Characters/" + name + "_forward_scared_down.png");
     frightMeat.load("://Images/Characters/frightMeat.png");
 }
 
+//defines bounding rectangle for enemy
 QRectF Enemy::boundingRect() const
 {
     return QRect(0,0,charW,charH);
 }
 
+//paints enemy's orientation for both normal and frightened mode
 void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    //paints enemy's oreintation when they are in frightened mode
     if (mode == Movement::FRIGHTENED)
     {
-        switch(facingDirection)
-        {
-        case LEFT:
-            painter->drawPixmap(posx,posy,charW,charW,frightMeat);
-            break;
-        case RIGHT:
-            painter->drawPixmap(posx,posy,charW,charW,frightMeat);
-            break;
-        case UP:
-            painter->drawPixmap(posx,posy,charW,charW,frightMeat);
-            break;
-        case DOWN:
-            painter->drawPixmap(posx,posy,charW,charW,frightMeat);
-            break;
-        case NONE:
-            painter->drawPixmap(posx,posy,charW,charW,frightMeat);
-            break;
-        }
+        painter->drawPixmap(posx,posy,charW,charW,frightMeat);
     }
     else
     {
+        //paints enemy's orientation while in normal mode
         switch(facingDirection)
         {
         case LEFT:
-            painter->drawPixmap(posx,posy,charW,charW,reverse);
+            painter->drawPixmap(posx,posy,charW,charW,reverse); //left orientation
             break;
         case RIGHT:
-            painter->drawPixmap(posx,posy,charW,charW,forward);
+            painter->drawPixmap(posx,posy,charW,charW,forward); //right orientation
             break;
         case UP:
-            painter->drawPixmap(posx,posy,charW,charW,up);
+            painter->drawPixmap(posx,posy,charW,charW,up); //up orientation
             break;
         case DOWN:
-            painter->drawPixmap(posx,posy,charW,charW,down);
+            painter->drawPixmap(posx,posy,charW,charW,down); //down orientation
             break;
         case NONE:
-            painter->drawPixmap(posx,posy,charW,charW,forward);
+            painter->drawPixmap(posx,posy,charW,charW,forward); //default orientation
             break;
         }
     }
 }
 
+//gets enemy's speed
 int Enemy::getSpeed() const
 {
     return speed;
 }
 
+//sets enemy's speed
 void Enemy::setSpeed(int speed)
 {
+    //prints to console the position and speed of enemy
     while ((posx % speed) != 0 || ((posy % speed) != 0))
     {
         move();
@@ -99,11 +88,13 @@ void Enemy::setSpeed(int speed)
     this->speed = speed;
 }
 
+//gets enemy's x-position
 int Enemy::getPosx() const
 {
     return posx;
 }
 
+//sets enemy's x-position
 void Enemy::setPosx(int x)
 {
     if (x >= 0 && x <= 520)
@@ -112,11 +103,13 @@ void Enemy::setPosx(int x)
     }
 }
 
+//gets enemy's y-position
 int Enemy::getPosy() const
 {
     return posy;
 }
 
+//sets enemy's y-position
 void Enemy::setPosy(int y)
 {
     if (y >= 10 && y <= 570)
@@ -125,49 +118,57 @@ void Enemy::setPosy(int y)
     }
 }
 
+//checks whether enemy is moving
 bool Enemy::isMoving() const
 {
     return moving;
 }
 
+//sets enemy's moving values
 void Enemy::setMoving(bool value)
 {
     moving = value;
 }
 
+//sets the enemy's speed for each movement mode (frightened or normal)
 void Enemy::setMode(const Movement mode)
 {
-    if (mode == Movement::FRIGHTENED)
+    if (mode == Movement::FRIGHTENED) //enemies move slower in frightened mode at speed 2
     {
         setSpeed(2);
     }
     else
     {
-        setSpeed(5);
+        setSpeed(5); //while not in frightened mode, enemies move at speed 5
     }
     this->mode = mode;
 }
 
+//checks if enemy is released from their box
 bool Enemy::isReleased() const
 {
     return released;
 }
 
+//sets whether enemy is released fromt heir box
 void Enemy::setReleased(bool value)
 {
     released = value;
 }
 
+//checks if enemy is intiated
 bool Enemy::isInitiated() const
 {
     return initiated;
 }
 
+//sets whether enemy is initiated
 void Enemy::setInitiated(bool value)
 {
     initiated = value;
 }
 
+//checks the enemy's movement mode
 Movement Enemy::getMode() const
 {
     return mode;
@@ -197,6 +198,7 @@ void Enemy::setScatterPoint()
     }
 }
 
+//resets the enemy's orientation
 void Enemy::resetOrientation()
 {
     facingDirection = Direction::RIGHT;
@@ -206,6 +208,7 @@ void Enemy::resetOrientation()
     mode = Movement::CHASE;
 }
 
+//sets the default position for the enemy
 void Enemy::setDefaultPosition()
 {
     released = false;
@@ -213,6 +216,7 @@ void Enemy::setDefaultPosition()
     setPosy(defaultPosy);
 }
 
+//changes enemy's movement based on what mode they are in
 void Enemy::move()
 {
     switch(mode)
@@ -229,10 +233,14 @@ void Enemy::move()
     }
 }
 
+//sets the movement patterns for the enemies while they are in chase mode
+//enemies will try to chase gatorpac
 void Enemy::chase()
 {
     QPoint point;
 
+    //compares the enemy's position with gatorpac's position
+    //and determines the direction the enemy should move
     if (moving)
     {
         if (direction == Direction::RIGHT || direction == Direction::LEFT)
@@ -258,6 +266,9 @@ void Enemy::chase()
             }
         }
     }
+
+    //compares the enemy's position with gatorpac's position
+    //and determines the direction the enemy should move
     else
     {
         if (direction == Direction::RIGHT || direction == Direction::LEFT)
@@ -302,6 +313,9 @@ void Enemy::chase()
                 }
             }
         }
+
+        //compares the enemy's position with gatorpac's position
+        //and determines the direction the enemy should move
         else if (direction == Direction::DOWN || direction == Direction::UP)
         {
             if (this->posx < gator->getPosx())
@@ -347,7 +361,8 @@ void Enemy::chase()
     }
 
 
-
+    //if next direction does not equal current direction change the current
+    //direction accordingly and check if that is valid.
     if (nextDirection != direction)
     {
         switch (nextDirection)
@@ -390,6 +405,8 @@ void Enemy::chase()
             break;
         }
     }
+
+    //changes enemy direction based on edge of gamemap
     switch (direction)
     {
     case LEFT:
@@ -485,12 +502,16 @@ void Enemy::chase()
 
 }
 
+//sets the movement patterns for the enemies while they are in scatter mode
+//each enemy moves around a certain position
 void Enemy::scatter()
 {
     QPoint point;
 
     if (moving)
     {
+        //compares enemy's current position with scatter positions and changes
+        //direction accordingly
         if (direction == Direction::RIGHT || direction == Direction::LEFT)
         {
             if (this->posy < scaty)
@@ -516,6 +537,7 @@ void Enemy::scatter()
     }
     else
     {
+        //scatter for horizontal orientation
         if (direction == Direction::RIGHT || direction == Direction::LEFT)
         {
             if (this->posy < scaty)
@@ -558,6 +580,8 @@ void Enemy::scatter()
                 }
             }
         }
+
+        //scatter for vertical orienation
         else if (direction == Direction::DOWN || direction == Direction::UP)
         {
             if (this->posx < scatx)
@@ -603,7 +627,8 @@ void Enemy::scatter()
     }
 
 
-
+    //if next direction does not equal current direction change the current
+    //direction accordingly and check if that is valid.
     if (nextDirection != direction)
     {
         switch (nextDirection)
@@ -646,8 +671,11 @@ void Enemy::scatter()
             break;
         }
     }
+
+    //changes direction of enemy based on current direction
     switch (direction)
     {
+
     case LEFT:
         point.setX(posx - speed);
         point.setY(posy);
@@ -737,6 +765,8 @@ void Enemy::scatter()
     }
 }
 
+//sets the movement patterns for the enemies while they are in frightened mode
+//enemy movement will be random
 void Enemy::frightened()
 {
     QPoint point;
@@ -771,6 +801,8 @@ void Enemy::frightened()
     }
 
 
+    //if next direction does not equal current direction change the current
+    //direction accordingly and check if that is valid.
     if (nextDirection != direction)
     {
         switch (nextDirection)
@@ -813,6 +845,8 @@ void Enemy::frightened()
             break;
         }
     }
+
+    //changes enemy orientation based on current direction
     switch (direction)
     {
     case LEFT:
