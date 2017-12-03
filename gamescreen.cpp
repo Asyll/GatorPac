@@ -186,7 +186,10 @@ void GameScreen::on_musicButton_clicked() {
         playDeathMusic();
     }
     else {
-        playBackgroundMusic();
+        if (frightenSound->state() != QMediaPlayer::PlayingState) {
+                playBackgroundMusic();
+            }
+
     }
     ui->musicButton->setVisible(false);
     ui->muteButton->setVisible(true);
@@ -194,7 +197,9 @@ void GameScreen::on_musicButton_clicked() {
 
 //mutes music when the mute button is clicked
 void GameScreen::on_muteButton_clicked() {
-    playlist->clear();
+    if (frightenSound->state() != QMediaPlayer::PlayingState || ui->retryLabel->isVisible() == true) {
+        playlist->clear();
+    }
     ui->muteButton->setVisible(false);
     ui->musicButton->setVisible(true);
 }
@@ -306,8 +311,10 @@ void GameScreen::resetGame()
 
     playBackgroundMusic();
     yesBtnClicked = false;
-    frightenSound->setVolume(100);
     timer->start();
+    if (frightenSound->state() != QMediaPlayer::PlayingState) {
+        frightenSound->setVolume(40);
+    }
 }
 
 //resets characters to default positions
@@ -344,6 +351,11 @@ void GameScreen::lostLife() {
         basicSounds->setVolume(40);
         basicSounds->play();
     }
+
+    if (frightenSound->state() == QMediaPlayer::PlayingState) {
+            frightenSound->setVolume(0);
+            backgroundMusic->setVolume(40);
+        }
 
     gator->setLives(gator->getLives() - 1);
 
