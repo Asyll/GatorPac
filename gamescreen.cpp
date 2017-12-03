@@ -457,9 +457,6 @@ void GameScreen::fsuInitSeq()
     }
     else
     {
-        if (fsu->isReleased())
-            fsu->setMode(Movement::CHASE);
-
         fsu->setInitiated(true);
     }
 }
@@ -503,8 +500,6 @@ void GameScreen::georgiaInitSeq()
     }
     else
     {
-        if (georgia->isReleased())
-            georgia->setMode(Movement::CHASE);
         georgia->setInitiated(true);
     }
 }
@@ -548,8 +543,6 @@ void GameScreen::lsuInitSeq()
     }
     else
     {
-        if (lsu->isReleased())
-            lsu->setMode(Movement::CHASE);
         lsu->setInitiated(true);
     }
 }
@@ -593,8 +586,6 @@ void GameScreen::kentuckyInitSeq()
     }
     else
     {
-        if (kentucky->isReleased())
-            kentucky->setMode(Movement::CHASE);
         kentucky->setInitiated(true);
     }
 }

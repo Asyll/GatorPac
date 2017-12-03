@@ -46,7 +46,6 @@ public:
 
 private:
     QPixmap forward, reverse, up, down;
-//    QPixmap forwardScared, reverseScared, upScared, downScared;
     QPixmap frightMeat;
     Direction direction, nextDirection, facingDirection;
 
