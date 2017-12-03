@@ -53,5 +53,6 @@
         <file>Images/Characters/lsu_forward_scared_up.png</file>
         <file>Images/Characters/lsu_forward_scared.png</file>
         <file>Images/Characters/lsu_reverse_scared.png</file>
+        <file>Images/Characters/frightMeat.png</file>
     </qresource>
 </RCC>

@@ -27,10 +27,11 @@ Enemy::Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Play
     reverse.load("://Images/Characters/" + name + "_reverse.png");
     up.load("://Images/Characters/" + name + "_forward_up.png");
     down.load("://Images/Characters/" + name + "_forward_down.png");
-    forwardScared.load("://Images/Characters/" + name + "_forward_scared.png");
-    reverseScared.load("://Images/Characters/" + name + "_reverse_scared.png");
-    upScared.load("://Images/Characters/" + name + "_forward_scared_up.png");
-    downScared.load("://Images/Characters/" + name + "_forward_scared_down.png");
+//    forwardScared.load("://Images/Characters/" + name + "_forward_scared.png");
+//    reverseScared.load("://Images/Characters/" + name + "_reverse_scared.png");
+//    upScared.load("://Images/Characters/" + name + "_forward_scared_up.png");
+//    downScared.load("://Images/Characters/" + name + "_forward_scared_down.png");
+    frightMeat.load("://Images/Characters/frightMeat.png");
 }
 
 QRectF Enemy::boundingRect() const
@@ -45,19 +46,19 @@ void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
         switch(facingDirection)
         {
         case LEFT:
-            painter->drawPixmap(posx,posy,charW,charW,reverseScared);
+            painter->drawPixmap(posx,posy,charW,charW,frightMeat);
             break;
         case RIGHT:
-            painter->drawPixmap(posx,posy,charW,charW,forwardScared);
+            painter->drawPixmap(posx,posy,charW,charW,frightMeat);
             break;
         case UP:
-            painter->drawPixmap(posx,posy,charW,charW,upScared);
+            painter->drawPixmap(posx,posy,charW,charW,frightMeat);
             break;
         case DOWN:
-            painter->drawPixmap(posx,posy,charW,charW,downScared);
+            painter->drawPixmap(posx,posy,charW,charW,frightMeat);
             break;
         case NONE:
-            painter->drawPixmap(posx,posy,charW,charW,forwardScared);
+            painter->drawPixmap(posx,posy,charW,charW,frightMeat);
             break;
         }
     }
