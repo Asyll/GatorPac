@@ -263,6 +263,7 @@ void GameScreen::end_fright()
         kentucky->setMode(Movement::CHASE);
 
     backgroundMusic->setVolume(50);
+    mascotPoints = 200;
 }
 
 //method that resets all parts of the game and ui
@@ -287,6 +288,7 @@ void GameScreen::resetGame()
 
     gator->setLives(3);
     score = 0;
+    mascotPoints = 200;
 
     fsu->setInitiated(false);
     georgia->setReleased(false);
