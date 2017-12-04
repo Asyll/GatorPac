@@ -705,9 +705,10 @@ void GameScreen::resetGame()
     ui->gameView->setVisible(true);
     ui->lifeCount->setVisible(true);
     ui->LifeLabel->setVisible(true);
-    //ui->pauseButton->setVisible(true);
     ui->scoreLabel->setVisible(true);
     ui->scoreValue->setVisible(true);
+    ui->muteButton->setVisible(true);
+    ui->musicButton->setVisible(false);
 
     resetCharacters();
 
