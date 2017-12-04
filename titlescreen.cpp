@@ -8,6 +8,8 @@ TitleScreen::TitleScreen(QWidget *parent) : QWidget(parent), ui(new Ui::TitleScr
 
     ui->logo->setPixmap(QPixmap(":/Images/gatorlogo.png"));
     ui->logo->setScaledContents( true );
+    ui->backButton->setVisible(false);
+    ui->howToText->setVisible(false);
 
     playBackgroundMusic();
 }
@@ -27,6 +29,24 @@ void TitleScreen::on_startBtn_clicked()
 
     this->close();
     game->show();
+}
+
+//pulls up how to play
+void TitleScreen::on_howToButton_clicked() {
+    ui->backButton->setVisible(true);
+    ui->logo->setVisible(false);
+    ui->startBtn->setVisible(false);
+    ui->howToButton->setVisible(false);
+    ui->howToText->setVisible(true);
+}
+
+//goes back to the titlescreen
+void TitleScreen::on_backButton_clicked() {
+    ui->backButton->setVisible(false);
+    ui->logo->setVisible(true);
+    ui->startBtn->setVisible(true);
+    ui->howToButton->setVisible(true);
+    ui->howToText->setVisible(false);
 }
 
 void TitleScreen::playBackgroundMusic()

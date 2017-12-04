@@ -27,6 +27,8 @@ private:
 
 private slots:
     void on_startBtn_clicked();
+    void on_howToButton_clicked();
+    void on_backButton_clicked();
 };
 
 #endif // TITLESCREEN_H
