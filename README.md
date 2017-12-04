@@ -13,7 +13,7 @@ Compile using Qt:
 
 ## Authors
 
-* **Gabriel Perez** - *Initial work* - [Asyll](https://github.com/Asyll)
-* **Bryan Miller** - *Initial work* - [bryancmiller](https://github.com/bryanmiller)
+* **Gabriel Perez** - [Asyll](https://github.com/Asyll)
+* **Bryan Miller** - [bryancmiller](https://github.com/bryanmiller)
 
 See also the list of [contributors](https://github.com/Asyll/GatorPac/contributors) who participated in this project.
