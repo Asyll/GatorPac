@@ -1,84 +1,58 @@
+/* This class represents the enemies (or ghosts) of the game and
+ * includes their movement mechanics. */
+
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include <QGraphicsItem>
-#include <QPainter>
+#include "entity.h"
 #include <QTimer>
 #include "player.h"
 #include "gamemap.h"
-#include "direction.h"
 
 enum Movement {CHASE, SCATTER, FRIGHTENED};
-enum GhostType {RED, PINK, BLUE, ORANGE};
+enum EnemyType {RED, PINK, BLUE, ORANGE};
 
-class Enemy : public QGraphicsItem
+class Enemy : public Entity
 {
 public:
-    Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Player* gator, GhostType type);
-    QRectF boundingRect() const;
+    Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Player* gator, EnemyType type);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    void move();
-    void resetOrientation(); //resets orientation for the enemy
-    void setDefaultPosition(); //sets the default position for the enemy
+    void move();                                        // Starts the correct movement mode
 
-    int getSpeed() const; //gets speed for the enemy
-    void setSpeed(int speed); //sets speed for the enmy
+    void setSpeed(int speed);                           // Changes the Enemy speed (valid values = 2 , 5)
 
-    int getPosx() const; //gets x-position for the enemy
-    void setPosx(int x); //sets x-positon for the enemy
+    void setMode(const Movement mode);                  // Changes to one of the three designated movements
+    Movement getMode() const;                           // Gives the current movement mode
 
-    int getPosy() const;
-    void setPosy(int y);
+    bool isReleased() const;                            // Returs whether the Enemy has left the box
+    void setReleased(bool value);                       // Used for indicating if the enemy is in the box
 
-    bool isMoving() const;
-    void setMoving(bool value);
+    bool isInitiated() const;                           // Returns whether the Enemy has finished the movement wave
+    void setInitiated(bool value);                      // Used for indicating if the enemy has finished the movement wave
 
-    void setMode(const Movement mode);
-    Movement getMode() const;
-
-    bool isReleased() const;
-    void setReleased(bool value);
-
-    bool isInitiated() const;
-    void setInitiated(bool value);
-
+    void resetOrientation();                            // Sets the default directions
+    void setDefaultPosition();                          // Returns entity to initial position
 
 private:
-    QPixmap forward, reverse, up, down;
-    QPixmap frightMeat;
-    Direction direction, nextDirection, facingDirection;
-
-    GhostType type;
+    QPixmap forward, reverse, up, down, frightMeat;     // Images for each direction
+    EnemyType type;
     Movement mode;
-    GameMap *gameMap;
-    Player *gator;
+    GameMap *gameMap;                                   // Access to the Game Map
+    Player *gator;                                      // Access to a Player instance
+    QString name;                                       // String used to find the pertaining image of Enemy
 
-    bool moving;
     bool released;
     bool initiated;
-    int speed;
 
-    // String used to find the pertaining image
-    QString name;
+    int scatx, scaty;                                   // Position where Enemy moves towards when in SCATTER mode
 
-    // Position in pixels
-    int posx, posy;
-    const int defaultPosx, defaultPosy;
+    // Different enemy movement modes
+    void chase();                                       // Enemy will chase the Player
+    void scatter();                                     // Enemy will go to its indicated scatter position
+    void frightened();                                  // Enemy will be able to be eaten and moves pseudorandomly
 
-    // Image dimension in pixels
-    const int charW, charH;
-
-    // Scatter position in pixels
-    int scatx, scaty;
-
-    // Different enemy movement styles
-    void chase();
-    void scatter();
-    void frightened();
-
-    void setScatterPoint();
-
+    void setScatterPoint();                             // Sets the scatter points depending on the GhostType of Enemy
 };
 
 #endif // ENEMY_H

@@ -1,35 +1,30 @@
 #include "gamemap.h"
-#include <iostream>
 
-//class that sets up the game map
-
-//sets up the game map
 GameMap::GameMap()
 {
-    mapImage.load(":/Images/swampmap.png"); //loads the game map from it's image
+    // Load map layout background
+    mapImage.load(":/Images/swampmap.png");
 
-    makeMapPaths(); //sets up the paths for the game map.
+    makeMapPaths();
 }
 
-//creates bounding rectangle for game map
 QRectF GameMap::boundingRect() const
 {
     return QRect(0,0,560,620);
 }
 
-//?
 void GameMap::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(0,0,560,620,mapImage);
 
-    /* Draw debug dot points
+    /* Draws debug dot points
     for (QPoint point : dotLocations)
     {
         painter->drawPoint(point);
     }
     */
 
-    /* Draw debug paths
+    /* Draws debug paths
     for (QPoint point : moveablePath)
     {
         painter->drawPoint(point);
@@ -37,7 +32,6 @@ void GameMap::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     */
 }
 
-//sets up the movement path for the game map
 bool GameMap::canMove(QPoint point)
 {
     for (int i = 0; i < moveablePath.size(); i++)
@@ -50,18 +44,17 @@ bool GameMap::canMove(QPoint point)
     return false;
 }
 
-//sets up the dot positions for the game map
 const QVector<QPoint>* GameMap::getDotVector()
 {
+    // Will only create the dots once called
     makeMapDots();
     return &dotLocations;
 }
 
-// Creates all the moveable paths on the game map
 void GameMap::makeMapPaths()
 {
     // Horizontal paths
-    // Top
+    // Top side
     generatePath(10,10,230,10);
     generatePath(290,10,510,10);
     generatePath(10,90,510,90);
@@ -73,7 +66,7 @@ void GameMap::makeMapPaths()
     // Teleport paths
     generatePath(0,270,170,270);
     generatePath(350,270,520,270);
-    // Bottom
+    // Bottom side
     generatePath(170,330,350,330);
     generatePath(10,390,230,390);
     generatePath(290,390,510,390);
@@ -87,7 +80,7 @@ void GameMap::makeMapPaths()
     generatePath(10,570,510,570);
 
     // Verticle paths
-    // Left
+    // Left side
     generatePath(10,10,10,150);
     generatePath(10,390,10,450);
     generatePath(10,510,10,570);
@@ -101,7 +94,7 @@ void GameMap::makeMapPaths()
     generatePath(230,390,230,450);
     generatePath(230,510,230,570);
 
-    // Right
+    // Right side
     generatePath(290,10,290,90);
     generatePath(290,150,290,210);
     generatePath(290,390,290,450);
@@ -116,11 +109,10 @@ void GameMap::makeMapPaths()
     generatePath(510,510,510,570);
 }
 
-//sets where the dots are on the map
 void GameMap::makeMapDots()
 {
     // Horizontal dots
-    // Top
+    // Top side
     generateDot(10,10,230,10);
     generateDot(290,10,510,10);
     generateDot(10,90,510,90);
@@ -128,7 +120,7 @@ void GameMap::makeMapDots()
     generateDot(170,150,230,150);
     generateDot(290,150,350,150);
     generateDot(410,150,510,150);
-    // Bottom
+    // Bottom side
     generateDot(10,390,230,390);
     generateDot(290,390,510,390);
     generateDot(10,450,50,450);
@@ -142,7 +134,7 @@ void GameMap::makeMapDots()
     generateDot(10,570,510,570);
 
     // Verticle Dots
-    // Left
+    // Left side
     generateDot(10,10,10,150);
     generateDot(10,390,10,450);
     generateDot(10,510,10,570);
@@ -154,7 +146,7 @@ void GameMap::makeMapDots()
     generateDot(230,390,230,450);
     generateDot(230,510,230,570);
 
-    // Right
+    // Right side
     generateDot(290,10,290,90);
     generateDot(290,390,290,450);
     generateDot(290,510,290,570);
@@ -167,7 +159,9 @@ void GameMap::makeMapDots()
     generateDot(510,510,510,570);
 }
 
-//generates dots for the game map
+/* Start and End position must be given in pixels with
+ * 0, 0 being the top left of the window.
+ * Cannot give diagnonal segments. */
 void GameMap::generateDot(int startx, int starty, int endx, int endy)
 {
     QPoint point;
@@ -176,13 +170,11 @@ void GameMap::generateDot(int startx, int starty, int endx, int endy)
     int x = startx;
     int y = starty;
 
-    // If the line is horizontal
-    if (starty == endy)
+    if (starty == endy)                                                 // If the line is horizontal
     {
-        // If line is given from left to right
-        if (startx < endx)
+        if (startx < endx)                                              // If line is given from left to right
         {
-            numOfDots = ((endx - startx) / DIVISOR) + 1;
+            numOfDots = ((endx - startx) / DIVISOR) + 1;                // Calculate how many dots will be in this section
 
             for (int i = 0; i < numOfDots ; i++)
             {
@@ -196,9 +188,10 @@ void GameMap::generateDot(int startx, int starty, int endx, int endy)
                 x += DIVISOR;
             }
         }
-        else
+        else                                                            // If line is given from right to left
         {
-             numOfDots = ((startx - endx) / DIVISOR) + 1;
+            numOfDots = ((startx - endx) / DIVISOR) + 1;                // Calculate how many dots will be in this section
+
             for (int i = 0; i < numOfDots; i++)
             {
                 point.setX(x);
@@ -211,12 +204,13 @@ void GameMap::generateDot(int startx, int starty, int endx, int endy)
             }
         }
     }
-    else
+    else                                                                // If the line is vertical
     {
         // If line is given bottom to top
-        if (starty < endy)
+        if (starty < endy)                                              // If line is given bottom to top
         {
             numOfDots = ((endy - starty) / DIVISOR) + 1;
+
             for (int i = 0; i < numOfDots; i++)
             {
                 point.setY(y);
@@ -228,9 +222,10 @@ void GameMap::generateDot(int startx, int starty, int endx, int endy)
                 y += DIVISOR;
             }
         }
-        else
+        else                                                            // If line is given top to bottom
         {
             numOfDots = ((starty - endy) / DIVISOR) + 1;
+
             for (int i = 0; i < numOfDots; i++)
             {
                 point.setY(y);
@@ -245,16 +240,16 @@ void GameMap::generateDot(int startx, int starty, int endx, int endy)
     }
 }
 
-// Creates the points on which characters will move
+/* Start and End position must be given in pixels with
+ * 0, 0 being the top left of the window.
+ * Cannot give diagnonal segments. */
 void GameMap::generatePath(int startx, int starty, int endx, int endy)
 {
     QPoint point;
 
-    // If the line is horizontal
-    if (starty == endy)
+    if (starty == endy)                                                 // If the line is horizontal
     {
-        // If line is given from left to right
-        if (startx < endx)
+        if (startx < endx)                                              // If line is given from left to right
         {
             for (int x = startx; x <= endx; x++)
             {
@@ -266,7 +261,7 @@ void GameMap::generatePath(int startx, int starty, int endx, int endy)
                 }
             }
         }
-        else
+        else                                                            // If the line is given from right to left
         {
             for (int x = startx; x >= startx; x--)
             {
@@ -279,10 +274,9 @@ void GameMap::generatePath(int startx, int starty, int endx, int endy)
             }
         }
     }
-    else
+    else                                                                // If the line is vertical
     {
-        // If line is given bottom to top
-        if (starty < endy)
+        if (starty < endy)                                              // If line is given bottom to top
         {
             for (int y = starty; y <= endy; y++)
             {
@@ -294,7 +288,7 @@ void GameMap::generatePath(int startx, int starty, int endx, int endy)
                 }
             }
         }
-        else
+        else                                                            // If the line is given top to bottom
         {
             for (int y = starty; y >= starty; y--)
             {

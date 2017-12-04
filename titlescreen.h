@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
+#include "gamescreen.h"
 
 
 namespace Ui {
@@ -13,20 +14,19 @@ class TitleScreen;
 class TitleScreen : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit TitleScreen(QWidget *parent = 0);
     ~TitleScreen();
 
-private slots:
-    void on_startBtn_clicked();
-
 private:
     Ui::TitleScreen *ui;
-
-    QMediaPlaylist * playlist = new QMediaPlaylist();
+    QMediaPlaylist *playlist;
+    QMediaPlayer *titleMusic;
 
     void playBackgroundMusic();
+
+private slots:
+    void on_startBtn_clicked();
 };
 
 #endif // TITLESCREEN_H

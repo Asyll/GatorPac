@@ -1,31 +1,19 @@
 #include "enemy.h"
 #include <iostream>
 
-//class that implements the enemies
-
-Enemy::Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Player* gator, GhostType type) :
-    charW(40),
-    charH(40),
-    defaultPosx(posx),
-    defaultPosy(posy)
+Enemy::Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Player* gator, EnemyType type) :
+    Entity::Entity(posx, posy, speed)
 {
-    this->posx = posx;
-    this->posy = posy;
     this->name = name;
-    this->speed = speed;
     this->gameMap = gameMap;
     this->gator = gator;
     this->type = type;
+    this->released = false;
+    this->initiated = false;
 
-    setScatterPoint(); //calls ScatterPoint method
+    setScatterPoint();
 
-    resetOrientation(); //calls resetOrientation method
-
-    mode = Movement::SCATTER;
-    released = false;
-    initiated = false;
-
-    //loads images for each possible orientation in normal and frightened mode
+    // Load images for different directions & frightened mode
     forward.load("://Images/Characters/" + name + "_forward.png");
     reverse.load("://Images/Characters/" + name + "_reverse.png");
     up.load("://Images/Characters/" + name + "_forward_up.png");
@@ -33,23 +21,14 @@ Enemy::Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Play
     frightMeat.load("://Images/Characters/frightMeat.png");
 }
 
-//defines bounding rectangle for enemy
-QRectF Enemy::boundingRect() const
-{
-    return QRect(0,0,charW,charH);
-}
-
-//paints enemy's orientation for both normal and frightened mode
 void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    //paints enemy's oreintation when they are in frightened mode
     if (mode == Movement::FRIGHTENED)
     {
         painter->drawPixmap(posx,posy,charW,charW,frightMeat);
     }
     else
     {
-        //paints enemy's orientation while in normal mode
         switch(facingDirection)
         {
         case LEFT:
@@ -71,112 +50,62 @@ void Enemy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     }
 }
 
-//gets enemy's speed
-int Enemy::getSpeed() const
-{
-    return speed;
-}
-
-//sets enemy's speed
 void Enemy::setSpeed(int speed)
 {
-    //prints to console the position and speed of enemy
-    while ((posx % speed) != 0 || ((posy % speed) != 0))
+    if (speed == 2 || speed == 5)
     {
-        move();
-    }
-    this->speed = speed;
-}
-
-//gets enemy's x-position
-int Enemy::getPosx() const
-{
-    return posx;
-}
-
-//sets enemy's x-position
-void Enemy::setPosx(int x)
-{
-    if (x >= 0 && x <= 520)
-    {
-        posx = x;
+        while ((posx % speed) != 0 || ((posy % speed) != 0))    // To avoid leaving path bounds
+        {
+            move();
+        }
+        this->speed = speed;
     }
 }
 
-//gets enemy's y-position
-int Enemy::getPosy() const
-{
-    return posy;
-}
-
-//sets enemy's y-position
-void Enemy::setPosy(int y)
-{
-    if (y >= 10 && y <= 570)
-    {
-        posy = y;
-    }
-}
-
-//checks whether enemy is moving
-bool Enemy::isMoving() const
-{
-    return moving;
-}
-
-//sets enemy's moving values
-void Enemy::setMoving(bool value)
-{
-    moving = value;
-}
-
-//sets the enemy's speed for each movement mode (frightened or normal)
-void Enemy::setMode(const Movement mode)
-{
-    if (mode == Movement::FRIGHTENED) //enemies move slower in frightened mode at speed 2
-    {
-        setSpeed(2);
-    }
-    else
-    {
-        setSpeed(5); //while not in frightened mode, enemies move at speed 5
-    }
-    this->mode = mode;
-}
-
-//checks if enemy is released from their box
 bool Enemy::isReleased() const
 {
     return released;
 }
 
-//sets whether enemy is released fromt heir box
 void Enemy::setReleased(bool value)
 {
     released = value;
 }
 
-//checks if enemy is intiated
 bool Enemy::isInitiated() const
 {
     return initiated;
 }
 
-//sets whether enemy is initiated
 void Enemy::setInitiated(bool value)
 {
     initiated = value;
 }
 
-//checks the enemy's movement mode
 Movement Enemy::getMode() const
 {
     return mode;
 }
 
-// Sets scatter point based on what ghost type the object is
+void Enemy::setMode(const Movement mode)
+{
+    // Changes movement mode and speed pertaining to that mode
+
+    if (mode == Movement::FRIGHTENED)   // Enemy moves slower in frightened mode (Speed = 2)
+    {
+        setSpeed(2);
+    }
+    else                                // Regular speed (Speed = 5)
+    {
+        setSpeed(5);
+    }
+    this->mode = mode;
+}
+
 void Enemy::setScatterPoint()
 {
+    // Each GhostType has a default scatter position
+
     switch(type)
     {
     case RED:
@@ -198,25 +127,23 @@ void Enemy::setScatterPoint()
     }
 }
 
-//resets the enemy's orientation
 void Enemy::resetOrientation()
 {
+    // By default Enemy faces right
     facingDirection = Direction::RIGHT;
     direction = Direction::RIGHT;
-    nextDirection = Direction::NONE;
+    nextDirection = Direction::NONE;        // Default NONE since Enemy has not decided on next movement at this point
 
-    setMode(Movement::CHASE);
+    setMode(Movement::CHASE);               // Default movement mode for Enemy
 }
 
-//sets the default position for the enemy
 void Enemy::setDefaultPosition()
 {
-    released = false;
+    released = false;                       // Default x and y position is inside the box, therefore it is not released
     setPosx(defaultPosx);
     setPosy(defaultPosy);
 }
 
-//changes enemy's movement based on what mode they are in
 void Enemy::move()
 {
     switch(mode)
@@ -233,14 +160,17 @@ void Enemy::move()
     }
 }
 
-//sets the movement patterns for the enemies while they are in chase mode
-//enemies will try to chase gatorpac
+
+// Movement mechanics
+
 void Enemy::chase()
 {
+    /* Will change directions based on Player position, without evr going backwards.
+     * There is also implementation for when Enemy moves inside tube, since it moves
+     * slower when doing so. */
     QPoint point;
 
-    //compares the enemy's position with gatorpac's position
-    //and determines the direction the enemy should move
+    // Determines the next direction Enemy will move
     if (moving)
     {
         if (direction == Direction::RIGHT || direction == Direction::LEFT)
@@ -266,10 +196,7 @@ void Enemy::chase()
             }
         }
     }
-
-    //compares the enemy's position with gatorpac's position
-    //and determines the direction the enemy should move
-    else
+    else    // When a wall is encountered
     {
         if (direction == Direction::RIGHT || direction == Direction::LEFT)
         {
@@ -299,7 +226,7 @@ void Enemy::chase()
                     nextDirection = Direction::DOWN;
                 }
             }
-            else
+            else    // Will go either way if Player is infront of Enemy
             {
                 point.setX(posx);
                 point.setY(posy + speed);
@@ -313,9 +240,6 @@ void Enemy::chase()
                 }
             }
         }
-
-        //compares the enemy's position with gatorpac's position
-        //and determines the direction the enemy should move
         else if (direction == Direction::DOWN || direction == Direction::UP)
         {
             if (this->posx < gator->getPosx())
@@ -344,7 +268,7 @@ void Enemy::chase()
                     nextDirection = Direction::RIGHT;
                 }
             }
-            else
+            else    // Will go either way if Player is infront of Enemy
             {
                 point.setX(posx + speed);
                 point.setY(posy);
@@ -360,9 +284,7 @@ void Enemy::chase()
         }
     }
 
-
-    //if next direction does not equal current direction change the current
-    //direction accordingly and check if that is valid.
+    // Switch to the to the next direction if Enemy is able to move in said direction
     if (nextDirection != direction)
     {
         switch (nextDirection)
@@ -406,7 +328,8 @@ void Enemy::chase()
         }
     }
 
-    //changes enemy direction based on edge of gamemap
+
+    // Actual movement: Changes Enemy position depending on currently set direction
     switch (direction)
     {
     case LEFT:
@@ -414,7 +337,7 @@ void Enemy::chase()
         point.setY(posy);
         facingDirection = direction;
 
-        if (posx < 90 && posy == 270)
+        if (posx < 90 && posy == 270)           // Going through left tube
         {
             posx -= 2;
             moving = true;
@@ -423,7 +346,7 @@ void Enemy::chase()
                 posx = 520;
             }
         }
-        else if (posx > 430 && posy == 270)
+        else if (posx > 430 && posy == 270)     // Going through right tube
         {
             posx -= 2;
             moving = true;
@@ -444,7 +367,8 @@ void Enemy::chase()
         point.setY(posy);
         facingDirection = direction;
 
-        if (posx > 430 && posy == 270) {
+        if (posx > 430 && posy == 270)          // Going through left tube
+        {
             posx += 2;
             moving = true;
             if (posx >= 520)
@@ -452,7 +376,8 @@ void Enemy::chase()
                 posx = 0;
             }
         }
-        else if (posx < 90 && posy == 270) {
+        else if (posx < 90 && posy == 270)      // Going through right tube
+        {
             posx += 2;
             moving = true;
         }
@@ -502,16 +427,14 @@ void Enemy::chase()
 
 }
 
-//sets the movement patterns for the enemies while they are in scatter mode
-//each enemy moves around a certain position
 void Enemy::scatter()
 {
+    /* Follows the CHASE mechanics for the most part, except it uses
+     * the set scatter position as a target. */
     QPoint point;
 
     if (moving)
     {
-        //compares enemy's current position with scatter positions and changes
-        //direction accordingly
         if (direction == Direction::RIGHT || direction == Direction::LEFT)
         {
             if (this->posy < scaty)
@@ -537,7 +460,6 @@ void Enemy::scatter()
     }
     else
     {
-        //scatter for horizontal orientation
         if (direction == Direction::RIGHT || direction == Direction::LEFT)
         {
             if (this->posy < scaty)
@@ -580,8 +502,6 @@ void Enemy::scatter()
                 }
             }
         }
-
-        //scatter for vertical orienation
         else if (direction == Direction::DOWN || direction == Direction::UP)
         {
             if (this->posx < scatx)
@@ -627,8 +547,7 @@ void Enemy::scatter()
     }
 
 
-    //if next direction does not equal current direction change the current
-    //direction accordingly and check if that is valid.
+
     if (nextDirection != direction)
     {
         switch (nextDirection)
@@ -672,10 +591,10 @@ void Enemy::scatter()
         }
     }
 
-    //changes direction of enemy based on current direction
+
+
     switch (direction)
     {
-
     case LEFT:
         point.setX(posx - speed);
         point.setY(posy);
@@ -765,12 +684,14 @@ void Enemy::scatter()
     }
 }
 
-//sets the movement patterns for the enemies while they are in frightened mode
-//enemy movement will be random
 void Enemy::frightened()
 {
+    /* Follows the CHASE mechanics for the most part, except it first
+     * selects a pseudorandom direction that is used as the next
+     * direction Enemy will follow. */
     QPoint point;
 
+    // Sets a pseudorandom next direction
     int ranDir = 0;
     if (!moving)
     {
@@ -801,8 +722,7 @@ void Enemy::frightened()
     }
 
 
-    //if next direction does not equal current direction change the current
-    //direction accordingly and check if that is valid.
+
     if (nextDirection != direction)
     {
         switch (nextDirection)
@@ -846,7 +766,9 @@ void Enemy::frightened()
         }
     }
 
-    //changes enemy orientation based on current direction
+
+
+
     switch (direction)
     {
     case LEFT:

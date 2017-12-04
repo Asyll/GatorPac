@@ -1,3 +1,6 @@
+/* This class creates and holds the moveable paths for the game
+ * as well as generates the locations of the dots. */
+
 #ifndef GAMEMAP_H
 #define GAMEMAP_H
 
@@ -14,9 +17,9 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    bool canMove(QPoint);
+    bool canMove(QPoint);                               // Helps check if an Entity can move within the moveable path
 
-    const QVector<QPoint>* getDotVector();
+    const QVector<QPoint>* getDotVector();              // Returns a QVector of QPoints used to set up the dots of the map by Dots class
 
 
 private:

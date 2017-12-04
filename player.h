@@ -1,52 +1,26 @@
+/* This class represents the player (gator). */
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <QGraphicsItem>
-#include <QPainter>
-#include <QObject>
-#include "direction.h"
+#include "entity.h"
 
-class Player : public QGraphicsItem
+class Player : public Entity
 {
 public:
-    Player(int posx,int posy,int speed_);
-    QRectF boundingRect() const;
+    Player(int posx,int posy,int speed);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    int getSpeed() const;
 
-    int getPosx() const; //gets x-position for player
-    void setPosx(int x); //sets x-position for player
+    int getLives() const;                               // Returns lives of Player
+    void setLives(int lives);                           // Sets lives of Player
 
-    int getPosy() const; //gets y-position for player
-    void setPosy(int y); //sets y-position for player
-
-    bool isMoving() const; //checks if player is moving
-    void setMoving(bool value); //sets whether player is moving or not
-
-    int getLives() const; //gets the total lives that the player has
-    void setLives(int lives); //sets the lives for the player
-
-    void resetOrientation(); //resets the orientation for the player
-    void setDefaultPosition(); //sets the default position for the player
-
-    void setDirection(Direction dir); //sets direcetion of the player
-
-    void setNextDirection(Direction dir); //sets the next direction for the player
+    void setDirection(Direction dir);                   // Sets current direcetion of Player
+    void setNextDirection(Direction dir);               // Sets next direction Player will move
 
 private:
-    QPixmap forward, reverse, up, down;
-    const int speed;
-    Direction direction, nextDirection, facingDirection;
-    bool moving;
+    QPixmap forward, reverse, up, down;                 // Images for each direction
 
-    // Position in pixels
-    int posx, posy;
-    int defaultPosx, defaultPosy;
-
-    // Image dimension in pixels
-    const int charW, charH;
-
-    int lives;
+    int lives;                                          // # of lives Player has
 };
 
 #endif // PLAYER_H
