@@ -225,6 +225,7 @@ void GameScreen::playerMove()
     QPoint point;
     const int speed = gator->getSpeed();
 
+    // Switch to the to the next direction if Player is able to move in said direction
     if (currentTmpDir != nextTmpDir)
     {
         switch(nextTmpDir)
@@ -270,6 +271,7 @@ void GameScreen::playerMove()
         }
     }
 
+    // Actual movement: Changes Enemy position depending on currently set direction
     switch(currentTmpDir)
     {
     case LEFT:
@@ -336,6 +338,7 @@ void GameScreen::playerMove()
         break;
     }
 
+    // Tube teleportation
     if (gator->getPosx() == 0)
     {
         gator->setPosx(520);
@@ -348,46 +351,46 @@ void GameScreen::playerMove()
 
 void GameScreen::enemiesMove()
 {
+    // FSU
     releaseFSU();
     if (fsu->isReleased())
     {
-        //starts movement for FSU
         if (!fsu->isInitiated() && fsu->getMode() != Movement::FRIGHTENED)
             fsuInitSeq();
 
         fsu->move();
     }
 
+    // Georgia
     releaseGeorgia();
     if (georgia->isReleased())
     {
-        //starts movement for Georgia
         if (!georgia->isInitiated() && georgia->getMode() != Movement::FRIGHTENED)
             georgiaInitSeq();
 
         georgia->move();
     }
 
-    if(canReleaseLSU) //checks if LSU can be released then releases them if possible
+    // LSU
+    if(canReleaseLSU)
     {
         releaseLSU();
     }
     if (lsu->isReleased())
     {
-        //starts movement for LSU
         if (!lsu->isInitiated() && lsu->getMode() != Movement::FRIGHTENED)
             lsuInitSeq();
 
         lsu->move();
     }
 
-    if (canReleaseKentucky) //checks if Kentucky can be released then releases them if possible
+    // Kentucky
+    if (canReleaseKentucky)
     {
         releaseKentucky();
     }
     if (kentucky->isReleased())
     {
-        //starts movement for Kentucky
         if (!kentucky->isInitiated() && kentucky->getMode() != Movement::FRIGHTENED)
             kentuckyInitSeq();
 
@@ -579,7 +582,7 @@ void GameScreen::releaseGeorgia()
 {
     if (georgia->getPosy() > 210 && georgia->getPosy() <= 270 && georgia->getPosx() == 260)
     {
-        georgia->setPosy(georgia->getPosy() - 5);
+        georgia->setPosy(georgia->getPosy() - 2);
     }
     else
     {
@@ -623,7 +626,8 @@ void GameScreen::releaseKentucky()
 
 // INTERACTIONS
 
-void GameScreen::ghostCollision() {
+void GameScreen::ghostCollision()
+{
 
     if((abs(gator->getPosx() - fsu->getPosx()) <= 20) && (abs(gator->getPosy() - fsu->getPosy()) <= 20)) {
         collideWith(fsu);
@@ -641,9 +645,8 @@ void GameScreen::ghostCollision() {
 
 void GameScreen::collideWith(Enemy *enemy)
 {
-    if (enemy->getMode() == Movement::FRIGHTENED) //if player collides with ghost in frightened mode, ghost goes to spawn box
+    if (enemy->getMode() == Movement::FRIGHTENED)       // Collision with frightened Enemy
     {
-
         score += mascotPoints;
         if (mascotPoints < 1600)
         {
@@ -652,17 +655,54 @@ void GameScreen::collideWith(Enemy *enemy)
         enemy->resetOrientation();
         enemy->setDefaultPosition();
     }
-    else if (gator->getLives() > 1) //if player collides with ghost in normal mode, player loses a life if they have more than one
+    else if (gator->getLives() > 1)                     // Regular collision with lives remaining
     {
         mascotPoints = 200;
         lostLife();
     }
-    else //ends game when player collides with ghost, having only one life left
+    else                                                // Final collision (ends the game)
     {
         mascotPoints = 200;
         gator->setLives(0);
         won = false;
         gameOver();
+    }
+}
+
+void GameScreen::dotCollision()
+{
+    if (dots->points.isEmpty()) {
+        won = true;
+    }
+    else
+    {
+        int pointsIndex = 0;
+        for(QPoint point : dots->points)
+        {
+            if (gator->getPosx() == point.x() && gator->getPosy() == point.y()) {
+                if ((point.x() == 10 && point.y() == 50) ||
+                    (point.x() == 510 && point.y() == 50) ||
+                    (point.x() == 10 && point.y() == 450) ||
+                    (point.x() == 510 && point.y() == 450)) {
+                    score += 50;
+
+                    fsu->setMode(Movement::FRIGHTENED);
+                    georgia->setMode(Movement::FRIGHTENED);
+                    lsu->setMode(Movement::FRIGHTENED);
+                    kentucky->setMode(Movement::FRIGHTENED);
+
+
+                    frightTimer->start();
+                    playFrightenMusic();
+                }
+                else {
+                    score += 10;
+                }
+                dots->points.remove(pointsIndex);
+                triggerWaka();
+            }
+            pointsIndex++;
+        }
     }
 }
 
@@ -672,6 +712,7 @@ void GameScreen::collideWith(Enemy *enemy)
 
 void GameScreen::lostLife()
 {
+                                                            // Play music
     basicSounds->setMedia(QUrl("qrc:/Audio/pacmanDeath.mp3"));
     if (basicSounds->state() == QMediaPlayer::PlayingState) {
         basicSounds->setPosition(0);
@@ -686,7 +727,7 @@ void GameScreen::lostLife()
             backgroundMusic->setVolume(40);
         }
 
-    gator->setLives(gator->getLives() - 1);
+    gator->setLives(gator->getLives() - 1);                 // Remove life
 
     resetCharacters();
 }
@@ -759,7 +800,8 @@ void GameScreen::resetCharacters()
     gator->resetOrientation();
 }
 
-void GameScreen::winGame() {
+void GameScreen::winGame()
+{
     frightenSound->setVolume(0);
     playWinMusic();
 
@@ -782,7 +824,8 @@ void GameScreen::winGame() {
     ui->scoreValue->setVisible(false);
 }
 
-void GameScreen::gameOver() {
+void GameScreen::gameOver()
+{
     frightenSound->setVolume(0);
     playDeathMusic();
 
@@ -866,7 +909,8 @@ void GameScreen::keyPressEvent(QKeyEvent *event)
 
 // SLOTS
 
-void GameScreen::updater() {
+void GameScreen::updater()
+{
     /* For debugging character position:
      * - unhide xPos and yPos
      * - uncomment the display functions */
@@ -875,53 +919,24 @@ void GameScreen::updater() {
     //ui->xPos->display(gator->getPosx());
     //ui->yPos->display(gator->getPosy());
 
-    //if player wins game display the wins screen
+
     if (won == true) {
         winGame();
     }
 
+
+    // Movement
     playerMove();
     enemiesMove();
 
+
+    // Check for collisions
+    ghostCollision();
+    dotCollision();
+
+
     ui->lifeCount->display(gator->getLives());
     ui->scoreValue->display(score);
-
-    ghostCollision();
-
-    //player wins game when all dots are eaten
-    if (dots->points.isEmpty()) {
-        won = true;
-    }
-    else
-    {
-        int pointsIndex = 0;
-        for(QPoint point : dots->points)
-        {
-            if (gator->getPosx() == point.x() && gator->getPosy() == point.y()) {
-                if ((point.x() == 10 && point.y() == 50) ||
-                    (point.x() == 510 && point.y() == 50) ||
-                    (point.x() == 10 && point.y() == 450) ||
-                    (point.x() == 510 && point.y() == 450)) {
-                    score += 50;
-
-                    fsu->setMode(Movement::FRIGHTENED);
-                    georgia->setMode(Movement::FRIGHTENED);
-                    lsu->setMode(Movement::FRIGHTENED);
-                    kentucky->setMode(Movement::FRIGHTENED);
-
-
-                    frightTimer->start();
-                    playFrightenMusic();
-                }
-                else {
-                    score += 10;
-                }
-                dots->points.remove(pointsIndex);
-                triggerWaka();
-            }
-            pointsIndex++;
-        }
-    }
 
     scene->update();
     gator->update();

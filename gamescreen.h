@@ -105,7 +105,7 @@ private:
 
     void ghostCollision();                                  // Checks for collision between Player and Enemies
     void collideWith(Enemy *enemy);                         // Handles collision between Player and given Enemy
-
+    void dotCollision();                                    // Checks for collision between Player and Dots
 
 
     // OTHER

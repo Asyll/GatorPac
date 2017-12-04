@@ -13,6 +13,9 @@ Enemy::Enemy(int posx, int posy, int speed, QString name, GameMap *gameMap, Play
 
     setScatterPoint();
 
+    resetOrientation();
+    setDefaultPosition();
+
     // Load images for different directions & frightened mode
     forward.load("://Images/Characters/" + name + "_forward.png");
     reverse.load("://Images/Characters/" + name + "_reverse.png");
@@ -134,7 +137,7 @@ void Enemy::resetOrientation()
     direction = Direction::RIGHT;
     nextDirection = Direction::NONE;        // Default NONE since Enemy has not decided on next movement at this point
 
-    setMode(Movement::CHASE);               // Default movement mode for Enemy
+    //setMode(Movement::CHASE);               // Default movement mode for Enemy
 }
 
 void Enemy::setDefaultPosition()

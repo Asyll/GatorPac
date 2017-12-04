@@ -57,7 +57,7 @@ void Entity::resetOrientation()
 {
     // By default any Entity faces right
     facingDirection = Direction::RIGHT;
-    direction = Direction::RIGHT;
+    direction = Direction::NONE;
     nextDirection = Direction::NONE;        // Default NONE since Entity has not decided on next movement at this point
 }
 
