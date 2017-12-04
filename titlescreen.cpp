@@ -9,6 +9,11 @@ TitleScreen::TitleScreen(QWidget *parent) : QWidget(parent), ui(new Ui::TitleScr
     ui->logo->setPixmap(QPixmap(":/Images/gatorlogo.png"));
     ui->logo->setScaledContents( true );
 
+    QMovie *wasdAnimation = new QMovie(":/Images/wasdAnimated.gif");
+    ui->wasdImg->setMovie(wasdAnimation);
+    ui->wasdImg->setScaledContents( true );
+    wasdAnimation->start();
+
     ui->backButton->setVisible(false);
     ui->howToText->setVisible(false);
     ui->wasdImg->setVisible(false);

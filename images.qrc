@@ -61,5 +61,12 @@
         <file>Images/Characters/gator_forward_down2.png</file>
         <file>Images/Characters/gator_forward_up2.png</file>
         <file>Images/Characters/gator_reverse2.png</file>
+        <file>Images/wasd1.png</file>
+        <file>Images/wasd2.png</file>
+        <file>Images/wasd3.png</file>
+        <file>Images/wasd4.png</file>
+        <file>Images/wasd5.png</file>
+        <file>Images/wasd6.png</file>
+        <file>Images/wasdAnimated.gif</file>
     </qresource>
 </RCC>

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
+#include <QMovie>
 #include "gamescreen.h"
 
 

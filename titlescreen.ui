@@ -311,14 +311,14 @@ p, li { white-space: pre-wrap; }
   <widget class="QLabel" name="wasdImg">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>140</x>
      <y>60</y>
-     <width>361</width>
+     <width>278</width>
      <height>211</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">image: url(:/Images/wasd.png);</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string/>
