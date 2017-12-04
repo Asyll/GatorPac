@@ -55,5 +55,6 @@ RESOURCES += images.qrc \
     titleanimation.qrc \
     wakasounds.qrc \
     winmusic.qrc \
-    frightenedmusic.qrc
+    frightenedmusic.qrc \
+    wasdanimation.qrc
 
