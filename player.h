@@ -18,9 +18,11 @@ public:
     void setNextDirection(Direction dir);               // Sets next direction Player will move
 
 private:
-    QPixmap forward, reverse, up, down;                 // Images for each direction
+    QPixmap forward, reverse, up, down;                 // Images for each direction open & closed
+    QPixmap forward2, reverse2, up2, down2;
 
     int lives;                                          // # of lives Player has
+
 };
 
 #endif // PLAYER_H

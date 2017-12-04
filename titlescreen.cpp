@@ -8,8 +8,21 @@ TitleScreen::TitleScreen(QWidget *parent) : QWidget(parent), ui(new Ui::TitleScr
 
     ui->logo->setPixmap(QPixmap(":/Images/gatorlogo.png"));
     ui->logo->setScaledContents( true );
+
     ui->backButton->setVisible(false);
     ui->howToText->setVisible(false);
+    ui->wasdImg->setVisible(false);
+    ui->gatorIcon->setVisible(false);
+    ui->fsuIcon->setVisible(false);
+    ui->georgiaIcon->setVisible(false);
+    ui->lsuIcon->setVisible(false);
+    ui->kentuckyIcon->setVisible(false);
+    ui->pacmanTitle->setVisible(false);
+    ui->blinkyTitle->setVisible(false);
+    ui->pinkyTitle->setVisible(false);
+    ui->inkyTitle->setVisible(false);
+    ui->clydeTitle->setVisible(false);
+
 
     playBackgroundMusic();
 }
@@ -38,6 +51,17 @@ void TitleScreen::on_howToButton_clicked() {
     ui->startBtn->setVisible(false);
     ui->howToButton->setVisible(false);
     ui->howToText->setVisible(true);
+    ui->wasdImg->setVisible(true);
+    ui->gatorIcon->setVisible(true);
+    ui->fsuIcon->setVisible(true);
+    ui->georgiaIcon->setVisible(true);
+    ui->lsuIcon->setVisible(true);
+    ui->kentuckyIcon->setVisible(true);
+    ui->pacmanTitle->setVisible(true);
+    ui->blinkyTitle->setVisible(true);
+    ui->pinkyTitle->setVisible(true);
+    ui->inkyTitle->setVisible(true);
+    ui->clydeTitle->setVisible(true);
 }
 
 // Goes back to title screen
@@ -47,6 +71,17 @@ void TitleScreen::on_backButton_clicked() {
     ui->startBtn->setVisible(true);
     ui->howToButton->setVisible(true);
     ui->howToText->setVisible(false);
+    ui->wasdImg->setVisible(false);
+    ui->gatorIcon->setVisible(false);
+    ui->fsuIcon->setVisible(false);
+    ui->georgiaIcon->setVisible(false);
+    ui->lsuIcon->setVisible(false);
+    ui->kentuckyIcon->setVisible(false);
+    ui->pacmanTitle->setVisible(false);
+    ui->blinkyTitle->setVisible(false);
+    ui->pinkyTitle->setVisible(false);
+    ui->inkyTitle->setVisible(false);
+    ui->clydeTitle->setVisible(false);
 }
 
 void TitleScreen::playBackgroundMusic()

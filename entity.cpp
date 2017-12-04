@@ -7,6 +7,7 @@ Entity::Entity(int posx, int posy, int speed) :
     this->posx = posx;
     this->posy = posy;
     this->speed = speed;
+    this->state = 0;
 
     setMoving(false);
 
@@ -59,11 +60,18 @@ void Entity::resetOrientation()
     facingDirection = Direction::RIGHT;
     direction = Direction::NONE;
     nextDirection = Direction::NONE;        // Default NONE since Entity has not decided on next movement at this point
+    moving = false;
+    state = 0;                              // Resets animation
 }
 
 void Entity::setDefaultPosition()
 {
     setPosx(defaultPosx);
     setPosy(defaultPosy);
+}
+
+void Entity::advanceAnimation()
+{
+    state++;
 }
 

@@ -347,6 +347,12 @@ void GameScreen::playerMove()
     {
         gator->setPosx(0);
     }
+
+    // Advance animation
+    if (gator->isMoving())
+    {
+        gator->advanceAnimation();
+    }
 }
 
 void GameScreen::enemiesMove()
@@ -798,6 +804,9 @@ void GameScreen::resetCharacters()
 
     gator->setDefaultPosition();
     gator->resetOrientation();
+
+    currentTmpDir = Direction::NONE;
+    nextTmpDir= Direction::NONE;
 }
 
 void GameScreen::winGame()

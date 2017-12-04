@@ -8,9 +8,13 @@ Player::Player(int posx, int posy, int speed) :
 
     // Load images for different directions
     forward.load("://Images/Characters/gator_forward.png");
+    forward2.load("://Images/Characters/gator_forward2.png");
     reverse.load("://Images/Characters/gator_reverse.png");
+    reverse2.load("://Images/Characters/gator_reverse2.png");
     up.load("://Images/Characters/gator_forward_up.png");
+    up2.load("://Images/Characters/gator_forward_up2.png");
     down.load("://Images/Characters/gator_forward_down.png");
+    down2.load("://Images/Characters/gator_forward_down2.png");
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -18,16 +22,56 @@ void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     switch(facingDirection)
     {
     case LEFT:
-        painter->drawPixmap(posx,posy,charW,charW,reverse);
+        if (state > 2)
+        {
+            if (state > 4)
+                state = 0;
+
+            painter->drawPixmap(posx,posy,charW,charW,reverse2);
+        }
+        else
+        {
+            painter->drawPixmap(posx,posy,charW,charW,reverse);
+        }
         break;
     case RIGHT:
-        painter->drawPixmap(posx,posy,charW,charW,forward);
+        if (state > 2)
+        {
+            if (state > 4)
+                state = 0;
+
+            painter->drawPixmap(posx,posy,charW,charW,forward2);
+        }
+        else
+        {
+            painter->drawPixmap(posx,posy,charW,charW,forward);
+        }
         break;
     case UP:
-        painter->drawPixmap(posx,posy,charW,charW,up);
+        if (state > 2)
+        {
+            if (state > 4)
+                state = 0;
+
+            painter->drawPixmap(posx,posy,charW,charW,up2);
+        }
+        else
+        {
+            painter->drawPixmap(posx,posy,charW,charW,up);
+        }
         break;
     case DOWN:
-        painter->drawPixmap(posx,posy,charW,charW,down);
+        if (state > 2)
+        {
+            if (state > 4)
+                state = 0;
+
+            painter->drawPixmap(posx,posy,charW,charW,down2);
+        }
+        else
+        {
+            painter->drawPixmap(posx,posy,charW,charW,down);
+        }
         break;
     case NONE:
         painter->drawPixmap(posx,posy,charW,charW,forward);

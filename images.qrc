@@ -56,5 +56,10 @@
         <file>Images/Characters/frightMeat.png</file>
         <file>Images/Buttons/back_plate.png</file>
         <file>Images/Buttons/how_to_play_plate.png</file>
+        <file>Images/wasd.png</file>
+        <file>Images/Characters/gator_forward2.png</file>
+        <file>Images/Characters/gator_forward_down2.png</file>
+        <file>Images/Characters/gator_forward_up2.png</file>
+        <file>Images/Characters/gator_reverse2.png</file>
     </qresource>
 </RCC>

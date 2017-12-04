@@ -28,6 +28,8 @@ public:
     virtual void resetOrientation();                    // Sets the default directions
     virtual void setDefaultPosition();                  // Returns entity to initial position
 
+    void advanceAnimation();                            // Cycles through animation
+
     int getSpeed() const;
 
 protected:
@@ -37,6 +39,7 @@ protected:
     const int defaultPosx, defaultPosy;                 // Used to reset entity's position
     int speed;                                          // # of pixels entity moves per frame
     bool moving;                                        // Determines whether the entity is moving
+    int state;                                          // Used to animate entity
 
     int charW = 40;                                     // Dimension of entity (in pixels)
     int charH = 40;                                     // Dimension of entity (in pixels)
