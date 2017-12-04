@@ -31,7 +31,7 @@ void TitleScreen::on_startBtn_clicked()
     game->show();
 }
 
-//pulls up how to play
+// Shows How To Play screen
 void TitleScreen::on_howToButton_clicked() {
     ui->backButton->setVisible(true);
     ui->logo->setVisible(false);
@@ -40,7 +40,7 @@ void TitleScreen::on_howToButton_clicked() {
     ui->howToText->setVisible(true);
 }
 
-//goes back to the titlescreen
+// Goes back to title screen
 void TitleScreen::on_backButton_clicked() {
     ui->backButton->setVisible(false);
     ui->logo->setVisible(true);

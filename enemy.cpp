@@ -137,7 +137,7 @@ void Enemy::resetOrientation()
     direction = Direction::RIGHT;
     nextDirection = Direction::NONE;        // Default NONE since Enemy has not decided on next movement at this point
 
-    //setMode(Movement::CHASE);               // Default movement mode for Enemy
+    setMode(Movement::CHASE);               // Default movement mode for Enemy
 }
 
 void Enemy::setDefaultPosition()
