@@ -98,10 +98,10 @@
   <widget class="QPushButton" name="howToButton">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>215</x>
      <y>650</y>
-     <width>185</width>
-     <height>41</height>
+     <width>111</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -120,10 +120,10 @@
   <widget class="QPushButton" name="backButton">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>10</y>
-     <width>121</width>
-     <height>51</height>
+     <x>20</x>
+     <y>20</y>
+     <width>65</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -283,7 +283,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;GatorPac is a game that is very similar to the original Pacman. It was created by Project Team 30 and the controls are very simple:&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;You are Albert (the gator) and you move around using w (up), a (left), s (down), and d (right) &lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;You are Albert (the gator) and you move around using w (up), a (left), s (down), and d (right). To pause and restart the music, tap spacebar&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The goal of the game is to eat all of the orange dots&lt;/p&gt;
