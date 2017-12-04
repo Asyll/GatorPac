@@ -270,7 +270,6 @@ void GameScreen::playerMove()
         }
     }
 
-    //?
     switch(currentTmpDir)
     {
     case LEFT:
