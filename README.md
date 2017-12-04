@@ -11,16 +11,9 @@ Compile using Qt:
 - Select Build > Build Project "GatorPac"
 - Select Build > Run
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Authors
 
 * **Gabriel Perez** - *Initial work* - [Asyll](https://github.com/Asyll)
 * **Bryan Miller** - *Initial work* - [bryancmiller](https://github.com/bryanmiller)
 
 See also the list of [contributors](https://github.com/Asyll/GatorPac/contributors) who participated in this project.
-
-## Acknowledgments
-
